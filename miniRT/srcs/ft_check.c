@@ -12,20 +12,23 @@
 
 #include "../includes/miniRT.h"
 
-int	error_handler(int code)
+int	error_handler(int is_valid, int code)
 {
-	printf("Error(%d): ", code);
-	if (code == 1)
-		printf("the file is not of type .rt");
-	else if (code == 2)
-		printf("wrong number of arguments");
-	else if (code == 3)
-		printf("a non empty line doesn't start with an identifier");
-	else if (code == 4)
-		printf("1 or more numbers provided is not valid");
-	else if (code == 5)
-		printf("i or more lines with a wrong number of arguments");
-	printf("\n");
+	if (is_valid)
+	{
+		printf("Error(%d): ", code);
+		if (code == 1)
+			printf("the file is not of type .rt");
+		else if (code == 2)
+			printf("wrong number of arguments");
+		else if (code == 3)
+			printf("a non empty line doesn't start with an identifier");
+		else if (code == 4)
+			printf("1 or more numbers provided is not valid");
+		else if (code == 5)
+			printf("i or more lines with a wrong number of arguments");
+		printf("\n");
+	}
 	return (1);
 }
 
@@ -48,5 +51,6 @@ int	check_file(char *file_name, t_mini *mini)
 		mini->file = file_name;
 		return (0);
 	}
-	return (error_handler(1));
+	mini->is_valid = 0;
+	return (error_handler(1, 1));
 }

@@ -94,7 +94,7 @@ typedef struct	s_mini
 
 //-------------------------------------SRCS-------------------------------------
 // CHECK
-int		error_handler(int code);
+int		error_handler(int is_valid, int code);
 int		check_file(char *file_name, t_mini *mini);
 
 #endif

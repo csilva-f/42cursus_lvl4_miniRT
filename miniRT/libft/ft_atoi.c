@@ -6,18 +6,18 @@
 /*   By: csilva-f <csilva-f@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 23:09:07 by csilva-f          #+#    #+#             */
-/*   Updated: 2022/11/07 20:20:25 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:15:10 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+long int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	c;
-	int	res;
-	int	n;
+	int			i;
+	int			c;
+	long int	res;
+	int			n;
 
 	i = 0;
 	c = 1;

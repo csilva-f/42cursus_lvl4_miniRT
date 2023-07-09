@@ -75,6 +75,6 @@ t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 //------------------------------------EXTENDED-----------------------------------
 int			ft_str_isdigit(char *str);
 char		*ft_remove_lb(char *str);
-void		ft_free_split(char ***str);
+void		ft_free_split(char **array);
 
 #endif
