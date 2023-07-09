@@ -10,17 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-OS = $(shell uname)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
-ifeq ($(OS), Linux)
-	CFLAGS += -D OS_LINUX
-	MLX_FLAGS = -L ./mlx_linux -lmlx -Ilmlx_linux -lXext -lX11 -lbsd
-else
-	CFLAGS += -D OS_MACOS
-	MLX_FLAGS = -L ./mlx_macos -lmlx -framework OpenGL -framework AppKit
-endif
+MLX_FLAGS = -L ./mlx_linux -lmlx -Ilmlx_linux -lXext -lX11 -lbsd
 
 LIBFT = ./libft/libft.a
 LINK = -I./includes
@@ -35,12 +28,8 @@ OBJS = $(SRCS:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(info Compiling miniRT for $(OS))
-ifeq ($(OS), Linux)
+	$(info Compiling miniRT)
 	$(MAKE) -C ./mlx_linux
-else
-	$(MAKE) -C ./mlx_macos
-endif
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -lm -o $(NAME)
 
 $(LIBFT):

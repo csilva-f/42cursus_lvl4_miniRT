@@ -25,6 +25,16 @@ void	init(t_mini *mini, char **argv)
 	mini->cyl = malloc(sizeof(t_cylinder));
 }
 
+void	free_structs(t_mini *mini)
+{
+	free(mini->al);
+	free(mini->cam);
+	free(mini->light);
+	free(mini->plane);
+	free(mini->sp);
+	free(mini->cyl);
+}
+
 void	check_identifier(t_mini *mini, char *str)
 {
 	if (ft_strncmp(str, "A", 2) && ft_strncmp(str, "C", 2) \
@@ -33,12 +43,12 @@ void	check_identifier(t_mini *mini, char *str)
 		mini->is_valid = 0;
 }
 
-int rgb_to_int(int red, int green, int blue)
+int	rgb_to_int(int red, int green, int blue)
 {
-    int	res;
+	int	res;
 
 	res = (red * 65536) + (green * 256) + blue;
-    return (res);
+	return (res);
 }
 
 void	vars_errors(t_mini *mini, int code)
@@ -65,16 +75,16 @@ int	count_vars(char **vars, int equal, int code, t_mini *m)
 
 int	fill_colors(t_mini *m, char *str, int c)
 {
-	int	r;
-	int	g;
-	int	b;
+	int		r;
+	int		g;
+	int		b;
 	char	**color;
-	
+
 	color = ft_split(str, ',');
 	if (count_vars(color, 3, 4, m))
 	{
-		if (ft_str_isdigit(color[0]) && ft_str_isdigit(color[1]) \
-				&& ft_str_isdigit(color[2]))
+		if (ft_str_isd(color[0]) && ft_str_isd(color[1]) \
+				&& ft_str_isd(color[2]))
 		{
 			r = ft_atoi(color[0]);
 			g = ft_atoi(color[1]);
@@ -87,10 +97,11 @@ int	fill_colors(t_mini *m, char *str, int c)
 		else
 			vars_errors(m, 4);
 	}
+	ft_free_split(color);
 	return (c);
 }
 
-float float_check(t_mini *m, char *str)
+float	float_check(t_mini *m, char *str)
 {
 	float	nbr;
 	char	**parts;
@@ -99,15 +110,15 @@ float float_check(t_mini *m, char *str)
 	parts = ft_split(str, '.');
 	if (count_vars(parts, 1, 4, m) == 2)
 	{
-		if (ft_str_isdigit(parts[0]) && ft_str_isdigit(parts[1]))
+		if (ft_str_isd(parts[0]) && ft_str_isd(parts[1]))
 			nbr = ft_atoi(parts[0]) + (float)ft_atoi(parts[1])
-			/ powf(10, ft_strlen(parts[1]));
+				/ powf(10, ft_strlen(parts[1]));
 		else
 			vars_errors(m, 4);
 	}
 	else if (count_vars(parts, 1, 4, m) == 1)
 	{
-		if (ft_str_isdigit(parts[0]))
+		if (ft_str_isd(parts[0]))
 			nbr = ft_atoi(parts[0]);
 		else
 			vars_errors(m, 4);
@@ -116,25 +127,25 @@ float float_check(t_mini *m, char *str)
 	return (nbr);
 }
 
-void	check_A_vars(t_mini *m, char **vars)
+void	check_a_vars(t_mini *m, char **vars)
 {
 	m->al->ratio = float_check(m, vars[1]);
 	if (m->is_valid)
 		m->al->color = fill_colors(m, vars[2], -1);
 }
 
-void	check_C_vars(t_mini *m, char **vars)
+void	check_c_vars(t_mini *m, char **v)
 {
 	char	**data;
 
-	data = ft_split(vars[1], ',');
+	data = ft_split(v[1], ',');
 	if (count_vars(data, 3, 4, m))
 	{
 		m->cam->x = float_check(m, data[0]);
 		m->cam->y = float_check(m, data[1]);
 		m->cam->z = float_check(m, data[2]);
 		ft_free_split(data);
-		data = ft_split(vars[2], ',');
+		data = ft_split(v[2], ',');
 		if (count_vars(data, 3, 4, m))
 		{
 			m->cam->ov_x = float_check(m, data[0]);
@@ -144,19 +155,15 @@ void	check_C_vars(t_mini *m, char **vars)
 					|| fabsf(m->cam->ov_y) > 1)
 				vars_errors(m, 4);
 			ft_free_split(data);
-			if (ft_str_isdigit(vars[3]))
-			{
-				m->cam->fov = ft_atoi(vars[3]);
-				if (m->cam->fov > 180 || m->cam->fov < 0)
-					vars_errors(m, 4);
-			}
+			if (ft_str_isd(v[3]) && ft_atoi(v[3]) <= 180 && ft_atoi(v[3]) >= 0)
+				m->cam->fov = ft_atoi(v[3]);
 			else
 				vars_errors(m, 4);
 		}
 	}
 }
 
-void	check_L_vars(t_mini *m, char **vars)
+void	check_l_vars(t_mini *m, char **vars)
 {
 	char	**data;
 
@@ -257,17 +264,17 @@ void	check_line_values(t_mini *mini, char **vars)
 	if (!ft_strncmp(vars[0], "A", 2))
 	{
 		if (count_vars(vars, 3, 5, mini))
-			check_A_vars(mini, vars);
+			check_a_vars(mini, vars);
 	}
 	else if (!ft_strncmp(vars[0], "C", 2))
 	{
 		if (count_vars(vars, 4, 5, mini))
-			check_C_vars(mini, vars);
+			check_c_vars(mini, vars);
 	}
 	else if (!ft_strncmp(vars[0], "L", 2))
 	{
 		if (count_vars(vars, 4, 5, mini))
-			check_L_vars(mini, vars);
+			check_l_vars(mini, vars);
 	}
 	else if (!ft_strncmp(vars[0], "pl", 3))
 	{
@@ -288,7 +295,7 @@ void	check_line_values(t_mini *mini, char **vars)
 
 void	check_lines(t_mini *mini, char *aux)
 {
-	char **vars;
+	char	**vars;
 
 	vars = ft_split(aux, ' ');
 	check_identifier(mini, vars[0]);
@@ -337,10 +344,11 @@ int	main(int argc, char **argv)
 			return (1);
 		init(&mini, argv);
 		get_values(&mini);
+		free_structs(&mini);
 		if (!mini.is_valid)
 			return (1);
 	}
 	else
-		return(error_handler(1, 2));
+		return (error_handler(1, 2));
 	return (0);
 }
