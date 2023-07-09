@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:34:00 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/09 15:44:51 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:54:44 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ void	check_C_vars(t_mini *m, char **vars)
 			m->cam->ov_x = float_check(m, o_vector[0]);
 			m->cam->ov_y = float_check(m, o_vector[1]);
 			m->cam->ov_z = float_check(m, o_vector[2]);
-			if (fabsf(m->cam->ov_x) > 1 || fabsf(m->cam->ov_y) > 1|| fabsf(m->cam->ov_y) > 1)
+			if (fabsf(m->cam->ov_x) > 1 || fabsf(m->cam->ov_y) > 1 \
+					|| fabsf(m->cam->ov_y) > 1)
 				vars_errors(m, 4);
 			ft_free_split(&o_vector);
 			if (ft_str_isdigit(vars[3]))
@@ -153,8 +154,6 @@ void	check_C_vars(t_mini *m, char **vars)
 			else
 				vars_errors(m, 4);
 		}
-		else
-			vars_errors(m, 4);
 	}
 }
 
@@ -177,7 +176,7 @@ void	check_pl_vars(t_mini *m, char **vars)
 			m->plane->nv_z = float_check(m, data[2]);
 			ft_free_split(&data);
 			data = ft_split(vars[3], ',');
-			if (fabs(m->plane->nv_x) > 1 || fabs(m->plane->nv_y) > 1
+			if (fabs(m->plane->nv_x) > 1 || fabs(m->plane->nv_y) > 1 \
 				|| fabs(m->plane->nv_z) > 1)
 				vars_errors(m, 4);
 			else
