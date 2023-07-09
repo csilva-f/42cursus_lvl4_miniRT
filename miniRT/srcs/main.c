@@ -6,12 +6,13 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:34:00 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/09 18:44:43 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:03:59 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void	init(t_mini *mini, char **argv)
 {
@@ -45,9 +46,15 @@ void	check_identifier(t_mini *mini, char *str)
 
 int	rgb_to_int(int red, int green, int blue)
 {
-	int	res;
+	int		res;
+	char	*str;
 
-	res = (red * 65536) + (green * 256) + blue;
+	printf("r: %d g: %d b: %d\n", red, green, blue);
+	str = ft_rgb_to_hex(red, green, blue);
+	printf("%s\n", str);
+	res = ft_hex_to_int(str);
+	free(str);
+	printf("%d\n", res);
 	return (res);
 }
 

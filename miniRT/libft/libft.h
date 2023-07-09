@@ -6,7 +6,7 @@
 /*   By: csilva-f <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 10:07:17 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/09 12:54:56 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:57:07 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,11 @@ void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-//------------------------------------EXTENDED-----------------------------------
+//----------------------------------EXTENDED---------------------------------
 int			ft_str_isd(char *str);
 char		*ft_remove_lb(char *str);
 void		ft_free_split(char **array);
+char		*ft_rgb_to_hex(int red, int green, int blue);
+int			ft_hex_to_int(const char *hex_s);
 
 #endif
