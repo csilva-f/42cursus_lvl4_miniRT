@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
@@ -96,5 +97,34 @@ typedef struct	s_mini
 // CHECK
 int		error_handler(int is_valid, int code);
 int		check_file(char *file_name, t_mini *mini);
+void	vars_errors(t_mini *mini, int code);
 
+// FILE READER
+
+void	check_identifier(char *str);
+void	check_line_values(t_mini *mini, char **vars);
+void	check_lines(t_mini *mini, char *aux);
+void	get_values(t_mini *mini);
+
+// COLORS
+
+int	rgb_to_int(int red, int green, int blue);
+int	fill_colors(t_mini *m, char *str, int c);
+
+// LIGHTS & CAMERA
+
+void	check_a_vars(t_mini *m, char **vars);
+void	check_c_vars(t_mini *m, char **v);
+void	check_l_vars(t_mini *m, char **vars);
+
+// SHAPES
+
+void	check_pl_vars(t_mini *m, char **vars);
+void	check_sp_vars(t_mini *m, char **vars);
+void	check_cy_vars(t_mini *m, char **vars, char **data);
+
+// AUXIL
+
+int		count_vars(char **vars, int equal, int code, t_mini *m);
+float	float_check(t_mini *m, char *str);
 #endif

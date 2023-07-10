@@ -34,6 +34,12 @@ int	error_handler(int is_valid, int code)
 	return (1);
 }
 
+void	vars_errors(t_mini *mini, int code)
+{
+	error_handler(mini->is_valid, code);
+	mini->is_valid = 0;
+}
+
 int	check_file(char *file_name, t_mini *mini)
 {
 	int	i;
