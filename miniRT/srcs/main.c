@@ -6,11 +6,12 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:34:00 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/09 20:03:59 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/07/11 00:54:11 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
+#include <stdlib.h>
 
 void	init(t_mini *mini, char **argv)
 {
@@ -19,19 +20,57 @@ void	init(t_mini *mini, char **argv)
 	mini->al = malloc(sizeof(t_al));
 	mini->cam = malloc(sizeof(t_cam));
 	mini->light = malloc(sizeof(t_light));
-	mini->plane = malloc(sizeof(t_plane));
-	mini->sp = malloc(sizeof(t_sphere));
-	mini->cyl = malloc(sizeof(t_cylinder));
+	if (!mini->al || !mini->cam || !mini->light)
+		return ;
+	mini->plane = NULL;
+	mini->sp = NULL;
+	mini->cyl = NULL;
+}
+
+void	ft_s_clear(t_plane **pl, t_sphere **sp, t_cylinder **cy)
+{
+	t_plane		*aux_p;
+	t_sphere	*aux_s;
+	t_cylinder	*aux_c;
+
+	if ((*pl) && pl)
+	{
+		while (*pl && pl)
+		{
+			aux_p = (*pl)->next;
+			free(*pl);
+			*pl = aux_p;
+		}
+	}
 }
 
 void	free_structs(t_mini *mini)
 {
+	t_plane		*aux_p;
+	t_sphere	*aux_s;
+	t_cylinder	*aux_c;
+
 	free(mini->al);
 	free(mini->cam);
 	free(mini->light);
-	free(mini->plane);
-	free(mini->sp);
-	free(mini->cyl);
+	while (mini->plane)
+	{
+		aux_p = mini->plane->next;
+		free(mini->plane);
+		mini->plane = aux_p;
+	}
+	while (mini->sp)
+	{
+		aux_s = mini->sp->next;
+		free(mini->sp);
+		mini->sp = aux_s;
+	}
+	while (mini->cyl)
+	{
+		aux_c = mini->cyl;
+		free(mini->cyl);
+		mini->cyl = aux_c;
+	}
 }
 
 int	count_vars(char **vars, int equal, int code, t_mini *m)

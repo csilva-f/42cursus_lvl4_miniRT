@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:57:04 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/10 18:57:06 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/07/11 00:46:02 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	check_line_values(t_mini *mini, char **vars)
 	else if (!ft_strncmp(vars[0], "sp", 3) && count_vars(vars, 4, 5, mini))
 		check_sp_vars(mini, vars);
 	else if (!ft_strncmp(vars[0], "cy", 3) && count_vars(vars, 6, 5, mini))
-		check_cy_vars(mini, vars, NULL);
+		check_cy_vars(mini, vars);
 }
 
 void	check_lines(t_mini *mini, char *aux)
@@ -64,15 +64,47 @@ void	get_values(t_mini *mini)
 		free(aux);
 	}
 	free(aux);
-	printf("A\n%f  %i\n", mini->al->ratio, mini->al->color);
-	printf("C\n%f,%f,%f  %f,%f,%f %i\n", mini->cam->x, mini->cam->y, mini->cam->z, \
-			mini->cam->ov_x, mini->cam->ov_y, mini->cam->ov_z, mini->cam->fov);
-	printf("L\n%f,%f,%f  %f, %i\n", mini->light->x, mini->light->y, \
-			mini->light->z, mini->light->ratio, mini->light->color);
-	printf("pl\n%f,%f,%f %f,%f,%f  %i\n", mini->plane->x, mini->plane->y, mini->plane->z, \
-			mini->plane->nv_x, mini->plane->nv_y, mini->plane->nv_z, mini->plane->color);
-	printf("sp\n%f,%f,%f  %f, %i\n", mini->sp->cx, mini->sp->cy, \
-			mini->sp->cz, mini->sp->d, mini->sp->color);
-	printf("cyl\n%f,%f,%f %f,%f,%f  %f  %f %i\n", mini->cyl->cx, mini->cyl->cy, mini->cyl->cz, \
-			mini->cyl->nv_x, mini->cyl->nv_y, mini->cyl->nv_z, mini->cyl->d, mini->cyl->h, mini->cyl->color);
+	print_parser(mini);
+}
+
+void	print_parser(t_mini *m)
+{
+	t_plane		*pl;
+	t_sphere	*sp;
+	t_cylinder	*cy;
+
+	printf("A\n%f  %i\n", m->al->ratio, m->al->color);
+	printf("C\n%f,%f,%f  %f,%f,%f %i\n", m->cam->x, m->cam->y, m->cam->z, \
+			m->cam->ov_x, m->cam->ov_y, m->cam->ov_z, m->cam->fov);
+	printf("L\n%f,%f,%f  %f, %i\n", m->light->x, m->light->y, \
+			m->light->z, m->light->ratio, m->light->color);
+	pl = m->plane;
+	sp = m->sp;
+	cy = m->cyl;
+	while (pl)
+	{
+		printf("pl\n%f,%f,%f %f,%f,%f  %i\n", m->plane->x, m->plane->y, \
+				m->plane->z, m->plane->nv_x, m->plane->nv_y, m->plane->nv_z, \
+				m->plane->color);
+		if (pl->next == NULL)
+			break ;
+		pl = pl->next;
+	}
+	while (sp)
+	{
+		printf("sp\n%f,%f,%f  %f, %i\n", m->sp->cx, m->sp->cy, \
+				m->sp->cz, m->sp->d, m->sp->color);
+		if (sp->next == NULL)
+			break ;
+		sp = sp->next;
+	}
+	while (cy)
+	{
+		printf("cyl\n%f,%f,%f %f,%f,%f  %f  %f %i\n", m->cyl->cx, m->cyl->cy, \
+				m->cyl->cz, m->cyl->nv_x, m->cyl->nv_y, m->cyl->nv_z, m->cyl->d, \
+				m->cyl->h, m->cyl->color);
+		if (cy->next == NULL)
+			break ;
+		cy = cy->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:47:40 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/10 18:47:43 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/07/10 21:43:36 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ void	check_a_vars(t_mini *m, char **vars)
 		m->al->color = fill_colors(m, vars[2], -1);
 }
 
-int	counter_c(void)
+int	counter_c(t_mini *m)
 {
 	static int	counter_c = 0;
 
 	counter_c++;
 	if (counter_c > 1)
 		vars_errors(m, 7);
-	return (c);
+	return (counter_c);
 }
 
 void	check_c_vars(t_mini *m, char **v, char **data)
 {
-	if (counter_c() > 1)
+	if (counter_c(m) > 1)
 		return ;
 	data = ft_split(v[1], ',');
 	if (count_vars(data, 3, 4, m))

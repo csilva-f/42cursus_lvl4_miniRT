@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:44:00 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/10 18:44:03 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/07/11 00:21:53 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,15 @@
 void	check_pl_vars(t_mini *m, char **vars)
 {
 	char	**data;
+	t_plane	*pl;
 
 	data = ft_split(vars[1], ',');
 	if (count_vars(data, 3, 4, m))
 	{
-		m->plane->x = float_check(m, data[0]);
-		m->plane->y = float_check(m, data[1]);
-		m->plane->z = float_check(m, data[2]);
-		ft_free_split(data);
-		data = ft_split(vars[2], ',');
-		if (count_vars(data, 3, 4, m))
-		{
-			m->plane->nv_x = float_check(m, data[0]);
-			m->plane->nv_y = float_check(m, data[1]);
-			m->plane->nv_z = float_check(m, data[2]);
-			ft_free_split(data);
-			if (fabs(m->plane->nv_x) > 1 || fabs(m->plane->nv_y) > 1 \
-				|| fabs(m->plane->nv_z) > 1)
-				vars_errors(m, 4);
-			else
-				m->plane->color = fill_colors(m, vars[3], -1);
-		}
+		pl = pl_new(m, vars, &data);
+		pl_add_b(&m->plane, pl);
 	}
+	ft_free_split(data);
 }
 
 void	check_sp_vars(t_mini *m, char **vars)
@@ -45,41 +32,16 @@ void	check_sp_vars(t_mini *m, char **vars)
 
 	data = ft_split(vars[1], ',');
 	if (count_vars(data, 3, 4, m))
-	{
-		m->sp->cx = float_check(m, data[0]);
-		m->sp->cy = float_check(m, data[1]);
-		m->sp->cz = float_check(m, data[2]);
-		ft_free_split(data);
-		m->sp->d = float_check(m, vars[2]);
-		m->plane->color = fill_colors(m, vars[3], -1);
-	}
+		sph_add_b(&m->sp, sph_new(m, vars, &data));
+	ft_free_split(data);
 }
 
-void	check_cy_vars(t_mini *m, char **vars, char **data)
+void	check_cy_vars(t_mini *m, char **vars)
 {
+	char		**data;
+
 	data = ft_split(vars[1], ',');
 	if (count_vars(data, 3, 4, m))
-	{
-		m->cyl->cx = float_check(m, data[0]);
-		m->cyl->cy = float_check(m, data[1]);
-		m->cyl->cz = float_check(m, data[2]);
-		ft_free_split(data);
-		data = ft_split(vars[2], ',');
-		if (count_vars(data, 3, 4, m))
-		{
-			m->cyl->nv_x = float_check(m, data[0]);
-			m->cyl->nv_y = float_check(m, data[1]);
-			m->cyl->nv_z = float_check(m, data[2]);
-			ft_free_split(data);
-			if (fabs(m->cyl->nv_x) > 1 || fabs(m->cyl->nv_y) > 1 \
-				|| fabs(m->cyl->nv_z) > 1)
-				vars_errors(m, 4);
-			else
-			{
-				m->cyl->d = float_check(m, vars[3]);
-				m->cyl->h = float_check(m, vars[4]);
-				m->cyl->color = fill_colors(m, vars[5], -1);
-			}
-		}
-	}
+		cy_add_b(&m->cyl, cy_new(m, vars, &data));
+	ft_free_split(data);
 }

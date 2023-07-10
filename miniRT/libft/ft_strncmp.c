@@ -6,7 +6,7 @@
 /*   By: csilva-f <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 20:22:17 by csilva-f          #+#    #+#             */
-/*   Updated: 2022/11/06 11:30:53 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/07/11 00:49:27 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	size_t	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (0);
 	while (s1[i] == s2[i] && s1[i] != '\0')
 		i++;
 	if (i >= n)

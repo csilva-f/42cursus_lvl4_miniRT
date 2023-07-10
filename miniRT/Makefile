@@ -6,7 +6,7 @@
 #    By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 14:33:39 by csilva-f          #+#    #+#              #
-#    Updated: 2023/07/09 17:02:00 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/07/11 00:29:32 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ LINK = -I./includes
 RM = rm -rf
 NAME = miniRT
 
-SRCS = srcs/main.c	srcs/ft_check.c	srcs/lights_camera_checker.c	srcs/shape_checker.c \
-	srcs/colors.c	srcs/file_reader.c
+SRCS =	srcs/main.c		srcs/ft_check.c		srcs/lights_camera_checker.c		srcs/shape_checker.c \
+		srcs/colors.c	srcs/file_reader.c	srcs/solid_lst.c					srcs/solid_lst_2.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)

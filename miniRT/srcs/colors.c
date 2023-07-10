@@ -17,12 +17,9 @@ int	rgb_to_int(int red, int green, int blue)
 	int		res;
 	char	*str;
 
-	printf("r: %d g: %d b: %d\n", red, green, blue);
 	str = ft_rgb_to_hex(red, green, blue);
-	printf("%s\n", str);
 	res = ft_hex_to_int(str);
 	free(str);
-	printf("%d\n", res);
 	return (res);
 }
 
