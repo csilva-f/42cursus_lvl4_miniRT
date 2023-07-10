@@ -36,12 +36,13 @@ void	free_structs(t_mini *mini)
 	free(mini->cyl);
 }
 
-void	check_identifier(t_mini *mini, char *str)
+void	check_identifier(char *str)
 {
 	if (ft_strncmp(str, "A", 2) && ft_strncmp(str, "C", 2) \
 			&& ft_strncmp(str, "L", 2) && ft_strncmp(str, "pl", 3) \
 			&& ft_strncmp(str, "sp", 3) && ft_strncmp(str, "cy", 3))
-		mini->is_valid = 0;
+		error_handler(1, 6);
+
 }
 
 int	rgb_to_int(int red, int green, int blue)
@@ -305,7 +306,7 @@ void	check_lines(t_mini *mini, char *aux)
 	char	**vars;
 
 	vars = ft_split(aux, ' ');
-	check_identifier(mini, vars[0]);
+	check_identifier(vars[0]);
 	if (!mini->is_valid)
 		error_handler(mini->is_valid, 3);
 	else

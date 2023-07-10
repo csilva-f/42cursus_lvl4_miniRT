@@ -26,7 +26,9 @@ int	error_handler(int is_valid, int code)
 		else if (code == 4)
 			printf("1 or more numbers provided is not valid");
 		else if (code == 5)
-			printf("i or more lines with a wrong number of arguments");
+			printf("1 or more lines with a wrong number of arguments");
+		else if (code == 6)
+			printf("invalid letter");
 		printf("\n");
 	}
 	return (1);

@@ -27,7 +27,7 @@ char	*ft_rgb_to_hex(int red, int green, int blue)
 {
 	char	*hex_s;
 
-	hex_s = (char *)malloc(6 * sizeof(char));
+	hex_s = (char *)malloc(7 * sizeof(char));
 	hex_s[0] = rgb_to_hex_aux(red / 16);
 	hex_s[1] = rgb_to_hex_aux(red % 16);
 	hex_s[2] = rgb_to_hex_aux(green / 16);
