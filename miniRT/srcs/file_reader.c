@@ -25,7 +25,7 @@ void	check_line_values(t_mini *mini, char **vars)
 	if (!ft_strncmp(vars[0], "A", 2) && count_vars(vars, 3, 5, mini))
 		check_a_vars(mini, vars);
 	else if (!ft_strncmp(vars[0], "C", 2) && count_vars(vars, 4, 5, mini))
-		check_c_vars(mini, vars);
+		check_c_vars(mini, vars, NULL);
 	else if (!ft_strncmp(vars[0], "L", 2) && count_vars(vars, 4, 5, mini))
 		check_l_vars(mini, vars);
 	else if (!ft_strncmp(vars[0], "pl", 3) && count_vars(vars, 4, 5, mini))

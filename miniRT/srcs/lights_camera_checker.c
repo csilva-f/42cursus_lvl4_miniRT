@@ -14,15 +14,33 @@
 
 void	check_a_vars(t_mini *m, char **vars)
 {
+	static int	counter_a = 0;
+
+	counter_a++;
+	if (counter_a > 1)
+	{
+		vars_errors(m, 7);
+		return ;
+	}
 	m->al->ratio = float_check(m, vars[1]);
 	if (m->is_valid)
 		m->al->color = fill_colors(m, vars[2], -1);
 }
 
-void	check_c_vars(t_mini *m, char **v)
+int	counter_c(void)
 {
-	char	**data;
+	static int	counter_c = 0;
 
+	counter_c++;
+	if (counter_c > 1)
+		vars_errors(m, 7);
+	return (c);
+}
+
+void	check_c_vars(t_mini *m, char **v, char **data)
+{
+	if (counter_c() > 1)
+		return ;
 	data = ft_split(v[1], ',');
 	if (count_vars(data, 3, 4, m))
 	{
@@ -50,8 +68,15 @@ void	check_c_vars(t_mini *m, char **v)
 
 void	check_l_vars(t_mini *m, char **vars)
 {
-	char	**data;
+	char		**data;
+	static int	counterl = 0;
 
+	counterl++;
+	if (counterl > 1)
+	{
+		vars_errors(m, 7);
+		return ;
+	}
 	data = ft_split(vars[1], ',');
 	if (count_vars(data, 3, 4, m))
 	{

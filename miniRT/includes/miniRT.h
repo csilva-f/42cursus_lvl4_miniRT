@@ -114,7 +114,7 @@ int	fill_colors(t_mini *m, char *str, int c);
 // LIGHTS & CAMERA
 
 void	check_a_vars(t_mini *m, char **vars);
-void	check_c_vars(t_mini *m, char **v);
+void	check_c_vars(t_mini *m, char **v, char **data);
 void	check_l_vars(t_mini *m, char **vars);
 
 // SHAPES

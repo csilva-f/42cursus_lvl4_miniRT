@@ -29,6 +29,8 @@ int	error_handler(int is_valid, int code)
 			printf("1 or more lines with a wrong number of arguments");
 		else if (code == 6)
 			printf("invalid letter");
+		else if (code == 7)
+			printf("invalid repeated letter");
 		printf("\n");
 	}
 	return (1);
