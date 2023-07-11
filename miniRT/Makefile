@@ -20,8 +20,9 @@ LINK = -I./includes
 RM = rm -rf
 NAME = miniRT
 
-SRCS =	srcs/main.c		srcs/ft_check.c		srcs/lights_camera_checker.c		srcs/shape_checker.c \
-		srcs/colors.c	srcs/file_reader.c	srcs/solid_lst.c					srcs/solid_lst_2.c
+SRCS =	srcs/main.c		srcs/ft_check.c		srcs/lights_camera_checker.c \
+		srcs/shape_checker.c srcs/colors.c	srcs/file_reader.c	srcs/solid_lst.c \
+		srcs/solid_lst_2.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)

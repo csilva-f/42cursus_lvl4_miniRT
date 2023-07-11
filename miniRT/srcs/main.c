@@ -27,7 +27,7 @@ void	init(t_mini *mini, char **argv)
 	mini->cyl = NULL;
 }
 
-void	ft_s_clear(t_plane **pl, t_sphere **sp, t_cylinder **cy)
+/*void	ft_s_clear(t_plane **pl, t_sphere **sp, t_cylinder **cy)
 {
 	t_plane		*aux_p;
 	t_sphere	*aux_s;
@@ -42,7 +42,7 @@ void	ft_s_clear(t_plane **pl, t_sphere **sp, t_cylinder **cy)
 			*pl = aux_p;
 		}
 	}
-}
+}*/
 
 void	free_structs(t_mini *mini)
 {
@@ -67,7 +67,7 @@ void	free_structs(t_mini *mini)
 	}
 	while (mini->cyl)
 	{
-		aux_c = mini->cyl;
+		aux_c = mini->cyl->next;
 		free(mini->cyl);
 		mini->cyl = aux_c;
 	}

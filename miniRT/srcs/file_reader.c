@@ -49,62 +49,53 @@ void	check_lines(t_mini *mini, char *aux)
 	ft_free_split(vars);
 }
 
-void	get_values(t_mini *mini)
+void	get_values(t_mini *m)
 {
 	char	*aux;
 
-	mini->fd = open(mini->file, O_RDONLY);
+	m->fd = open(m->file, O_RDONLY);
 	while (1)
 	{
-		aux = get_next_line(mini->fd);
+		aux = get_next_line(m->fd);
 		if (aux == NULL)
 			break ;
 		aux = ft_remove_lb(aux);
-		check_lines(mini, aux);
+		check_lines(m, aux);
 		free(aux);
 	}
 	free(aux);
-	print_parser(mini);
+	printf("A\n%f %i\n", m->al->ratio, m->al->color);
+	printf("C\n%f,%f,%f %f,%f,%f %i\n", m->cam->x, m->cam->y, \
+			m->cam->z, m->cam->ov_x, m->cam->ov_y, m->cam->ov_z, m->cam->fov);
+	printf("L\n%f,%f,%f %f, %i\n", m->light->x, m->light->y, \
+			m->light->z, m->light->ratio, m->light->color);
+	print_parser(m);
 }
 
 void	print_parser(t_mini *m)
 {
 	t_plane		*pl;
-	t_sphere	*sp;
-	t_cylinder	*cy;
+	t_sphere	*s;
+	t_cylinder	*c;
 
-	printf("A\n%f  %i\n", m->al->ratio, m->al->color);
-	printf("C\n%f,%f,%f  %f,%f,%f %i\n", m->cam->x, m->cam->y, m->cam->z, \
-			m->cam->ov_x, m->cam->ov_y, m->cam->ov_z, m->cam->fov);
-	printf("L\n%f,%f,%f  %f, %i\n", m->light->x, m->light->y, \
-			m->light->z, m->light->ratio, m->light->color);
 	pl = m->plane;
-	sp = m->sp;
-	cy = m->cyl;
-	while (pl)
+	s = m->sp;
+	c = m->cyl;
+	while (pl != NULL)
 	{
-		printf("pl\n%f,%f,%f %f,%f,%f  %i\n", m->plane->x, m->plane->y, \
-				m->plane->z, m->plane->nv_x, m->plane->nv_y, m->plane->nv_z, \
-				m->plane->color);
-		if (pl->next == NULL)
-			break ;
+		printf("pl\n%f,%f,%f %f,%f,%f %i\n", pl->x, pl->y, \
+				pl->z, pl->nv_x, pl->nv_y, pl->nv_z, pl->color);
 		pl = pl->next;
 	}
-	while (sp)
+	while (s != NULL)
 	{
-		printf("sp\n%f,%f,%f  %f, %i\n", m->sp->cx, m->sp->cy, \
-				m->sp->cz, m->sp->d, m->sp->color);
-		if (sp->next == NULL)
-			break ;
-		sp = sp->next;
+		printf("sp\n%f,%f,%f %f, %i\n", s->cx, s->cy, s->cz, s->d, s->color);
+		s = s->next;
 	}
-	while (cy)
+	while (c != NULL)
 	{
-		printf("cyl\n%f,%f,%f %f,%f,%f  %f  %f %i\n", m->cyl->cx, m->cyl->cy, \
-				m->cyl->cz, m->cyl->nv_x, m->cyl->nv_y, m->cyl->nv_z, m->cyl->d, \
-				m->cyl->h, m->cyl->color);
-		if (cy->next == NULL)
-			break ;
-		cy = cy->next;
+		printf("cl\n%f,%f,%f %f,%f,%f %f %f %i\n", c->cx, c->cy, \
+				c->cz, c->nv_x, c->nv_y, c->nv_z, c->d, c->h, c->color);
+		c = c->next;
 	}
 }
