@@ -140,6 +140,10 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data);
 t_cylinder	*cy_last(t_cylinder *cy);
 void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
 
+// TRANSFORMATION
+
+void	data_transform(t_mini *m);
+
 // AUXIL
 
 int			count_vars(char **vars, int equal, int code, t_mini *m);

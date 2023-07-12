@@ -63,6 +63,8 @@ void	get_values(t_mini *m)
 		check_lines(m, aux);
 		free(aux);
 	}
+	if (m->is_valid)
+		data_transform(m);
 	free(aux);
 	printf("A\n%f %i\n", m->al->ratio, m->al->color);
 	printf("C\n%f,%f,%f %f,%f,%f %i\n", m->cam->x, m->cam->y, \
@@ -94,7 +96,7 @@ void	print_parser(t_mini *m)
 	}
 	while (c != NULL)
 	{
-		printf("cl\n%f,%f,%f %f,%f,%f %f %f %i\n", c->cx, c->cy, \
+		printf("cy\n%f,%f,%f %f,%f,%f %f %f %i\n", c->cx, c->cy, \
 				c->cz, c->nv_x, c->nv_y, c->nv_z, c->d, c->h, c->color);
 		c = c->next;
 	}
