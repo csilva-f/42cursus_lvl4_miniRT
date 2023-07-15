@@ -67,10 +67,11 @@ void	get_values(t_mini *m)
 		data_transform(m);
 	free(aux);
 	printf("A\n%f %i\n", m->al->ratio, m->al->color);
-	printf("C\n%f,%f,%f %f,%f,%f %i\n", m->cam->x, m->cam->y, \
-			m->cam->z, m->cam->ov_x, m->cam->ov_y, m->cam->ov_z, m->cam->fov);
-	printf("L\n%f,%f,%f %f, %i\n", m->light->x, m->light->y, \
-			m->light->z, m->light->ratio, m->light->color);
+	printf("C\n%f,%f", m->cam->pos.x, m->cam->pos.y);
+	printf(",%f %f,%f,%f %i\n", m->cam->pos.z, \
+			m->cam->vec.vx, m->cam->vec.vy, m->cam->vec.vz, m->cam->fov);
+	printf("L\n%f,%f,%f %f, %i\n", m->light->pos.x, m->light->pos.y, \
+			m->light->pos.z, m->light->ratio, m->light->color);
 	print_parser(m);
 }
 
@@ -85,19 +86,20 @@ void	print_parser(t_mini *m)
 	c = m->cyl;
 	while (pl != NULL)
 	{
-		printf("pl\n%f,%f,%f %f,%f,%f %i\n", pl->x, pl->y, \
-				pl->z, pl->nv_x, pl->nv_y, pl->nv_z, pl->color);
+		printf("pl\n%f,%f,%f %f,%f,%f %i\n", pl->pos.x, pl->pos.y, \
+				pl->pos.z, pl->vec.vx, pl->vec.vy, pl->vec.vz, pl->color);
 		pl = pl->next;
 	}
 	while (s != NULL)
 	{
-		printf("sp\n%f,%f,%f %f, %i\n", s->cx, s->cy, s->cz, s->d, s->color);
+		printf("sp\n%f,%f", s->pos.x, s->pos.y);
+		printf(",%f %f, %i\n", s->pos.z, s->d, s->color);
 		s = s->next;
 	}
 	while (c != NULL)
 	{
-		printf("cy\n%f,%f,%f %f,%f,%f %f %f %i\n", c->cx, c->cy, \
-				c->cz, c->nv_x, c->nv_y, c->nv_z, c->d, c->h, c->color);
+		printf("cy\n%f,%f,%f %f,%f,%f %f %f %i\n", c->pos.x, c->pos.y, c->pos.z, \
+				c->vec.vx, c->vec.vy, c->vec.vz, c->d, c->h, c->color);
 		c = c->next;
 	}
 }

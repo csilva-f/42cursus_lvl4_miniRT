@@ -27,31 +27,37 @@ typedef struct s_al
 	int		color;
 }		t_al;
 
-typedef struct s_cam
+typedef struct s_pos
 {
 	float	x;
 	float	y;
 	float	z;
-	float	ov_x;
-	float	ov_y;
-	float	ov_z;
-	int		fov;
+}	t_pos;
+
+typedef struct s_vector
+{
+	float	vx;
+	float	vy;
+	float	vz;
+}	t_vector;
+
+typedef struct s_cam
+{
+	t_pos		pos;
+	t_vector	vec;
+	int			fov;
 }		t_cam;
 
 typedef struct s_light
 {
-	float	x;
-	float	y;
-	float	z;
+	t_pos	pos;
 	float	ratio;
 	int		color;
 }		t_light;
 
 typedef struct s_sphere
 {
-	float			cx;
-	float			cy;
-	float			cz;
+	t_pos			pos;
 	float			d;
 	int				color;
 	struct s_sphere	*next;
@@ -60,12 +66,8 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	float			x;
-	float			y;
-	float			z;
-	float			nv_x;
-	float			nv_y;
-	float			nv_z;
+	t_pos			pos;
+	t_vector		vec;
 	int				color;
 	struct s_plane	*next;
 	struct s_plane	*prev;
@@ -73,12 +75,8 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	float				cx;
-	float				cy;
-	float				cz;
-	float				nv_x;
-	float				nv_y;
-	float				nv_z;
+	t_pos				pos;
+	t_vector			vec;
 	float				d;
 	float				h;
 	int					color;
@@ -143,6 +141,7 @@ void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
 // TRANSFORMATION
 
 void	data_transform(t_mini *m);
+t_pos	coord_sub(t_pos c1, t_pos c2);
 
 // AUXIL
 

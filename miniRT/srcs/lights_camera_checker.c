@@ -44,18 +44,18 @@ void	check_c_vars(t_mini *m, char **v, char **data)
 	data = ft_split(v[1], ',');
 	if (count_vars(data, 3, 4, m))
 	{
-		m->cam->x = float_check(m, data[0]);
-		m->cam->y = float_check(m, data[1]);
-		m->cam->z = float_check(m, data[2]);
+		m->cam->pos.x = float_check(m, data[0]);
+		m->cam->pos.y = float_check(m, data[1]);
+		m->cam->pos.z = float_check(m, data[2]);
 		ft_free_split(data);
 		data = ft_split(v[2], ',');
 		if (count_vars(data, 3, 4, m))
 		{
-			m->cam->ov_x = float_check(m, data[0]);
-			m->cam->ov_y = float_check(m, data[1]);
-			m->cam->ov_z = float_check(m, data[2]);
-			if (fabsf(m->cam->ov_x) > 1 || fabsf(m->cam->ov_y) > 1 \
-					|| fabsf(m->cam->ov_y) > 1)
+			m->cam->vec.vx = float_check(m, data[0]);
+			m->cam->vec.vy = float_check(m, data[1]);
+			m->cam->vec.vz = float_check(m, data[2]);
+			if (fabsf(m->cam->vec.vx) > 1 || fabsf(m->cam->vec.vy) > 1 \
+					|| fabsf(m->cam->vec.vz) > 1)
 				vars_errors(m, 4);
 			ft_free_split(data);
 			if (ft_str_isd(v[3]) && ft_atoi(v[3]) <= 180 && ft_atoi(v[3]) >= 0)
@@ -80,9 +80,9 @@ void	check_l_vars(t_mini *m, char **vars)
 	data = ft_split(vars[1], ',');
 	if (count_vars(data, 3, 4, m))
 	{
-		m->light->x = float_check(m, data[0]);
-		m->light->y = float_check(m, data[1]);
-		m->light->z = float_check(m, data[2]);
+		m->light->pos.x = float_check(m, data[0]);
+		m->light->pos.y = float_check(m, data[1]);
+		m->light->pos.z = float_check(m, data[2]);
 		ft_free_split(data);
 		if (m->is_valid)
 		{

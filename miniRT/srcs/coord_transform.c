@@ -21,33 +21,27 @@ void	data_transform(t_mini *m)
 	temp_sp = m->sp;
 	temp_pl = m->plane;
 	temp_cyl = m->cyl;
-	while(m->sp)
+	while (m->sp)
 	{
-		m->sp->cx -= m->cam->x;
-		m->sp->cy -= m->cam->y;
-		m->sp->cz -= m->cam->z;
+		m->sp->pos = coord_sub(m->sp->pos, m->cam->pos);
 		m->sp = m->sp->next;
 	}
-	while(m->plane)
+	while (m->plane)
 	{
-		m->plane->x -= m->cam->x;
-		m->plane->y -= m->cam->y;
-		m->plane->z -= m->cam->z;
+		m->plane->pos = coord_sub(m->plane->pos, m->cam->pos);
 		m->plane = m->plane->next;
 	}
-	while(m->cyl)
+	while (m->cyl)
 	{
-		m->cyl->cx -= m->cam->x;
-		m->cyl->cy -= m->cam->y;
-		m->cyl->cz -= m->cam->z;
+		m->cyl->pos = coord_sub(m->cyl->pos, m->cam->pos);
 		m->cyl = m->cyl->next;
 	}
 	m->sp = temp_sp;
 	m->plane = temp_pl;
 	m->cyl = temp_cyl;
-	m->cam->x = 0;
-	m->cam->y = 0;
-	m->cam->z = 0;
+	m->cam->pos.x = 0;
+	m->cam->pos.y = 0;
+	m->cam->pos.z = 0;
 }
 
 /*void	eq_transform(t_mini *mini)

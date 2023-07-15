@@ -34,17 +34,18 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 	t_cylinder	*cy;
 
 	cy = malloc(sizeof(t_cylinder));
-	cy->cx = float_check(m, (*data)[0]);
-	cy->cy = float_check(m, (*data)[1]);
-	cy->cz = float_check(m, (*data)[2]);
+	cy->pos.x = float_check(m, (*data)[0]);
+	cy->pos.y = float_check(m, (*data)[1]);
+	cy->pos.z = float_check(m, (*data)[2]);
 	ft_free_split(*data);
 	*data = ft_split(vars[2], ',');
 	if (count_vars(*data, 3, 4, m))
 	{
-		cy->nv_x = float_check(m, (*data)[0]);
-		cy->nv_y = float_check(m, (*data)[1]);
-		cy->nv_z = float_check(m, (*data)[2]);
-		if (fabs(cy->nv_x) > 1 || fabs(cy->nv_y) > 1 || fabs(cy->nv_z) > 1)
+		cy->vec.vx = float_check(m, (*data)[0]);
+		cy->vec.vy = float_check(m, (*data)[1]);
+		cy->vec.vz = float_check(m, (*data)[2]);
+		if (fabs(cy->vec.vx) > 1 || fabs(cy->vec.vy) > 1
+			|| fabs(cy->vec.vz) > 1)
 			vars_errors(m, 4);
 		else
 		{
