@@ -10,24 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/miniRT.h"
+#include "coords_vectors.h"
 
 t_pos	coord_add(t_pos c1, t_pos c2)
 {
-	t_pos	new;
+	t_pos	novo;
 
-	new.x = c1.x + c2.x;
-	new.y = c1.y + c2.y;
-	new.z = c1.z + c2.z;
-	return (new);
+	novo.x = c1.x + c2.x;
+	novo.y = c1.y + c2.y;
+	novo.z = c1.z + c2.z;
+	return (novo);
 }
 
 t_pos	coord_sub(t_pos c1, t_pos c2)
 {
-	t_pos	new;
+	t_pos	novo;
 
-	new.x = c1.x - c2.x;
-	new.y = c1.y - c2.y;
-	new.z = c1.z - c2.z;
-	return (new);
+	novo.x = c1.x - c2.x;
+	novo.y = c1.y - c2.y;
+	novo.z = c1.z - c2.z;
+	return (novo);
 }

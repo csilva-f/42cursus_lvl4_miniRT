@@ -20,26 +20,13 @@
 # include <fcntl.h>
 # include <math.h>
 # include "../libft/libft.h"
+# include "../coords_vectors/coords_vectors.h"
 
 typedef struct s_al
 {
 	float	ratio;
 	int		color;
 }		t_al;
-
-typedef struct s_pos
-{
-	float	x;
-	float	y;
-	float	z;
-}	t_pos;
-
-typedef struct s_vector
-{
-	float	vx;
-	float	vy;
-	float	vz;
-}	t_vector;
 
 typedef struct s_cam
 {
@@ -141,7 +128,6 @@ void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
 // TRANSFORMATION
 
 void	data_transform(t_mini *m);
-t_pos	coord_sub(t_pos c1, t_pos c2);
 
 // AUXIL
 
