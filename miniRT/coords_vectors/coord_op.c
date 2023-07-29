@@ -31,3 +31,13 @@ t_pos	coord_sub(t_pos c1, t_pos c2)
 	novo.z = c1.z - c2.z;
 	return (novo);
 }
+
+t_pos	coord_mult_const(t_pos c1, float c)
+{
+	t_pos	novo;
+
+	novo.x = c1.x * c;
+	novo.y = c1.y * c;
+	novo.z = c1.z * c;
+	return (novo);
+}

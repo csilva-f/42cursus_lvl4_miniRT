@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
@@ -86,8 +87,8 @@ typedef struct s_mini
 
 //-------------------------------------SRCS-------------------------------------
 // CHECK
-int			error_handler(int is_valid, int code);
-int			check_file(char *file_name, t_mini *mini);
+bool		error_handler(int is_valid, int code);
+bool		check_file(char *file_name, t_mini *mini);
 void		vars_errors(t_mini *mini, int code);
 
 // COLORS
@@ -127,7 +128,15 @@ void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
 
 // TRANSFORMATION
 
-void	data_transform(t_mini *m);
+void		data_transform(t_mini *m);
+
+// RAYS
+
+t_pos		ray_pos(t_pos p, t_pos v, float t);
+
+// COLLISIONS
+
+bool		sphere_colision(t_sphere *sp, t_pos p1);
 
 // AUXIL
 

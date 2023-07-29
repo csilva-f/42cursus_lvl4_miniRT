@@ -23,7 +23,7 @@ NAME = miniRT
 
 SRCS =	srcs/main.c		srcs/ft_check.c		srcs/lights_camera_checker.c \
 		srcs/shape_checker.c srcs/colors.c	srcs/file_reader.c	srcs/solid_lst.c \
-		srcs/solid_lst_2.c srcs/coord_transform.c
+		srcs/solid_lst_2.c srcs/coord_transform.c srcs/collisions.c srcs/lightrays.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)

@@ -12,7 +12,7 @@
 
 #include "../includes/miniRT.h"
 
-int	error_handler(int is_valid, int code)
+bool	error_handler(int is_valid, int code)
 {
 	if (is_valid)
 	{
@@ -33,7 +33,7 @@ int	error_handler(int is_valid, int code)
 			printf("invalid repeated letter");
 		printf("\n");
 	}
-	return (1);
+	return (false);
 }
 
 void	vars_errors(t_mini *mini, int code)
@@ -42,7 +42,7 @@ void	vars_errors(t_mini *mini, int code)
 	mini->is_valid = 0;
 }
 
-int	check_file(char *file_name, t_mini *mini)
+bool	check_file(char *file_name, t_mini *mini)
 {
 	int	i;
 	int	c;
@@ -59,7 +59,7 @@ int	check_file(char *file_name, t_mini *mini)
 	if (!c)
 	{
 		mini->file = file_name;
-		return (0);
+		return (true);
 	}
 	mini->is_valid = 0;
 	return (error_handler(1, 1));

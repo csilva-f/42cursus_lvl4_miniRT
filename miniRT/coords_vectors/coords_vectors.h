@@ -33,6 +33,7 @@ typedef struct s_vector
 
 t_pos		coord_add(t_pos c1, t_pos c2);
 t_pos		coord_sub(t_pos c1, t_pos c2);
+t_pos		coord_mult_const(t_pos c1, float c);
 
 // VECTORS
 

@@ -121,7 +121,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		if (check_file(argv[1], &mini))
+		if (!check_file(argv[1], &mini))
 			return (1);
 		init(&mini, argv);
 		get_values(&mini);
