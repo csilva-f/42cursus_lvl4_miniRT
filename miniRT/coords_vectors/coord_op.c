@@ -41,3 +41,15 @@ t_pos	coord_mult_const(t_pos c1, float c)
 	novo.z = c1.z * c;
 	return (novo);
 }
+
+float	distance(t_pos p1, t_pos p2)
+{
+	float	xpart;
+	float	ypart;
+	float	zpart;
+
+	xpart = (p1.x - p2.x) * (p1.x - p2.x);
+	ypart = (p1.y - p2.y) * (p1.y - p2.y);
+	zpart = (p1.z - p2.z) * (p1.z - p2.z);
+	return ((xpart + ypart + zpart) * 0.5);
+}

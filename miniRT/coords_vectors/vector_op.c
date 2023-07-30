@@ -46,3 +46,13 @@ t_vector	vector_sub(t_vector v1, t_vector v2)
 	novo.vz = v1.vz - v2.vz;
 	return (novo);
 }
+
+t_vector	vector_create(t_pos p1, t_pos p2)
+{
+	t_vector	novo;
+
+	novo.vx = p1.x - p2.x;
+	novo.vy = p1.y - p2.y;
+	novo.vz = p1.z - p2.z;
+	return (novo);
+}

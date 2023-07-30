@@ -13,11 +13,12 @@
 #include "../includes/miniRT.h"
 
 // p2(t) = (p.x, p.y, p.z) + (v.x, v.y, v.z) * t
-// ter em conta que v e' vetor mas as contas e' como se fossem coordenadas penso?
-t_pos	ray_pos(t_pos p, t_pos v, float t)
+// ter em conta que v e' vetor mas as contas e' como
+// se fossem coordenadas penso?
+t_pos	ray_pos(t_pos p, t_vector v, float t)
 {
-	return (coord_add(p, coord_mult_const(v, t)));
+	return (coord_add(p, coord_mult_const(vector_to_pos(v), t)));
 }
 
-// nao sei que adicionar mais por enquanto, mas no minimo vai ser preciso uma funcao
-// para gerar bilioes de raios de luz (paralelos?) do sitio de onde estiver a luz 
+// nao sei que adicionar mais por enquanto, mas no minimo vai ser preciso uma
+// funcao para gerar bilioes de raios de luz (paralelos?) do ponto de luz

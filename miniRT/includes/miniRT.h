@@ -132,7 +132,7 @@ void		data_transform(t_mini *m);
 
 // RAYS
 
-t_pos		ray_pos(t_pos p, t_pos v, float t);
+t_pos		ray_pos(t_pos p, t_vector v, float t);
 
 // COLLISIONS
 
