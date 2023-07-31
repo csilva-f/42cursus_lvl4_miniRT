@@ -56,6 +56,7 @@ typedef struct s_plane
 {
 	t_pos			pos;
 	t_vector		vec;
+	float			coef;
 	int				color;
 	struct s_plane	*next;
 	struct s_plane	*prev;
@@ -118,6 +119,7 @@ void		check_cy_vars(t_mini *m, char **vars);
 
 t_plane		*pl_new(t_mini *m, char **vars, char ***data);
 t_plane		*pl_last(t_plane *pl);
+float		pl_coef(t_vector vec, t_pos pos);
 void		pl_add_b(t_plane **pl, t_plane *pl_new);
 t_sphere	*sph_new(t_mini *m, char **vars, char ***data);
 t_sphere	*sph_last(t_sphere *sp);
@@ -136,7 +138,9 @@ t_pos		ray_pos(t_pos p, t_vector v, float t);
 
 // COLLISIONS
 
-bool		sphere_colision(t_sphere *sp, t_pos p1);
+bool		sphere_collision(t_sphere *sp, t_pos p1);
+bool		cylinder_collision(t_cylinder *cyl, t_pos p1);
+bool		plane_collision(t_plane *pl, t_pos p1);
 
 // AUXIL
 

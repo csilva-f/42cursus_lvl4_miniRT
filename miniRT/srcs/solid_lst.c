@@ -36,6 +36,7 @@ t_plane	*pl_new(t_mini *m, char **vars, char ***data)
 			pl->color = fill_colors(m, vars[3], -1);
 	}
 	pl->next = NULL;
+	pl->coef = -1 * vector_dot(pl->vec, pos_to_vector(pl->pos));
 	return (pl);
 }
 

@@ -12,6 +12,11 @@
 
 #include "../includes/miniRT.h"
 
+/*float	pl_coef(t_vector vec, t_pos pos)
+{
+	return (-1 * vector_dot(vec, pos_to_vector(pos)));
+}
+*/
 void	sph_add_b(t_sphere **sp, t_sphere *sp_new)
 {
 	t_sphere	*aux;
