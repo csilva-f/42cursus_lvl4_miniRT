@@ -21,4 +21,69 @@ t_pos	ray_pos(t_pos p, t_vector v, float t)
 }
 
 // nao sei que adicionar mais por enquanto, mas no minimo vai ser preciso uma
-// funcao para gerar bilioes de raios de luz (paralelos?) do ponto de luz
+// funcao para gerar bilioes de raios de luz (paralelos?) do ponto de luz ou
+// do ponto da camara, depende do que quisermos fazer
+
+
+// vou usar a estrutura de codigo que tu criaste para os solidos na luz 
+// talvez seja temp, nao sei se se aplica bem para este caso
+
+t_ray	*ray_new(t_mini *m, t_pos p)
+{
+	t_ray	*ray;
+
+	ray = malloc(sizeof(t_ray));
+	if (!ray)
+		return (NULL);
+	ray->p0.x = p.x;
+	ray->p0.y = p.y;
+	ray->p0.z = p.z;
+	ray->v1.vx = m->cam->vec.vx; // nao sei o que por como vetor inicial, se vem da luz ou da camara
+	ray->v1.vy = m->cam->vec.vy;
+	ray->v1.vz = m->cam->vec.vz;
+	ray->reflex_times = 15;
+	ray->next = NULL;
+	return (ray);
+}
+
+t_ray	*ray_last(t_ray *ray)
+{
+	t_ray	*aux;
+
+	if (!ray)
+		return (NULL);
+	aux = ray;
+	while (aux->next != NULL)
+		aux = aux->next;
+	return (aux);
+}
+
+void	ray_add_b(t_ray **ray, t_ray *ray_new)
+{
+	t_ray	*aux;
+
+	if (ray)
+	{
+		if (*ray)
+		{
+			aux = ray_last(*ray);
+			aux->next = ray_new;
+			ray_new = aux;
+		}
+		else
+			*ray = ray_new;
+	}
+}
+
+void	ray_create(t_mini *m)
+{
+	int	i;
+	t_pos	p;
+
+	i = -1;
+	p = m->cam->pos; // ou pos da luz
+	while (++i < 100000000) //100 milhoes, vai ser pouco (?)
+		ray_add_b(&m->ray, ray_new(m, p)); //preciso de variar p
+	//com senos e cossenos e mais um loop para aumentar o raio no fim de cada volta
+	//podemos variar p em espiral para simular tipo lanterna?
+}

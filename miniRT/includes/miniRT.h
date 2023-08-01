@@ -43,6 +43,16 @@ typedef struct s_light
 	int		color;
 }		t_light;
 
+typedef struct s_ray
+{
+	t_pos			p0;
+	t_vector		v1;
+	t_vector		norm_v;
+	int				reflex_times;
+	struct s_ray	*next;
+	struct s_ray	*prev;
+}		t_ray;
+
 typedef struct s_sphere
 {
 	t_pos			pos;
@@ -84,6 +94,7 @@ typedef struct s_mini
 	t_sphere	*sp;
 	t_plane		*plane;
 	t_cylinder	*cyl;
+	t_ray		*ray;
 }		t_mini;
 
 //-------------------------------------SRCS-------------------------------------
@@ -135,12 +146,13 @@ void		data_transform(t_mini *m);
 // RAYS
 
 t_pos		ray_pos(t_pos p, t_vector v, float t);
+void		ray_create(t_mini *m);
 
 // COLLISIONS
 
-bool		sphere_collision(t_sphere *sp, t_pos p1);
-bool		cylinder_collision(t_cylinder *cyl, t_pos p1);
-bool		plane_collision(t_plane *pl, t_pos p1);
+bool		sphere_collision(t_sphere *sp, t_ray *r);
+bool		cylinder_collision(t_cylinder *cyl, t_ray *r);
+bool		plane_collision(t_plane *pl, t_ray *r);
 
 // AUXIL
 

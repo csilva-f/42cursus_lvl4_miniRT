@@ -13,6 +13,18 @@
 #include "../includes/miniRT.h"
 
 /*
+typedef struct s_ray
+{
+	t_pos			p0;
+	t_vector		v1;
+	t_vector		norm_v;
+	int				reflex_times;
+	struct t_ray	*next;
+	struct t_ray	*prev;
+}		t_ray;
+*/
+
+/*
 typedef struct s_sphere
 {
 	t_pos			pos;
@@ -23,7 +35,7 @@ typedef struct s_sphere
 }		t_sphere;
 */
 
-bool	sphere_collision(t_sphere *sp, t_pos p1)
+bool	sphere_collision(t_sphere *sp, t_ray *r1)
 {
 	float	xpart;
 	float	ypart;
@@ -33,11 +45,15 @@ bool	sphere_collision(t_sphere *sp, t_pos p1)
 	tol = 0.5;
 	//definir aqui uma tolerancia decente pq calculos computacionais
 	//trazem sempre incerteza e nao podem ser comparados com "=="
-	xpart = (p1.x - sp->pos.x) * (p1.x - sp->pos.x);
-	ypart = (p1.y - sp->pos.y) * (p1.y - sp->pos.y);
-	zpart = (p1.z - sp->pos.z) * (p1.z - sp->pos.z);
+	xpart = (r1->p0.x - sp->pos.x) * (r1->p0.x - sp->pos.x);
+	ypart = (r1->p0.y - sp->pos.y) * (r1->p0.y - sp->pos.y);
+	zpart = (r1->p0.z - sp->pos.z) * (r1->p0.z - sp->pos.z);
 	if (fabs(xpart + ypart + zpart - sp->d * sp->d) <= tol)
+	{
+		r1->norm_v = vector_create(r1->p0, sp->pos);
+		r1->reflex_times--;
 		return (true);
+	}
 	else
 		return (false);
 }
@@ -64,40 +80,42 @@ typedef struct s_cylinder
 //primeiro vou fazer o dot de p1 com a O para ver se o ponto esta a cima
 // ou abaixo para eliminar logo metade dos calculos
 
-bool	loop(t_cylinder *cyl, t_pos p1, t_vector cyl_vec)
+bool	loop(t_cylinder *c, t_ray *r, t_vector c_vec)
 {
-	t_pos		p2;
+	t_pos		p;
 	t_vector	v1;
 	t_vector	v2;
 	float		t;
 
 	t = 0;
-	p2 = cyl->pos;
-	while (distance(p2, cyl->pos) < cyl->h / 2)
+	p = c->pos;
+	while (distance(p, c->pos) <= c->h / 2)
 	{
 		t += 0.1; //tb vai ser preciso cuidado quanto aumentar t de cada vez
-		p2 = ray_pos(cyl->pos, cyl_vec, t);
-		v1 = vector_create(p1, p2);
-		v2 = vector_create(p2, cyl->pos);
+		p = ray_pos(c->pos, c_vec, t);
+		v1 = vector_create(r->p0, p);
+		v2 = vector_create(p, c->pos);
 		//tol=0.5, probably too big
-		if (vector_dot(v1, v2) == 0 && fabs(distance(p1, p2) - cyl->d) <= 0.5)
+		if (vector_dot(v1, v2) == 0 && (fabs(distance(r->p0, p) - c->d) <= 0.5
+			|| (distance(p, c->pos) == c->h / 2 && distance(r->p0, p) <= c->d)))
+		{
+			r->norm_v = v2;
+			r->reflex_times--;
 			return (true);
+		}
 	}
-	if (distance(p2, cyl->pos) == cyl->h / 2)
-		if (vector_dot(v1, v2) == 0 && distance(p1, p2) <= cyl->d)
-			return (true);
 	return (false);
 }
 
-bool	cylinder_collision(t_cylinder *cyl, t_pos p1)
+bool	cylinder_collision(t_cylinder *cyl, t_ray *r)
 {
 	t_vector	v1;
 
-	v1 = vector_create(p1, cyl->pos);
+	v1 = vector_create(r->p0, cyl->pos);
 	if (vector_dot(v1, cyl->vec) > 0)
-		return (loop(cyl, p1, cyl->vec));
+		return (loop(cyl, r, cyl->vec));
 	else
-		return (loop(cyl, p1, vector_mult_const(cyl->vec, -1)));
+		return (loop(cyl, r, vector_mult_const(cyl->vec, -1)));
 }
 
 /*
@@ -115,18 +133,17 @@ typedef struct s_plane
 // eq se ponto esta no plano 
 // pl.vx * p1.x + pl.vy * p1.y + pl.vz * p1.z - pl->coef = 0
 
-bool	plane_collision(t_plane *pl, t_pos p1)
+bool	plane_collision(t_plane *pl, t_ray *r1)
 {
 	float	tol;
 
 	tol = 0.5; //define good tolerance
-	if (fabs(vector_dot(pl->vec, pos_to_vector(p1)) + pl->coef) <= tol)
+	if (fabs(vector_dot(pl->vec, pos_to_vector(r1->p0)) + pl->coef) <= tol)
+	{
+		r1->norm_v = pl->vec;
+		r1->reflex_times--;
 		return (true);
+	}
 	else
 		return (false);
-}
-
-t_vector	plane_norm(t_plane *pl, t_pos p1)
-{
-
 }

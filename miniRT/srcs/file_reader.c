@@ -64,7 +64,10 @@ void	get_values(t_mini *m)
 		free(aux);
 	}
 	if (m->is_valid)
+	{
 		data_transform(m);
+		ray_create(m);
+	}
 	free(aux);
 	printf("A\n%f %i\n", m->al->ratio, m->al->color);
 	printf("C\n%f,%f", m->cam->pos.x, m->cam->pos.y);
