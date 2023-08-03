@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-#include <stdlib.h>
 
 void	init(t_mini *mini, char **argv)
 {
@@ -20,7 +19,8 @@ void	init(t_mini *mini, char **argv)
 	mini->al = malloc(sizeof(t_al));
 	mini->cam = malloc(sizeof(t_cam));
 	mini->light = malloc(sizeof(t_light));
-	if (!mini->al || !mini->cam || !mini->light)
+	mini->g = malloc(sizeof(t_graphics));
+	if (!mini->al || !mini->cam || !mini->light || !mini->g)
 		return ;
 	mini->plane = NULL;
 	mini->sp = NULL;
@@ -125,7 +125,10 @@ int	main(int argc, char **argv)
 			return (1);
 		init(&mini, argv);
 		get_values(&mini);
-		free_structs(&mini);
+		if (mini.is_valid)
+			start_mlx(&mini);
+		else
+			free_structs(&mini);
 		if (!mini.is_valid)
 			return (1);
 	}

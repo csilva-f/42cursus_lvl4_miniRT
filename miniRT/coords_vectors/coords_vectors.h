@@ -39,6 +39,7 @@ float		distance(t_pos p1, t_pos p2);
 // VECTORS
 
 float		length(t_vector v1);
+t_vector	vector_norm(t_vector v);
 t_vector	vector_mult_const(t_vector v1, float c);
 t_vector	vector_add(t_vector v1, t_vector v2);
 t_vector	vector_sub(t_vector v1, t_vector v2);

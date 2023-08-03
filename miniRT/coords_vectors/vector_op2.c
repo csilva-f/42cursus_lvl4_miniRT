@@ -34,7 +34,6 @@ t_pos	vector_to_pos(t_vector v1)
 	novo.x = v1.vx;
 	novo.y = v1.vy;
 	novo.z = v1.vz;
-
 	return (novo);
 }
 
@@ -45,6 +44,15 @@ t_vector	pos_to_vector(t_pos p1)
 	novo.vx = p1.x;
 	novo.vy = p1.y;
 	novo.vz = p1.z;
+	return (novo);
+}
 
+t_vector	vector_norm(t_vector v)
+{
+	t_vector	novo;
+
+	novo.vx = v.vx / length(v);
+	novo.vy = v.vy / length(v);
+	novo.vz = v.vz / length(v);
 	return (novo);
 }

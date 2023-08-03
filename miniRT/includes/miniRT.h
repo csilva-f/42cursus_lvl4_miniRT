@@ -22,6 +22,18 @@
 # include <math.h>
 # include "../libft/libft.h"
 # include "../coords_vectors/coords_vectors.h"
+# include "../mlx_linux/mlx.h"
+
+# define ESC 65307
+
+# define LEFT 65361
+# define UP 65362
+# define RIGHT 65363
+# define DOWN 65364
+# define R 114
+# define Z 122
+# define PLUS 65451
+# define MINUS 65453
 
 typedef struct s_al
 {
@@ -83,11 +95,24 @@ typedef struct s_cylinder
 	struct s_cylinder	*prev;
 }		t_cylinder;
 
+typedef struct s_graphics
+{
+	void	*img;
+	void	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	void	*mlx;
+	void	*win;
+	int		width;
+	int		height;
+}		t_graphics;
+
 typedef struct s_mini
 {
 	char		*file;
 	int			fd;
-	int			is_valid;
+	int		is_valid;
 	t_al		*al;
 	t_cam		*cam;
 	t_light		*light;
@@ -95,6 +120,7 @@ typedef struct s_mini
 	t_plane		*plane;
 	t_cylinder	*cyl;
 	t_ray		*ray;
+	t_graphics	*g;
 }		t_mini;
 
 //-------------------------------------SRCS-------------------------------------
@@ -154,9 +180,14 @@ bool		sphere_collision(t_sphere *sp, t_ray *r);
 bool		cylinder_collision(t_cylinder *cyl, t_ray *r);
 bool		plane_collision(t_plane *pl, t_ray *r);
 
+// GRAPHICS
+
+void		start_mlx(t_mini *m);
+
 // AUXIL
 
 int			count_vars(char **vars, int equal, int code, t_mini *m);
 float		float_check(t_mini *m, char *str);
+void		free_structs(t_mini *mini);
 
 #endif

@@ -50,7 +50,7 @@ bool	sphere_collision(t_sphere *sp, t_ray *r1)
 	zpart = (r1->p0.z - sp->pos.z) * (r1->p0.z - sp->pos.z);
 	if (fabs(xpart + ypart + zpart - sp->d * sp->d) <= tol)
 	{
-		r1->norm_v = vector_create(r1->p0, sp->pos);
+		r1->norm_v = vector_norm(vector_create(r1->p0, sp->pos));
 		r1->reflex_times--;
 		return (true);
 	}
@@ -95,12 +95,13 @@ bool	loop(t_cylinder *c, t_ray *r, t_vector c_vec)
 		p = ray_pos(c->pos, c_vec, t);
 		v1 = vector_create(r->p0, p);
 		v2 = vector_create(p, c->pos);
-		//tol=0.5, probably too big
+		//tol = 0.5, probably too big
 		if (vector_dot(v1, v2) == 0 && (fabs(distance(r->p0, p) - c->d) <= 0.5
-			|| (distance(p, c->pos) == c->h / 2 && distance(r->p0, p) <= c->d)))
+				|| (distance(p, c->pos) == c->h / 2 && distance(r->p0, p) <= c->d)))
 		{
-			r->norm_v = v2;
+			r->norm_v = vector_norm(v2);
 			r->reflex_times--;
+			// norma para as bases dos cilindros nao 'e esta, vai ser como se fosse um plano
 			return (true);
 		}
 	}
@@ -140,7 +141,7 @@ bool	plane_collision(t_plane *pl, t_ray *r1)
 	tol = 0.5; //define good tolerance
 	if (fabs(vector_dot(pl->vec, pos_to_vector(r1->p0)) + pl->coef) <= tol)
 	{
-		r1->norm_v = pl->vec;
+		r1->norm_v = vector_norm(pl->vec);
 		r1->reflex_times--;
 		return (true);
 	}

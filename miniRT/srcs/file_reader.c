@@ -60,13 +60,14 @@ void	get_values(t_mini *m)
 		if (aux == NULL)
 			break ;
 		aux = ft_remove_lb(aux);
+		printf("%s\n", aux);
 		check_lines(m, aux);
 		free(aux);
 	}
-	if (m->is_valid)
+	if (!m->is_valid)
 	{
 		data_transform(m);
-		ray_create(m);
+		//ray_create(m);
 	}
 	free(aux);
 	printf("A\n%f %i\n", m->al->ratio, m->al->color);
