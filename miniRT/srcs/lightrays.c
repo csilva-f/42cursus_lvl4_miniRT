@@ -20,10 +20,6 @@ t_pos	ray_pos(t_pos p, t_vector v, float t)
 	return (coord_add(p, coord_mult_const(vector_to_pos(v), t)));
 }
 
-// nao sei que adicionar mais por enquanto, mas no minimo vai ser preciso uma
-// funcao para gerar bilioes de raios de luz (paralelos?) do ponto de luz ou
-// do ponto da camara, depende do que quisermos fazer
-
 // vou usar a estrutura de codigo que tu criaste para os solidos na func luz 
 // talvez seja temp, nao sei se se aplica bem para este caso
 
@@ -77,15 +73,25 @@ void	ray_add_b(t_ray **ray, t_ray *ray_new)
 
 void	ray_create(t_mini *m)
 {
-	int			i;
+	int			x;
+	int			y;
+	float		px;
 	t_pos		p;
-	t_vector	v;
 
-	i = -1;
-	p = m->cam->pos; // ou posic da luz
-	v = m->cam->vec; // ou posic da luz
-	while (++i < 100000000) //100 milhoes, vai ser pouco (?)
-		ray_add_b(&m->ray, ray_new(m, p, v)); //preciso de variar p
-	//com senos e cossenos e mais um loop para aumentar o raio no fim de cada volta
-	//podemos variar p em espiral para simular uma especie de foco em vez de so um ponto?
+	x = 0;
+	while (x < m->g->width)
+	{
+		y = 0;
+		px = (x + 0.5) / m->g->width;
+		while (y < m->g->height)
+		{
+			p = pixel_pos(px, (y + 0.5) / m->g->height, m);
+			ray_add_b(&m->ray, ray_new(m, p, pixel_vec(p)));
+			y++;
+		}
+		printf(" isto esta muito lento wtf, tem de se mudar ray add b%i\n", x);
+		//a funcao vai estar sempre a ir ao inicio e itera ate chegar ao ultimo
+		//nao faz sentido nestecaso,so temos de fazer sempre seguido
+		x++;
+	}
 }

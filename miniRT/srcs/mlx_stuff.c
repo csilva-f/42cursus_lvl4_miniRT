@@ -26,6 +26,15 @@ int	key_hook(int keycode, t_mini *m)
 	return (0);
 }
 
+void	raytracing(t_mini *m) //😎
+{
+	ray_create(m);
+	/*
+	while etc
+		my_pixel_put (color in pixel);
+	*/
+}
+
 void	start_mlx(t_mini *m)
 {
 	m->g->mlx = mlx_init();
@@ -34,7 +43,7 @@ void	start_mlx(t_mini *m)
 	m->g->win = mlx_new_window(m->g->mlx, m->g->width,
 			m->g->height, "miniRT");
 	m->g->img = mlx_new_image(m->g->mlx, m->g->width, m->g->height);
-	//msetup(&m);
+	raytracing(m);
 	mlx_key_hook(m->g->win, key_hook, &m);
 	//mlx_mouse_hook(m->g->win, mouse_hook, &m);
 	mlx_hook(m->g->win, 17, 1L << 17, close_game, &m);

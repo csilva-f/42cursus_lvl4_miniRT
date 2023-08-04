@@ -168,6 +168,8 @@ void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
 // TRANSFORMATION
 
 void		data_transform(t_mini *m);
+t_pos		pixel_pos(float psx, float psy, t_mini *m);
+t_vector	pixel_vec(t_pos pix);
 
 // RAYS
 
@@ -179,6 +181,7 @@ void		ray_create(t_mini *m);
 bool		sphere_collision(t_sphere *sp, t_ray *r);
 bool		cylinder_collision(t_cylinder *cyl, t_ray *r);
 bool		plane_collision(t_plane *pl, t_ray *r);
+t_vector	reflected_ray(t_ray *r);
 
 // GRAPHICS
 

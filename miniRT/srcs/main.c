@@ -25,6 +25,7 @@ void	init(t_mini *mini, char **argv)
 	mini->plane = NULL;
 	mini->sp = NULL;
 	mini->cyl = NULL;
+	mini->ray = NULL;
 }
 
 /*void	ft_s_clear(t_plane **pl, t_sphere **sp, t_cylinder **cy)
