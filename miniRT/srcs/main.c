@@ -51,6 +51,12 @@ void	free_structs(t_mini *mini)
 	t_sphere	*aux_s;
 	t_cylinder	*aux_c;
 
+	if (mini->is_valid)
+	{
+		mlx_destroy_image(mini->g->mlx, mini->g->img);
+		mlx_destroy_window(mini->g->mlx, mini->g->win);
+		mlx_destroy_display(mini->g->mlx);
+	}
 	free(mini->al);
 	free(mini->cam);
 	free(mini->light);

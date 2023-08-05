@@ -71,27 +71,64 @@ void	ray_add_b(t_ray **ray, t_ray *ray_new)
 	}
 }
 
+
+int	my_mlx_pixel_put(t_mini *mini, int x, int y, int color)
+{
+	char	*dst;
+
+	printf("%d, %d, %d\n", x, y, color);
+	dst = mini->g->addr + (y * mini->g->line_length + x
+			* (mini->g->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+	return (0);
+}
+
+/*void	collisions(t_mini *m, int x, int y)
+{
+	float	t;
+
+	t = 0;
+	printf("ray inicial= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
+	while (t < 10000)
+	{
+		if (sphere_collision(m->sp, m->ray))
+		{
+			my_mlx_pixel_put(m, x, y, 0xccf1ff);
+			return ;
+		}
+		t++;
+		m->ray->p0 = ray_pos(m->ray->p0, m->ray->v1, t);
+	}
+	printf("ray final= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
+	//my_mlx_pixel_put(m, x, y, 0);
+}*/
+
 void	ray_create(t_mini *m)
 {
 	int			x;
 	int			y;
 	float		px;
 	t_pos		p;
+	t_ray		*temp;
 
 	x = 0;
-	while (x < m->g->width)
+	temp = m->ray;
+	while (x <= m->g->width)
 	{
 		y = 0;
 		px = (x + 0.5) / m->g->width;
-		while (y < m->g->height)
+		while (y <= m->g->height)
 		{
 			p = pixel_pos(px, (y + 0.5) / m->g->height, m);
-			ray_add_b(&m->ray, ray_new(m, p, pixel_vec(p)));
+
+			m->ray = ray_new(m, p, pixel_vec(p));
+			//collisions(m, x, y);
 			y++;
+			m->ray = m->ray->next;
 		}
-		printf(" isto esta muito lento wtf, tem de se mudar ray add b%i\n", x);
-		//a funcao vai estar sempre a ir ao inicio e itera ate chegar ao ultimo
-		//nao faz sentido nestecaso,so temos de fazer sempre seguido
+		printf("pixelpos= %f %f %f\n", p.x, p.y, p.z);
+		printf("%i\n", x);
 		x++;
 	}
+	m->ray = temp;
 }

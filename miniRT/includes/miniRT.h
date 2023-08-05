@@ -112,7 +112,7 @@ typedef struct s_mini
 {
 	char		*file;
 	int			fd;
-	int		is_valid;
+	int			is_valid;
 	t_al		*al;
 	t_cam		*cam;
 	t_light		*light;
