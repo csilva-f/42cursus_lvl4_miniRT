@@ -60,6 +60,7 @@ typedef struct s_ray
 	t_pos			p0;
 	t_vector		v1;
 	t_vector		norm_v;
+	float			t;
 	int				reflex_times;
 	struct s_ray	*next;
 	struct s_ray	*prev;
@@ -192,5 +193,6 @@ void		start_mlx(t_mini *m);
 int			count_vars(char **vars, int equal, int code, t_mini *m);
 float		float_check(t_mini *m, char *str);
 void		free_structs(t_mini *mini);
+float		quadratic_form(float a, float b, float c);
 
 #endif

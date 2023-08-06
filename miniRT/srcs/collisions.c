@@ -18,11 +18,30 @@ typedef struct s_ray
 	t_pos			p0;
 	t_vector		v1;
 	t_vector		norm_v;
+	float			t;
 	int				reflex_times;
 	struct t_ray	*next;
 	struct t_ray	*prev;
 }		t_ray;
 */
+
+//https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm
+
+float		quadratic_form(float a, float b, float c)
+{
+	float t_plus;
+	float t_minus;
+
+	t_plus = (-1 * b + sqrt(b * b - 4 * a * c)) / (2 * a);
+	t_minus = (-1 * b - sqrt(b * b - 4 * a * c)) / (2 * a);
+	if (t_plus >= 0 && t_plus <= t_minus)
+		return (t_plus);
+	else if (t_minus >= 0)
+		return (t_minus);
+	else
+		return (-1);
+
+}
 
 /*
 typedef struct s_sphere
@@ -35,7 +54,7 @@ typedef struct s_sphere
 }		t_sphere;
 */
 
-bool	sphere_collision(t_sphere *sp, t_ray *r1)
+/*bool	sphere_collision(t_sphere *sp, t_ray *r1)
 {
 	float	xpart;
 	float	ypart;
@@ -56,6 +75,24 @@ bool	sphere_collision(t_sphere *sp, t_ray *r1)
 	}
 	else
 		return (false);
+}*/
+
+bool	sphere_collision(t_sphere *sp, t_ray *r)
+{
+	t_vector	x;
+	float		c;
+	float		t;
+
+	x = vector_create(r->p0, sp->pos);
+	c = vector_dot(x, x) - sp->d * sp->d;
+	t = quadratic_form(vector_dot(r->v1, r->v1), vector_dot(r->v1, x) * 2, c);
+	if (t > -1)
+	{
+		r->t = t;
+		r->reflex_times--;
+		return (true);
+	}
+	return (false);
 }
 
 /*
@@ -134,7 +171,7 @@ typedef struct s_plane
 // eq se ponto esta no plano 
 // pl.vx * p1.x + pl.vy * p1.y + pl.vz * p1.z - pl->coef = 0
 
-bool	plane_collision(t_plane *pl, t_ray *r1)
+/*bool	plane_collision(t_plane *pl, t_ray *r1)
 {
 	float	tol;
 
@@ -148,3 +185,26 @@ bool	plane_collision(t_plane *pl, t_ray *r1)
 	else
 		return (false);
 }
+*/
+//func anterior arcaica mas pode ter coisas aproveitaveis, agora vou seguir
+// formula para descobrir ponte de intersecao t = -X|V / D|V
+
+bool	plane_collision(t_plane *pl, t_ray *r1)
+{
+	float	denom;
+	float	nom;
+
+	denom = vector_dot(r1->v1, pl->vec);
+	nom = vector_dot(vector_create(r1->p0, pl->pos), pl->vec);
+	if ((denom < 0 && nom >= 0) || (denom > 0 && nom <= 0))
+	{
+		r1->t = -1 * nom / denom;
+		r1->reflex_times--;
+		return (true);
+	}
+	else
+		return (false);
+}
+
+	//depois verificar de que lado do plano se esta para ficar com o vetor normal
+	//correto
