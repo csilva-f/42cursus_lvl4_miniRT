@@ -18,6 +18,7 @@ typedef struct s_ray
 	t_pos			p0;
 	t_vector		v1;
 	t_vector		norm_v;
+	float			sqrt_len;
 	float			t;
 	int				reflex_times;
 	struct t_ray	*next;
@@ -34,8 +35,9 @@ float		quadratic_form(float a, float b, float c)
 
 	t_plus = (-1 * b + sqrt(b * b - 4 * a * c)) / (2 * a);
 	t_minus = (-1 * b - sqrt(b * b - 4 * a * c)) / (2 * a);
-	if (t_plus >= 0 && t_plus <= t_minus)
-		return (t_plus);
+	printf("float min %f max %f\n", t_minus, t_plus);
+	if (t_plus >= 0 && (t_minus <= 0 || t_plus <= t_minus))
+			return (t_plus);
 	else if (t_minus >= 0)
 		return (t_minus);
 	else
@@ -48,6 +50,7 @@ typedef struct s_sphere
 {
 	t_pos			pos;
 	float			d;
+	float			d_squared;
 	int				color;
 	struct s_sphere	*next;
 	struct s_sphere	*prev;
@@ -84,8 +87,8 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 	float		t;
 
 	x = vector_create(r->p0, sp->pos);
-	c = vector_dot(x, x) - sp->d * sp->d;
-	t = quadratic_form(vector_dot(r->v1, r->v1), vector_dot(r->v1, x) * 2, c);
+	c = vector_dot(x, x) - sp->d_squared;
+	t = quadratic_form(r->sqrt_len, vector_dot(r->v1, x) * 2, c);
 	if (t > -1)
 	{
 		r->t = t;
@@ -96,27 +99,6 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 }
 
 /*
-typedef struct s_cylinder
-{
-	t_pos				pos;
-	t_vector			vec;
-	float				d;
-	float				h;
-	int					color;
-	struct s_cylinder	*next;
-	struct s_cylinder	*prev;
-}		t_cylinder;
-*/
-
-// logica vai ser que para cada ponto p1 no percurso do raio encontrar o ponto
-// p2 que esteja na linha (infinita) do centro do cyl que unindo com p1 crie
-// um vetor perpendicular ao vetor que une p2 ao centro do cyl O ou seja
-// p1p2 . Op2 = 0 e depois ver se p2 esta dentro da altura do cilindro e se p1
-// esta a distancia d do cilindro para as paredes ou <= d se estiver nas bases
-
-//primeiro vou fazer o dot de p1 com a O para ver se o ponto esta a cima
-// ou abaixo para eliminar logo metade dos calculos
-
 bool	loop(t_cylinder *c, t_ray *r, t_vector c_vec)
 {
 	t_pos		p;
@@ -154,6 +136,43 @@ bool	cylinder_collision(t_cylinder *cyl, t_ray *r)
 		return (loop(cyl, r, cyl->vec));
 	else
 		return (loop(cyl, r, vector_mult_const(cyl->vec, -1)));
+}
+*/
+
+/*
+typedef struct s_cylinder
+{
+	t_pos				pos;
+	t_vector			vec;
+	float				d;
+	float				d_squared;
+	float				h;
+	int					color;
+	struct s_cylinder	*next;
+	struct s_cylinder	*prev;
+}		t_cylinder;
+*/
+
+bool	cylinder_collision(t_cylinder *cyl, t_ray *r)
+{
+	t_vector	x;
+	float		d_v;
+	float		c;
+	float		x_v;
+
+	x = vector_create(r->p0, cyl->pos);
+	d_v = vector_dot(r->v1, cyl->vec);
+	x_v = vector_dot(x, cyl->vec);
+	c = vector_dot(x, x) - x_v * x_v - cyl->d_squared;
+	c = quadratic_form(r->sqrt_len - d_v * d_v,\
+		(vector_dot(r->v1, x) - d_v * x_v) * 2, c);
+	if (c > -1)
+	{
+		r->t = c;
+		r->reflex_times--;
+		return (true);
+	}
+	return (false);
 }
 
 /*

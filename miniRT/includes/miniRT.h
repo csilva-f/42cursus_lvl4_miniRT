@@ -60,6 +60,7 @@ typedef struct s_ray
 	t_pos			p0;
 	t_vector		v1;
 	t_vector		norm_v;
+	float			sqrt_len;
 	float			t;
 	int				reflex_times;
 	struct s_ray	*next;
@@ -70,6 +71,7 @@ typedef struct s_sphere
 {
 	t_pos			pos;
 	float			d;
+	float			d_squared;
 	int				color;
 	struct s_sphere	*next;
 	struct s_sphere	*prev;
@@ -90,6 +92,7 @@ typedef struct s_cylinder
 	t_pos				pos;
 	t_vector			vec;
 	float				d;
+	float				d_squared;
 	float				h;
 	int					color;
 	struct s_cylinder	*next;

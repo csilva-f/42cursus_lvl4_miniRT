@@ -79,7 +79,8 @@ t_sphere	*sph_new(t_mini *m, char **vars, char ***data)
 	sp->pos.x = float_check(m, (*data)[0]);
 	sp->pos.y = float_check(m, (*data)[1]);
 	sp->pos.z = float_check(m, (*data)[2]);
-	sp->d = float_check(m, vars[2]);
+	sp->d = float_check(m, vars[2]) / 2;
+	sp->d_squared = sp->d * sp->d;
 	sp->color = fill_colors(m, vars[3], -1);
 	sp->next = NULL;
 	return (sp);

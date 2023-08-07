@@ -51,5 +51,5 @@ float	distance(t_pos p1, t_pos p2)
 	xpart = (p1.x - p2.x) * (p1.x - p2.x);
 	ypart = (p1.y - p2.y) * (p1.y - p2.y);
 	zpart = (p1.z - p2.z) * (p1.z - p2.z);
-	return ((xpart + ypart + zpart) * 0.5);
+	return (sqrt(xpart + ypart + zpart));
 }

@@ -54,7 +54,8 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 			vars_errors(m, 4);
 		else
 		{
-			cy->d = float_check(m, vars[3]);
+			cy->d = float_check(m, vars[3]) / 2;
+			cy->d_squared = cy->d * cy->d;
 			cy->h = float_check(m, vars[4]);
 			cy->color = fill_colors(m, vars[5], -1);
 		}

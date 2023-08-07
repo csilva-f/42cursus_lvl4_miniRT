@@ -23,12 +23,11 @@ t_pos	ray_pos(t_pos p, t_vector v, float t)
 // vou usar a estrutura de codigo que tu criaste para os solidos na func luz 
 // talvez seja temp, nao sei se se aplica bem para este caso
 
-t_ray	*ray_new(t_mini *m, t_pos p, t_vector v)
+t_ray	*ray_new(t_pos p, t_vector v)
 {
 	t_ray	*ray;
 
 	ray = malloc(sizeof(t_ray));
-	(void)m;
 	if (!ray)
 		return (NULL);
 	ray->p0.x = p.x;
@@ -37,6 +36,7 @@ t_ray	*ray_new(t_mini *m, t_pos p, t_vector v)
 	ray->v1.vx = v.vx;
 	ray->v1.vy = v.vy;
 	ray->v1.vz = v.vz;
+	ray->sqrt_len = vector_dot(ray->v1, ray->v1);
 	ray->reflex_times = 15;
 	ray->next = NULL;
 	return (ray);
@@ -72,36 +72,33 @@ void	ray_add_b(t_ray **ray, t_ray *ray_new)
 }
 
 
-int	my_mlx_pixel_put(t_mini *mini, int x, int y, int color)
+int	my_mlx_pixel_put(t_graphics *g, int x, int y, int color)
 {
 	char	*dst;
 
 	printf("%d, %d, %d\n", x, y, color);
-	dst = mini->g->addr + (y * mini->g->line_length + x
-			* (mini->g->bits_per_pixel / 8));
+	printf("bits per pixel%d\n", g->bits_per_pixel / 8);
+	printf("line length%d\n", g->line_length);
+	dst = g->addr + (y * g->line_length + x
+			* (g->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 	return (0);
 }
 
-/*void	collisions(t_mini *m, int x, int y)
+void	collisions(t_mini *m, int x, int y)
 {
-	float	t;
-
-	t = 0;
-	printf("ray inicial= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
-	while (t < 10000)
+	//printf("ray inicial= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
+	if (sphere_collision(m->sp, m->ray)) //|| cylinder_collision(m->cyl, m->ray)
+		//|| plane_collision(m->plane, m->ray))
 	{
-		if (sphere_collision(m->sp, m->ray))
-		{
-			my_mlx_pixel_put(m, x, y, 0xccf1ff);
-			return ;
-		}
-		t++;
-		m->ray->p0 = ray_pos(m->ray->p0, m->ray->v1, t);
+		printf("int x %d y %d\n",x, y);
+		my_mlx_pixel_put(m->g, x, y, 0xccf1ff);
+		return ;
 	}
-	printf("ray final= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
+	//m->ray->p0 = ray_pos(m->ray->p0, m->ray->v1, t);
+	//printf("ray final= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
 	//my_mlx_pixel_put(m, x, y, 0);
-}*/
+}
 
 void	ray_create(t_mini *m)
 {
@@ -121,8 +118,8 @@ void	ray_create(t_mini *m)
 		{
 			p = pixel_pos(px, (y + 0.5) / m->g->height, m);
 
-			m->ray = ray_new(m, p, pixel_vec(p));
-			//collisions(m, x, y);
+			m->ray = ray_new(p, pixel_vec(p));
+			collisions(m, x, y);
 			y++;
 			m->ray = m->ray->next;
 		}
