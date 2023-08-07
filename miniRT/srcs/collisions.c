@@ -35,7 +35,6 @@ float		quadratic_form(float a, float b, float c)
 
 	t_plus = (-1 * b + sqrt(b * b - 4 * a * c)) / (2 * a);
 	t_minus = (-1 * b - sqrt(b * b - 4 * a * c)) / (2 * a);
-	printf("float min %f max %f\n", t_minus, t_plus);
 	if (t_plus >= 0 && (t_minus <= 0 || t_plus <= t_minus))
 			return (t_plus);
 	else if (t_minus >= 0)

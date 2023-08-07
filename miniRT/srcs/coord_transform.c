@@ -21,6 +21,7 @@ void	data_transform(t_mini *m)
 	temp_sp = m->sp;
 	temp_pl = m->plane;
 	temp_cyl = m->cyl;
+	m->cam->pos.z -= 1;
 	while (m->sp)
 	{
 		m->sp->pos = coord_sub(m->sp->pos, m->cam->pos);
@@ -41,7 +42,7 @@ void	data_transform(t_mini *m)
 	m->cyl = temp_cyl;
 	m->cam->pos.x = 0;
 	m->cam->pos.y = 0;
-	m->cam->pos.z = 0;
+	m->cam->pos.z = -1;
 }
 
 /*void	eq_transform(t_mini *mini)

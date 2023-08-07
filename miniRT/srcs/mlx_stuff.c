@@ -38,11 +38,13 @@ void	raytracing(t_mini *m) //😎
 void	start_mlx(t_mini *m)
 {
 	m->g->mlx = mlx_init();
-	m->g->width = 1280;
-	m->g->height = 720;
+	m->g->width = 128 * 5;
+	m->g->height = 72 * 5;
 	m->g->win = mlx_new_window(m->g->mlx, m->g->width,
 			m->g->height, "miniRT");
 	m->g->img = mlx_new_image(m->g->mlx, m->g->width, m->g->height);
+	m->g->addr = mlx_get_data_addr(m->g->img, &m->g->bits_per_pixel,
+			&m->g->line_length, &m->g->endian);
 	raytracing(m);
 	mlx_key_hook(m->g->win, key_hook, &m);
 	//mlx_mouse_hook(m->g->win, mouse_hook, &m);

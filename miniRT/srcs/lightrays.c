@@ -72,32 +72,35 @@ void	ray_add_b(t_ray **ray, t_ray *ray_new)
 }
 
 
-int	my_mlx_pixel_put(t_graphics *g, int x, int y, int color)
+int	my_mlx_pixel_put(t_mini *m, int x, int y, int color)
 {
 	char	*dst;
 
-	printf("%d, %d, %d\n", x, y, color);
-	printf("bits per pixel%d\n", g->bits_per_pixel / 8);
-	printf("line length%d\n", g->line_length);
-	dst = g->addr + (y * g->line_length + x
-			* (g->bits_per_pixel / 8));
+	dst = m->g->addr + (y * m->g->line_length + x
+			* (m->g->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 	return (0);
 }
 
 void	collisions(t_mini *m, int x, int y)
 {
-	//printf("ray inicial= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
-	if (sphere_collision(m->sp, m->ray)) //|| cylinder_collision(m->cyl, m->ray)
+	printf("ray inicial= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
+	if (sphere_collision(m->sp, m->ray))
 		//|| plane_collision(m->plane, m->ray))
 	{
 		printf("int x %d y %d\n",x, y);
-		my_mlx_pixel_put(m->g, x, y, 0xccf1ff);
+		my_mlx_pixel_put(m, x, y, m->sp->color);
+		return ;
+	}
+	else if (cylinder_collision(m->cyl, m->ray))
+	{
+		printf("int x %d y %d\n",x, y);
+		my_mlx_pixel_put(m, x, y, m->cyl->color);
 		return ;
 	}
 	//m->ray->p0 = ray_pos(m->ray->p0, m->ray->v1, t);
 	//printf("ray final= %f %f %f\n", m->ray->p0.x, m->ray->p0.y, m->ray->p0.z);
-	//my_mlx_pixel_put(m, x, y, 0);
+	my_mlx_pixel_put(m, x, y, m->al->color);
 }
 
 void	ray_create(t_mini *m)
@@ -117,7 +120,6 @@ void	ray_create(t_mini *m)
 		while (y <= m->g->height)
 		{
 			p = pixel_pos(px, (y + 0.5) / m->g->height, m);
-
 			m->ray = ray_new(p, pixel_vec(p));
 			collisions(m, x, y);
 			y++;
@@ -127,5 +129,6 @@ void	ray_create(t_mini *m)
 		printf("%i\n", x);
 		x++;
 	}
+	mlx_put_image_to_window(m->g->mlx, m->g->win, m->g->img, 0, 0);
 	m->ray = temp;
 }
