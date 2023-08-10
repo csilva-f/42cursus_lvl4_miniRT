@@ -63,6 +63,7 @@ typedef struct s_ray
 	float			sqrt_len;
 	float			t;
 	int				reflex_times;
+	int				color;
 	struct s_ray	*next;
 	struct s_ray	*prev;
 }		t_ray;

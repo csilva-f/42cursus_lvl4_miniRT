@@ -31,3 +31,4 @@ t_vector	reflected_ray(t_ray *r)
 	dot_product = 2 * vector_dot(r->v1, r->norm_v);
 	return (vector_sub(r->v1, vector_mult_const(r->norm_v, dot_product)));
 }
+
