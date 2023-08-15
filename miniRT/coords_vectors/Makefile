@@ -14,7 +14,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = coords_vectors.a
 
-SRCS = coord_op.c	vector_op.c	vector_op2.c
+SRCS = coord_op.c	vector_op.c	vector_op2.c vector_op3.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -12,12 +12,16 @@
 
 #include "../includes/miniRT.h"
 
-void	check_identifier(char *str)
+int	check_identifier(char *str)
 {
-	if (ft_strncmp(str, "A", 2) && ft_strncmp(str, "C", 2) \
-			&& ft_strncmp(str, "L", 2) && ft_strncmp(str, "pl", 3) \
-			&& ft_strncmp(str, "sp", 3) && ft_strncmp(str, "cy", 3))
+	if (ft_strncmp(str, "A", 2) || ft_strncmp(str, "C", 2) \
+			|| ft_strncmp(str, "L", 2) || ft_strncmp(str, "pl", 3) \
+			|| ft_strncmp(str, "sp", 3) || ft_strncmp(str, "cy", 3))
+	{
 		error_handler(1, 6);
+		return (0);
+	}
+	return (1);
 }
 
 void	check_line_values(t_mini *mini, char **vars)
@@ -41,7 +45,7 @@ void	check_lines(t_mini *mini, char *aux)
 	char	**vars;
 
 	vars = ft_split(aux, ' ');
-	check_identifier(vars[0]);
+	mini->is_valid = check_identifier(vars[0]);
 	if (!mini->is_valid)
 		error_handler(mini->is_valid, 3);
 	else
@@ -57,18 +61,15 @@ void	get_values(t_mini *m)
 	while (1)
 	{
 		aux = get_next_line(m->fd);
-		if (aux == NULL)
+		if (aux == NULL || !m->is_valid)
 			break ;
 		aux = ft_remove_lb(aux);
 		printf("%s\n", aux);
 		check_lines(m, aux);
 		free(aux);
 	}
-	if (!m->is_valid)
-	{
+	if (m->is_valid)
 		data_transform(m);
-		//ray_create(m);
-	}
 	free(aux);
 	printf("A\n%f %i\n", m->al->ratio, m->al->color);
 	printf("C\n%f,%f", m->cam->pos.x, m->cam->pos.y);

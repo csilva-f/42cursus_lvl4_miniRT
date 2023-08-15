@@ -53,3 +53,13 @@ float	distance(t_pos p1, t_pos p2)
 	zpart = (p1.z - p2.z) * (p1.z - p2.z);
 	return (sqrt(xpart + ypart + zpart));
 }
+
+t_pos	coord_new(float c1, float c2, float c3)
+{
+	t_pos	novo;
+
+	novo.x = c1;
+	novo.y = c2;
+	novo.z = c3;
+	return (novo);
+}

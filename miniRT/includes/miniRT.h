@@ -141,7 +141,7 @@ int			fill_colors(t_mini *m, char *str, int c);
 
 // FILE READER
 
-void		check_identifier(char *str);
+int			check_identifier(char *str);
 void		check_line_values(t_mini *mini, char **vars);
 void		check_lines(t_mini *mini, char *aux);
 void		get_values(t_mini *mini);
