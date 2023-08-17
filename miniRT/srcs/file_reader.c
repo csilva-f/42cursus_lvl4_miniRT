@@ -14,9 +14,9 @@
 
 int	check_identifier(char *str)
 {
-	if (ft_strncmp(str, "A", 2) || ft_strncmp(str, "C", 2) \
-			|| ft_strncmp(str, "L", 2) || ft_strncmp(str, "pl", 3) \
-			|| ft_strncmp(str, "sp", 3) || ft_strncmp(str, "cy", 3))
+	if (ft_strncmp(str, "A", 2) && ft_strncmp(str, "C", 2) \
+			&& ft_strncmp(str, "L", 2) && ft_strncmp(str, "pl", 3) \
+			&& ft_strncmp(str, "sp", 3) && ft_strncmp(str, "cy", 3))
 	{
 		error_handler(1, 6);
 		return (0);

@@ -12,6 +12,16 @@
 
 #include "../includes/miniRT.h"
 
+int	my_mlx_pixel_put(t_mini *m, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = m->g->addr + (y * m->g->line_length + x
+			* (m->g->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+	return (0);
+}
+
 int	close_game(t_mini *m)
 {
 	free_structs(m);
@@ -26,14 +36,15 @@ int	key_hook(int keycode, t_mini *m)
 	return (0);
 }
 
-void	raytracing(t_mini *m) //😎
+void	raytracing(t_mini *m)
 {
 	ray_create(m);
+}
+
 	/*
 	while etc
 		my_pixel_put (color in pixel);
 	*/
-}
 
 void	start_mlx(t_mini *m)
 {
@@ -47,7 +58,8 @@ void	start_mlx(t_mini *m)
 			&m->g->line_length, &m->g->endian);
 	raytracing(m);
 	mlx_key_hook(m->g->win, key_hook, &m);
-	//mlx_mouse_hook(m->g->win, mouse_hook, &m);
 	mlx_hook(m->g->win, 17, 1L << 17, close_game, &m);
-	mlx_loop(m->g->mlx);
+	//mlx_loop(m->g->mlx);
 }
+
+	//mlx_mouse_hook(m->g->win, mouse_hook, &m);

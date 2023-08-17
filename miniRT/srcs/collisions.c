@@ -65,9 +65,7 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 
 	x = vector_create(r->p0, sp->pos);
 	c = vector_dot(x, x) - sp->d_squared;
-	//printf("entrou\n");
 	t = quadratic_form(r->sqrt_len, vector_dot(r->v1, x) * 2, c);
-	//printf("saiu\n");
 	if (t > -1)
 	{
 		if (r->t == -1 || (t < r->t))
@@ -106,17 +104,17 @@ bool	cylinder_collision(t_cylinder *cyl, t_ray *r)
 	d_v = vector_dot(r->v1, cyl->vec);
 	x_v = vector_dot(x, cyl->vec);
 	c = vector_dot(x, x) - x_v * x_v - cyl->d_squared;
-	c = quadratic_form(r->sqrt_len - d_v * d_v,\
+	c = quadratic_form(r->sqrt_len - d_v * d_v, \
 		(vector_dot(r->v1, x) - d_v * x_v) * 2, c);
 	if (c > -1)
 	{
 		if (r->t == -1 || (c < r->t))
-			{
-				r->t = c;
-				r->reflex_times--;
-				r->color = cyl->color;
-				return (true);
-			}
+		{
+			r->t = c;
+			r->reflex_times--;
+			r->color = cyl->color;
+			return (true);
+		}
 	}
 	return (true);
 }

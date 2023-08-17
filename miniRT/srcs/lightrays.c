@@ -43,45 +43,6 @@ t_ray	*ray_new(t_pos p, t_vector v)
 	return (ray);
 }
 
-t_ray	*ray_last(t_ray *ray)
-{
-	t_ray	*aux;
-
-	if (!ray)
-		return (NULL);
-	aux = ray;
-	while (aux->next != NULL)
-		aux = aux->next;
-	return (aux);
-}
-
-void	ray_add_b(t_ray **ray, t_ray *ray_new)
-{
-	t_ray	*aux;
-
-	if (ray)
-	{
-		if (*ray)
-		{
-			aux = ray_last(*ray);
-			aux->next = ray_new;
-			ray_new = aux;
-		}
-		else
-			*ray = ray_new;
-	}
-}
-
-int	my_mlx_pixel_put(t_mini *m, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = m->g->addr + (y * m->g->line_length + x
-			* (m->g->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-	return (0);
-}
-
 void	collisions(t_mini *m, int x, int y)
 {
 	t_sphere	*temp_sp;
@@ -91,29 +52,20 @@ void	collisions(t_mini *m, int x, int y)
 	temp_pl = m->plane;
 	temp_sp = m->sp;
 	temp_cyl = m->cyl;
-	if (m->sp)
+	while (m->sp)
 	{
-		while (m->sp)
-		{
-			sphere_collision(m->sp, m->ray);
-			m->sp = m->sp->next;
-		}
+		sphere_collision(m->sp, m->ray);
+		m->sp = m->sp->next;
 	}
-	if (m->plane)
+	while (m->plane)
 	{
-		while (m->plane)
-		{
-			plane_collision(m->plane, m->ray);
-			m->plane = m->plane->next;
-		}
+		plane_collision(m->plane, m->ray);
+		m->plane = m->plane->next;
 	}
-	if (m->cyl)
+	while (m->cyl)
 	{
-		while (m->cyl)
-		{
-			cylinder_collision(m->cyl, m->ray);
-			m->cyl = m->cyl->next;
-		}
+		cylinder_collision(m->cyl, m->ray);
+		m->cyl = m->cyl->next;
 	}
 	if (m->ray->t > -1)
 		my_mlx_pixel_put(m, x, y, m->ray->color);

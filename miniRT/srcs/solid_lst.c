@@ -30,7 +30,7 @@ t_plane	*pl_new(t_mini *m, char **vars, char ***data)
 		pl->vec.vy = float_check(m, (*data)[1]);
 		pl->vec.vz = float_check(m, (*data)[2]);
 		if (fabs(pl->vec.vx) > 1 || fabs(pl->vec.vy) > 1
-			|| fabs(pl->vec.vz) > 1)
+			|| fabs(pl->vec.vz) > 1 || length(pl->vec) != 1)
 			vars_errors(m, 4);
 		else
 			pl->color = fill_colors(m, vars[3], -1);

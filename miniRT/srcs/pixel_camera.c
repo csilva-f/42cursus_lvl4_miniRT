@@ -14,11 +14,6 @@
 
 /*
 https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
-transformacao de pixel de ecra (raster) para pixel normalizado (ndc) para world space.
-de raster para ndc esta a ser feito no lightrays.c:ray_create e em baixo, somar 0.5 
-e dividir pelo comprimento total do eixo e mult por 2 e sub 1 para variar entre 
-[-1,1], de ndc para world space sao as funcoes em baixo. x 'e  mult pelo
-ratio de ecra e ambas as coordenadas pelo tan fov / 2
 */
 
 float	pixel_cam_x(float psx, t_mini *m)

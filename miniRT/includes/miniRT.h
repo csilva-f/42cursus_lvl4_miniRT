@@ -194,9 +194,15 @@ void		start_mlx(t_mini *m);
 
 // AUXIL
 
+int			my_mlx_pixel_put(t_mini *m, int x, int y, int color);
 int			count_vars(char **vars, int equal, int code, t_mini *m);
 float		float_check(t_mini *m, char *str);
 void		free_structs(t_mini *mini);
 float		quadratic_form(float a, float b, float c);
+
+void		raytracing(t_mini *m);
+int			key_hook(int keycode, t_mini *m);
+int			close_game(t_mini *m);
+
 
 #endif

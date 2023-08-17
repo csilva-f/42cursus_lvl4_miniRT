@@ -56,7 +56,9 @@ void	free_structs(t_mini *mini)
 		mlx_destroy_image(mini->g->mlx, mini->g->img);
 		mlx_destroy_window(mini->g->mlx, mini->g->win);
 		mlx_destroy_display(mini->g->mlx);
+		free(mini->g->mlx);
 	}
+	free(mini->g);
 	free(mini->al);
 	free(mini->cam);
 	free(mini->light);
@@ -124,19 +126,33 @@ float	float_check(t_mini *m, char *str)
 
 int	main(int argc, char **argv)
 {
-	t_mini	mini;
+	t_mini	m;
 
 	if (argc == 2)
 	{
-		if (!check_file(argv[1], &mini))
+		if (!check_file(argv[1], &m))
 			return (1);
-		init(&mini, argv);
-		get_values(&mini);
-		if (mini.is_valid)
-			start_mlx(&mini);
+		init(&m, argv);
+		get_values(&m);
+		if (m.is_valid)
+		{
+			m.g->mlx = mlx_init();
+			m.g->width = 128 * 5;
+			m.g->height = 72 * 5;
+			m.g->win = mlx_new_window(m.g->mlx, m.g->width,
+				m.g->height, "miniRT");
+			m.g->img = mlx_new_image(m.g->mlx, m.g->width, m.g->height);
+			m.g->addr = mlx_get_data_addr(m.g->img, &m.g->bits_per_pixel,
+				&m.g->line_length, &m.g->endian);
+			raytracing(&m);
+			mlx_key_hook(m.g->win, key_hook, &m);
+			mlx_hook(m.g->win, 17, 1L << 17, close_game, &m);
+			mlx_loop(m.g->mlx);
+			//start_mlx(&m);
+		}
 		else
-			free_structs(&mini);
-		if (!mini.is_valid)
+			free_structs(&m);
+		if (!m.is_valid)
 			return (1);
 	}
 	else
