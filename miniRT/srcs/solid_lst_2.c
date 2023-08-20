@@ -39,16 +39,12 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 	t_cylinder	*c;
 
 	c = malloc(sizeof(t_cylinder));
-	c->pos.x = float_check(m, (*data)[0]);
-	c->pos.y = float_check(m, (*data)[1]);
-	c->pos.z = float_check(m, (*data)[2]);
+	c->pos = coord_new(float_check(m, (*data)[0]), float_check(m, (*data)[1]), float_check(m, (*data)[2]));
 	ft_free_split(*data);
 	*data = ft_split(vars[2], ',');
 	if (count_vars(*data, 3, 4, m))
 	{
-		c->vec.vx = float_check(m, (*data)[0]);
-		c->vec.vy = float_check(m, (*data)[1]);
-		c->vec.vz = float_check(m, (*data)[2]);
+		c->vec = vector_new(float_check(m, (*data)[0]), float_check(m, (*data)[1]), float_check(m, (*data)[2]));
 		if (fabs(c->vec.vx) > 1 || fabs(c->vec.vy) > 1 || fabs(c->vec.vz) > 1
 			|| length(c->vec) != (float) 1)
 			vars_errors(m, 4);
@@ -58,6 +54,8 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 			c->d_squared = c->d * c->d;
 			c->h = float_check(m, vars[4]);
 			c->color = fill_colors(m, vars[5], -1);
+			c->pos = ray_pos(c->pos, c->vec, c->h / 2);
+			c->vec = vector_mult_const(c->vec, -1);
 		}
 	}
 	c->next = NULL;

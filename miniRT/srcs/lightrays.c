@@ -12,16 +12,10 @@
 
 #include "../includes/miniRT.h"
 
-// p2(t) = (p.x, p.y, p.z) + (v.x, v.y, v.z) * t
-// ter em conta que v e' vetor mas as contas e' como
-// se fossem coordenadas penso?
 t_pos	ray_pos(t_pos p, t_vector v, float t)
 {
 	return (coord_add(p, coord_mult_const(vector_to_pos(v), t)));
 }
-
-// vou usar a estrutura de codigo que tu criaste para os solidos na func luz 
-// talvez seja temp, nao sei se se aplica bem para este caso
 
 t_ray	*ray_new(t_pos p, t_vector v)
 {
@@ -86,68 +80,22 @@ void	ray_create(t_mini *m)
 
 	x = 0;
 	temp = m->ray;
-	while (x <= m->g->width)
+	while (x < m->g->width)
 	{
 		y = 0;
 		px = (x + 0.5) / m->g->width;
-		while (y <= m->g->height)
+		while (y < m->g->height)
 		{
 			p = pixel_pos(px, (y + 0.5) / m->g->height, m);
 			m->ray = ray_new(p, pixel_vec(p));
 			collisions(m, x, y);
+			free(m->ray);
 			y++;
-			m->ray = m->ray->next;
+			//m->ray = m->ray->next;
 		}
-		printf("%i  pixelpos= %f %f %f\n", x, p.x, p.y, p.z);
+		//printf("%i  pixelpos= %f %f %f\n", x, p.x, p.y, p.z);
 		x++;
 	}
 	mlx_put_image_to_window(m->g->mlx, m->g->win, m->g->img, 0, 0);
 	m->ray = temp;
 }
-
-/*
-void	ray_create(t_mini *m)
-{
-	int			x;
-	int			y;
-	float		px;
-	t_pos		p;
-	t_ray		*temp;
-
-	float	viewport_height = 2.0;
-    float	viewport_width = 16 / 9 * viewport_height;
-    float	focal_length = 1.0;
-
-    t_pos or = m->cam->pos;
-    t_vector horizontal = vector_new(viewport_width, 0.0, 0.0);
-    t_vector vertical = vector_new(0.0, viewport_height, 0.0);
-    t_pos llc = coord_sub(or, coord_new(-1 * viewport_width / 2.0, -1 * viewport_height / 2.0,
-                          -1 * focal_length));
-
-	t_vector	u;
-	t_vector	v;
-	t_vector	vec;
-
-	x = 0;
-	temp = m->ray;
-	while (x <= m->g->width)
-	{
-		y = 0;
-		px = (x + 0.5) / m->g->width;
-		u = vector_mult_const(horizontal, (float) x / m->g->width);
-		while (y <= m->g->height)
-		{
-			v = vector_mult_const(vertical, (float) y / m->g->height);
-			p = or;
-			vec = vector_sub(vector_add(vector_add(pos_to_vector(llc), u), v), pos_to_vector(or));
-			m->ray = ray_new(p, vec);
-			collisions(m, x, y);
-			y++;
-			m->ray = m->ray->next;
-		}
-		printf("%i  pixelvec= %f %f %f\n", x, vec.vx, vec.vy, vec.vz);
-		x++;
-	}
-	mlx_put_image_to_window(m->g->mlx, m->g->win, m->g->img, 0, 0);
-	m->ray = temp;
-}*/

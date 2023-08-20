@@ -93,26 +93,30 @@ typedef struct s_cylinder
 }		t_cylinder;
 */
 
-bool	cylinder_collision(t_cylinder *cyl, t_ray *r)
+bool	cylinder_collision(t_cylinder *c, t_ray *r)
 {
 	t_vector	x;
+	float		m;
 	float		d_v;
-	float		c;
+	float		ce;
 	float		x_v;
 
-	x = vector_create(r->p0, cyl->pos);
-	d_v = vector_dot(r->v1, cyl->vec);
-	x_v = vector_dot(x, cyl->vec);
-	c = vector_dot(x, x) - x_v * x_v - cyl->d_squared;
-	c = quadratic_form(r->sqrt_len - d_v * d_v, \
-		(vector_dot(r->v1, x) - d_v * x_v) * 2, c);
-	if (c > -1)
+	x = vector_create(r->p0, c->pos);
+	d_v = vector_dot(r->v1, c->vec);
+	x_v = vector_dot(x, c->vec);
+	ce = vector_dot(x, x) - x_v * x_v - c->d_squared;
+	ce = quadratic_form(r->sqrt_len - d_v * d_v, \
+		(vector_dot(r->v1, x) - d_v * x_v) * 2, ce);
+	if (ce > 0)
 	{
-		if (r->t == -1 || (c < r->t))
+		if (r->t == -1 || (ce < r->t))
 		{
-			r->t = c;
+			m = d_v * ce + x_v;
+			if (m < 0 || m > distance(c->pos,ray_pos(c->pos, c->vec, c->h)))
+				return (false);
+			r->t = ce;
 			r->reflex_times--;
-			r->color = cyl->color;
+			r->color = c->color;
 			return (true);
 		}
 	}

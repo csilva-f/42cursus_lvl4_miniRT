@@ -80,6 +80,14 @@ void	free_structs(t_mini *mini)
 		free(mini->cyl);
 		mini->cyl = aux_c;
 	}
+	/*t_ray		*aux_r;
+	while (mini->ray)
+	{
+		aux_r = mini->ray->next;
+		free(mini->ray);
+		mini->ray = aux_r;
+		printf("ola\n");
+	}*/
 }
 
 int	count_vars(char **vars, int equal, int code, t_mini *m)
