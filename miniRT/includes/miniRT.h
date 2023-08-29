@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/11 00:12:22 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/08/29 21:22:58 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include "../libft/libft.h"
 # include "../coords_vectors/coords_vectors.h"
 # include "../mlx_linux/mlx.h"
+
+# define HEIGHT 72
+# define WIDTH 128
 
 # define ESC 65307
 
@@ -129,80 +132,89 @@ typedef struct s_mini
 }		t_mini;
 
 //-------------------------------------SRCS-------------------------------------
+
 // CHECK
 bool		error_handler(int is_valid, int code);
-bool		check_file(char *file_name, t_mini *mini);
 void		vars_errors(t_mini *mini, int code);
+bool		check_file(char *file_name, t_mini *mini);
+
+// CLEAR
+void		free_solids(t_mini *mini);
+void		free_structs(t_mini *mini);
+
+// COLLISIONS
+float		quadratic_form(float a, float b, float c);
+bool		sphere_collision(t_sphere *sp, t_ray *r);
+bool		cylinder_collision(t_cylinder *c, t_ray *r);
+bool		plane_collision(t_plane *pl, t_ray *r1);
 
 // COLORS
-
 int			rgb_to_int(int red, int green, int blue);
 int			fill_colors(t_mini *m, char *str, int c);
 
-// FILE READER
+// COORD TRANSFORMATION
+void		data_transform(t_mini *m);
 
+// INITIALIZE
+void		init(t_mini *mini);
+void		init_canvas(t_mini *m);
+
+// FILE READER
 int			check_identifier(char *str);
 void		check_line_values(t_mini *mini, char **vars);
 void		check_lines(t_mini *mini, char *aux);
 void		get_values(t_mini *mini);
 void		print_parser(t_mini *m);
 
-// LIGHTS & CAMERA
+// LIGHTRAYS
+t_pos		ray_pos(t_pos p, t_vector v, float t);
+t_ray		*ray_new(t_pos p, t_vector v);
+void		collisions_aux(t_mini *m);
+void		collisions(t_mini *m, int x, int y);
+void		ray_create(t_mini *m);
 
+// LIGHTS & CAMERA
 void		check_a_vars(t_mini *m, char **vars);
+int			counter_c(t_mini *m);
 void		check_c_vars(t_mini *m, char **v, char **data);
 void		check_l_vars(t_mini *m, char **vars);
 
-// SHAPES
+// MLX
+int			my_mlx_pixel_put(t_mini *m, int x, int y, int color);
+int			close_game(t_mini *m);
+int			key_hook(int keycode, t_mini *m);
+void		raytracing(t_mini *m);
+void		start_mlx(t_mini *m);
 
+// PIXEL CAMERA
+float		pixel_cam_x(float psx, t_mini *m);
+float		pixel_cam_y(float psy, t_mini *m);
+t_pos		pixel_pos(float psx, float psy, t_mini *m);
+t_vector	pixel_vec(t_pos pix);
+
+// REFLECTION
+t_vector	reflected_ray(t_ray *r);
+
+// SHAPE CHECKER
 void		check_pl_vars(t_mini *m, char **vars);
 void		check_sp_vars(t_mini *m, char **vars);
 void		check_cy_vars(t_mini *m, char **vars);
 
+// SOLID LST
 t_plane		*pl_new(t_mini *m, char **vars, char ***data);
 t_plane		*pl_last(t_plane *pl);
-float		pl_coef(t_vector vec, t_pos pos);
 void		pl_add_b(t_plane **pl, t_plane *pl_new);
 t_sphere	*sph_new(t_mini *m, char **vars, char ***data);
 t_sphere	*sph_last(t_sphere *sp);
+
+// SOLID LST 2
 void		sph_add_b(t_sphere **sp, t_sphere *sp_new);
 t_cylinder	*cy_new(t_mini *m, char **vars, char ***data);
 t_cylinder	*cy_last(t_cylinder *cy);
 void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
 
-// TRANSFORMATION
-
-void		data_transform(t_mini *m);
-t_pos		pixel_pos(float psx, float psy, t_mini *m);
-t_vector	pixel_vec(t_pos pix);
-
-// RAYS
-
-t_pos		ray_pos(t_pos p, t_vector v, float t);
-void		ray_create(t_mini *m);
-
-// COLLISIONS
-
-bool		sphere_collision(t_sphere *sp, t_ray *r);
-bool		cylinder_collision(t_cylinder *cyl, t_ray *r);
-bool		plane_collision(t_plane *pl, t_ray *r);
-t_vector	reflected_ray(t_ray *r);
-
-// GRAPHICS
-
-void		start_mlx(t_mini *m);
-
-// AUXIL
-
-int			my_mlx_pixel_put(t_mini *m, int x, int y, int color);
+// MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);
 float		float_check(t_mini *m, char *str);
-void		free_structs(t_mini *mini);
-float		quadratic_form(float a, float b, float c);
-
-void		raytracing(t_mini *m);
-int			key_hook(int keycode, t_mini *m);
-int			close_game(t_mini *m);
-
 
 #endif

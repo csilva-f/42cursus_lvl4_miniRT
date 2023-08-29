@@ -6,24 +6,26 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 11:50:48 by fvieira           #+#    #+#             */
-/*   Updated: 2023/08/04 11:50:50 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/08/29 21:18:18 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
 /*
-https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
+https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-
+	  //tracing-generating-camera-rays/generating-camera-rays.html
 */
 
 float	pixel_cam_x(float psx, t_mini *m)
 {
-	return ((2 * psx - 1) * m->g->width / m->g->height * tan(m->cam->fov / 2));
+	return ((2 * psx - 1) * m->g->width / \
+			m->g->height * tan(m->cam->fov / 2.0));
 }
 
 float	pixel_cam_y(float psy, t_mini *m)
 {
-	return ((1 - 2 * psy) * tan(m->cam->fov / 2));
+	return ((1 - 2 * psy) * tan(m->cam->fov / 2.0));
 }
 
 t_pos	pixel_pos(float psx, float psy, t_mini *m)

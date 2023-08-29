@@ -6,7 +6,7 @@
 #    By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 14:33:39 by csilva-f          #+#    #+#              #
-#    Updated: 2023/07/11 00:29:32 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/08/29 19:48:05 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,12 @@ LINK = -I./includes
 RM = rm -rf
 NAME = miniRT
 
-SRCS =	srcs/main.c		srcs/ft_check.c		srcs/lights_camera_checker.c \
-		srcs/shape_checker.c srcs/colors.c	srcs/file_reader.c	srcs/solid_lst.c \
-		srcs/solid_lst_2.c srcs/coord_transform.c srcs/collisions.c srcs/lightrays.c \
-		srcs/mlx_stuff.c	srcs/pixel_camera.c	srcs/reflection.c
+SRCS =	srcs/main.c					srcs/check.c					srcs/lights_camera_checker.c \
+		srcs/shape_checker.c		srcs/colors.c					srcs/file_reader.c \
+		srcs/solid_lst.c			srcs/solid_lst_2.c 				srcs/coord_transform.c \
+		srcs/collisions.c 			srcs/lightrays.c 				srcs/mlx_stuff.c \
+		srcs/pixel_camera.c			srcs/reflection.c				srcs/initialize.c \
+		srcs/clear.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)
@@ -41,7 +43,6 @@ $(LIBFT):
 
 $(COORD_VECTOR):
 	$(MAKE) -C ./coords_vectors
-
 
 clean:
 	$(RM) $(OBJ_DIR) $(OBJS) 

@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:45:27 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/29 16:45:28 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/08/29 21:21:40 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,8 @@ t_ray	*ray_new(t_pos p, t_vector v)
 	return (ray);
 }
 
-void	collisions(t_mini *m, int x, int y)
+void	collisions_aux(t_mini *m)
 {
-	t_sphere	*temp_sp;
-	t_plane		*temp_pl;
-	t_cylinder	*temp_cyl;
-
-	temp_pl = m->plane;
-	temp_sp = m->sp;
-	temp_cyl = m->cyl;
 	while (m->sp)
 	{
 		sphere_collision(m->sp, m->ray);
@@ -61,6 +54,18 @@ void	collisions(t_mini *m, int x, int y)
 		cylinder_collision(m->cyl, m->ray);
 		m->cyl = m->cyl->next;
 	}
+}
+
+void	collisions(t_mini *m, int x, int y)
+{
+	t_sphere	*temp_sp;
+	t_plane		*temp_pl;
+	t_cylinder	*temp_cyl;
+
+	temp_pl = m->plane;
+	temp_sp = m->sp;
+	temp_cyl = m->cyl;
+	collisions_aux(m);
 	if (m->ray->t > -1)
 		my_mlx_pixel_put(m, x, y, m->ray->color);
 	else
@@ -91,9 +96,7 @@ void	ray_create(t_mini *m)
 			collisions(m, x, y);
 			free(m->ray);
 			y++;
-			//m->ray = m->ray->next;
 		}
-		//printf("%i  pixelpos= %f %f %f\n", x, p.x, p.y, p.z);
 		x++;
 	}
 	mlx_put_image_to_window(m->g->mlx, m->g->win, m->g->img, 0, 0);

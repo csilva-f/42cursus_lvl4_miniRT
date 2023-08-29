@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 00:28:07 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/11 00:45:20 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/08/29 21:24:05 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 	t_cylinder	*c;
 
 	c = malloc(sizeof(t_cylinder));
-	c->pos = coord_new(float_check(m, (*data)[0]), float_check(m, (*data)[1]), float_check(m, (*data)[2]));
+	c->pos = coord_new(float_check(m, (*data)[0]), float_check(m, \
+				(*data)[1]), float_check(m, (*data)[2]));
 	ft_free_split(*data);
 	*data = ft_split(vars[2], ',');
 	if (count_vars(*data, 3, 4, m))
 	{
-		c->vec = vector_new(float_check(m, (*data)[0]), float_check(m, (*data)[1]), float_check(m, (*data)[2]));
+		c->vec = vector_new(float_check(m, (*data)[0]), float_check(m, \
+					(*data)[1]), float_check(m, (*data)[2]));
 		if (fabs(c->vec.vx) > 1 || fabs(c->vec.vy) > 1 || fabs(c->vec.vz) > 1
 			|| length(c->vec) != (float) 1)
 			vars_errors(m, 4);

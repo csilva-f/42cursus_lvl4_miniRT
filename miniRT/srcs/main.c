@@ -6,27 +6,11 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:34:00 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/11 00:54:11 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/08/29 19:54:02 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-
-void	init(t_mini *mini, char **argv)
-{
-	mini->file = argv[1];
-	mini->is_valid = 1;
-	mini->al = malloc(sizeof(t_al));
-	mini->cam = malloc(sizeof(t_cam));
-	mini->light = malloc(sizeof(t_light));
-	mini->g = malloc(sizeof(t_graphics));
-	if (!mini->al || !mini->cam || !mini->light || !mini->g)
-		return ;
-	mini->plane = NULL;
-	mini->sp = NULL;
-	mini->cyl = NULL;
-	mini->ray = NULL;
-}
 
 /*void	ft_s_clear(t_plane **pl, t_sphere **sp, t_cylinder **cy)
 {
@@ -44,51 +28,6 @@ void	init(t_mini *mini, char **argv)
 		}
 	}
 }*/
-
-void	free_structs(t_mini *mini)
-{
-	t_plane		*aux_p;
-	t_sphere	*aux_s;
-	t_cylinder	*aux_c;
-
-	if (mini->is_valid)
-	{
-		mlx_destroy_image(mini->g->mlx, mini->g->img);
-		mlx_destroy_window(mini->g->mlx, mini->g->win);
-		mlx_destroy_display(mini->g->mlx);
-		free(mini->g->mlx);
-	}
-	free(mini->g);
-	free(mini->al);
-	free(mini->cam);
-	free(mini->light);
-	while (mini->plane)
-	{
-		aux_p = mini->plane->next;
-		free(mini->plane);
-		mini->plane = aux_p;
-	}
-	while (mini->sp)
-	{
-		aux_s = mini->sp->next;
-		free(mini->sp);
-		mini->sp = aux_s;
-	}
-	while (mini->cyl)
-	{
-		aux_c = mini->cyl->next;
-		free(mini->cyl);
-		mini->cyl = aux_c;
-	}
-	/*t_ray		*aux_r;
-	while (mini->ray)
-	{
-		aux_r = mini->ray->next;
-		free(mini->ray);
-		mini->ray = aux_r;
-		printf("ola\n");
-	}*/
-}
 
 int	count_vars(char **vars, int equal, int code, t_mini *m)
 {
@@ -140,24 +79,10 @@ int	main(int argc, char **argv)
 	{
 		if (!check_file(argv[1], &m))
 			return (1);
-		init(&m, argv);
+		init(&m);
 		get_values(&m);
 		if (m.is_valid)
-		{
-			m.g->mlx = mlx_init();
-			m.g->width = 128 * 5;
-			m.g->height = 72 * 5;
-			m.g->win = mlx_new_window(m.g->mlx, m.g->width,
-				m.g->height, "miniRT");
-			m.g->img = mlx_new_image(m.g->mlx, m.g->width, m.g->height);
-			m.g->addr = mlx_get_data_addr(m.g->img, &m.g->bits_per_pixel,
-				&m.g->line_length, &m.g->endian);
-			raytracing(&m);
-			mlx_key_hook(m.g->win, key_hook, &m);
-			mlx_hook(m.g->win, 17, 1L << 17, close_game, &m);
-			mlx_loop(m.g->mlx);
-			//start_mlx(&m);
-		}
+			init_canvas(&m);
 		else
 			free_structs(&m);
 		if (!m.is_valid)
