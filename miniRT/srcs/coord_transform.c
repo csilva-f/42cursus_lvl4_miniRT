@@ -6,22 +6,14 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:39:09 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/12 15:39:11 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/08/30 18:44:51 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-void	data_transform(t_mini *m)
+void	data_transform_aux(t_mini *m)
 {
-	t_sphere	*temp_sp;
-	t_plane		*temp_pl;
-	t_cylinder	*temp_cyl;
-
-	temp_sp = m->sp;
-	temp_pl = m->plane;
-	temp_cyl = m->cyl;
-	m->cam->pos.z -= 1;
 	while (m->sp)
 	{
 		m->sp->pos = coord_sub(m->sp->pos, m->cam->pos);
@@ -37,6 +29,19 @@ void	data_transform(t_mini *m)
 		m->cyl->pos = coord_sub(m->cyl->pos, m->cam->pos);
 		m->cyl = m->cyl->next;
 	}
+}
+
+void	data_transform(t_mini *m)
+{
+	t_sphere	*temp_sp;
+	t_plane		*temp_pl;
+	t_cylinder	*temp_cyl;
+
+	temp_sp = m->sp;
+	temp_pl = m->plane;
+	temp_cyl = m->cyl;
+	m->cam->pos.z -= 1;
+	data_transform_aux(m);
 	m->sp = temp_sp;
 	m->plane = temp_pl;
 	m->cyl = temp_cyl;

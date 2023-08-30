@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:42:57 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/29 16:42:59 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/08/30 18:42:19 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ typedef struct s_ray
 	struct t_ray	*next;
 	struct t_ray	*prev;
 }		t_ray;
-*/
 
-//https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm
+
+https://hugi.scene.org/online/hugi24/coding%20\
+graphics%20chris%20dragan%20raytracing%20shapes.htm
+*/
 
 float	quadratic_form(float a, float b, float c)
 {
@@ -36,7 +38,6 @@ float	quadratic_form(float a, float b, float c)
 
 	t_plus = (-1 * b + sqrt(b * b - 4 * a * c)) / (2 * a);
 	t_minus = (-1 * b - sqrt(b * b - 4 * a * c)) / (2 * a);
-	//printf("t_minus %f t_plus %f\n", t_minus, t_plus);
 	if (t_plus >= 0 && (t_minus <= 0 || t_plus <= t_minus))
 		return (t_plus);
 	else if (t_minus >= 0)
@@ -112,7 +113,7 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 		if (r->t == -1 || (ce < r->t))
 		{
 			m = d_v * ce + x_v;
-			if (m < 0 || m > distance(c->pos,ray_pos(c->pos, c->vec, c->h)))
+			if (m < 0 || m > distance(c->pos, ray_pos(c->pos, c->vec, c->h)))
 				return (false);
 			r->t = ce;
 			r->reflex_times--;

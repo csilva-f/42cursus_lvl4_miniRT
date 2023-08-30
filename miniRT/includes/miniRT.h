@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/08/29 21:22:58 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:45:24 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int			rgb_to_int(int red, int green, int blue);
 int			fill_colors(t_mini *m, char *str, int c);
 
 // COORD TRANSFORMATION
+void		data_transform_aux(t_mini *m);
 void		data_transform(t_mini *m);
 
 // INITIALIZE
