@@ -6,14 +6,22 @@
 #    By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 14:33:39 by csilva-f          #+#    #+#              #
-#    Updated: 2023/08/29 19:48:05 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/08/30 18:51:00 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
+
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
-MLX_FLAGS = -L ./mlx_linux -lmlx -Ilmlx_linux -lXext -lX11 -lbsd
+MLX = mlx_linux
+MLX_FLAGS = -L ./$(MLX) -lmlx -Ilmlx_linux -lXext -lX11 -lbsd
+OS = $(shell uname)
+
+ifeq ($(OS), Darwin)
+	MLX = mlx_macos
+	MLX_FLAGS = -L ./$(MLX) -lmlx -framework OpenGL -framework AppKit -lm
+endif
 
 LIBFT = ./libft/libft.a
 COORD_VECTOR = ./coords_vectors/coords_vectors.a
@@ -35,7 +43,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(COORD_VECTOR)
 	$(info Compiling miniRT)
-	$(MAKE) -C ./mlx_linux
+	$(MAKE) -C ./$(MLX)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(COORD_VECTOR) $(MLX_FLAGS) -lm -o $(NAME)
 
 $(LIBFT):

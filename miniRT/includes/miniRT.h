@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/08/30 18:45:24 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:52:16 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@
 # include <math.h>
 # include "../libft/libft.h"
 # include "../coords_vectors/coords_vectors.h"
-# include "../mlx_linux/mlx.h"
+
+# ifdef __APPLE__
+#  include "../mlx_macos/mlx.h"
+# else
+#  include "../mlx_linux/mlx.h"
+#  include <X11/X.h>
+# endif
 
 # define HEIGHT 72
 # define WIDTH 128
