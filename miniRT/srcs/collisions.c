@@ -31,6 +31,8 @@ https://hugi.scene.org/online/hugi24/coding%20\
 graphics%20chris%20dragan%20raytracing%20shapes.htm
 */
 
+//printf("t_minus %f t_plus %f\n", t_minus, t_plus);
+
 float	quadratic_form(float a, float b, float c)
 {
 	float	t_plus;
@@ -74,6 +76,7 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 			r->t = t;
 			r->reflex_times--;
 			r->color = sp->color;
+			r->norm_v = vector_norm(vector_create(ray_pos(r->p0, r->v1, t), sp->pos));
 			return (true);
 		}
 	}
@@ -94,10 +97,53 @@ typedef struct s_cylinder
 }		t_cylinder;
 */
 
+bool	bases(t_cylinder *c, t_ray *r, float base)
+{
+	float		denom;
+	float		nom;
+	float		t;
+	t_pos		pos;
+	t_vector	vec;
+
+	if (base >= 0.3)
+	{
+		pos = ray_pos(c->pos, c->vec, c->h);
+		vec = vector_mult_const(c->vec, -1);
+	}
+	else
+	{
+		vec = c->vec;
+		pos = c->pos;
+	}
+	denom = vector_dot(r->v1, vec);
+	nom = vector_dot(vector_create(r->p0, pos), vec);
+	if ((denom < 0 && nom >= 0) || (denom > 0 && nom <= 0))
+	{
+		t = -1 * nom / denom;
+		if (t > 0)
+		{
+			if (r->t == -1 || (t < r->t))
+			{
+				if (distance(pos, ray_pos(r->p0, r->v1, t)) > c->d)
+					return (false);
+				r->t = t;
+				r->reflex_times--;
+				r->color = 351313;
+				//r->color = c->color;
+				if (denom < 0)
+					r->norm_v = vector_mult_const(c->vec, -1);
+				else
+					r->norm_v = c->vec;
+				return (true);
+			}
+		}
+	}
+	return (false);
+}
+
 bool	cylinder_collision(t_cylinder *c, t_ray *r)
 {
 	t_vector	x;
-	float		m;
 	float		d_v;
 	float		ce;
 	float		x_v;
@@ -112,46 +158,25 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 	{
 		if (r->t == -1 || (ce < r->t))
 		{
-			m = d_v * ce + x_v;
-			if (m < 0 || m > distance(c->pos, ray_pos(c->pos, c->vec, c->h)))
-				return (false);
-			r->t = ce;
-			r->reflex_times--;
-			r->color = c->color;
-			return (true);
+			x.vx = d_v * ce + x_v;
+			x.vy = distance(c->pos,ray_pos(c->pos, c->vec, c->h));
+			if (x.vx > 0 && x.vx < x.vy)
+			{
+				r->t = ce;
+				r->reflex_times--;
+				r->color = c->color;
+				r->norm_v = vector_norm(vector_sub(vector_create(ray_pos(r->p0,\
+					r->v1, ce), c->pos), vector_mult_const(c->vec, x.vx)));
+				return (true);
+
+			}
+			else
+				return (bases(c, r, x.vx));
 		}
 	}
 	return (true);
 }
 
-/*
-bool	cylinder_collision(t_cylinder *c, t_ray *r)
-{
-	t_vector	x;
-	t_vector	d;
-	t_vector	temp;
-	float		t;
-
-	x = vector_sub(r->v1, vector_mult_const(c->vec, vector_dot(r->v1, c->vec)));
-	temp = vector_create(r->p0, c->pos);
-	d = vector_sub(temp, vector_mult_const(c->vec, vector_dot(temp, c->vec)));
-	printf("antes\n");
-	t = quadratic_form(vector_dot(x, x), 2 * vector_dot(x, d),\
-		vector_dot(d, d) - c->d_squared);
-	printf("depois\n");
-	if (t > -1)
-	{
-		if (r->t == -1 || (t < r->t))
-		{
-			r->t = t;
-			r->reflex_times--;
-			r->color = c->color;
-			return (true);
-		}
-	}
-	return (true);
-}
-*/
 /*
 typedef struct s_plane
 {
@@ -171,7 +196,7 @@ bool	plane_collision(t_plane *pl, t_ray *r1)
 	float	t;
 
 	denom = vector_dot(r1->v1, pl->vec);
-	nom = vector_dot(vector_create(pl->pos, r1->p0), pl->vec);
+	nom = vector_dot(vector_create(r1->p0, pl->pos), pl->vec);
 	if ((denom < 0 && nom >= 0) || (denom > 0 && nom <= 0))
 	{
 		t = -1 * nom / denom;
@@ -182,6 +207,10 @@ bool	plane_collision(t_plane *pl, t_ray *r1)
 				r1->t = t;
 				r1->reflex_times--;
 				r1->color = pl->color;
+				if (denom < 0)
+					r1->norm_v = vector_mult_const(pl->vec, -1);
+				else
+					r1->norm_v = pl->vec;
 				return (true);
 			}
 		}
