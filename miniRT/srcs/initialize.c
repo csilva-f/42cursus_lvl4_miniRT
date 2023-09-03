@@ -30,8 +30,8 @@ void	init(t_mini *mini)
 void	init_canvas(t_mini *m)
 {
 	m->g->mlx = mlx_init();
-	m->g->width = WIDTH * 5;
-	m->g->height = HEIGHT * 5;
+	m->g->width = WIDTH * 10;
+	m->g->height = HEIGHT * 10;
 	m->g->win = mlx_new_window(m->g->mlx, m->g->width, \
 			m->g->height, "miniRT");
 	m->g->img = mlx_new_image(m->g->mlx, m->g->width, m->g->height);

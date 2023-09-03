@@ -128,12 +128,12 @@ bool	bases(t_cylinder *c, t_ray *r, float base)
 					return (false);
 				r->t = t;
 				r->reflex_times--;
-				r->color = 351313;
-				//r->color = c->color;
+				//r->color = 351313;
+				r->color = c->color;
 				if (denom < 0)
-					r->norm_v = vector_mult_const(c->vec, -1);
+					r->norm_v = vector_mult_const(vec, -1);
 				else
-					r->norm_v = c->vec;
+					r->norm_v = vec;
 				return (true);
 			}
 		}

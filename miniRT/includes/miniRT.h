@@ -200,7 +200,10 @@ t_pos		pixel_pos(float psx, float psy, t_mini *m);
 t_vector	pixel_vec(t_pos pix);
 
 // REFLECTION
-t_vector	reflected_ray(t_ray *r);
+t_vector	reflected_ray(t_ray *r, t_vector l);
+
+// PHONG
+int			phong(t_mini *m, t_ray *r);
 
 // SHAPE CHECKER
 void		check_pl_vars(t_mini *m, char **vars);

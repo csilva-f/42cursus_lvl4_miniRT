@@ -67,9 +67,9 @@ void	collisions(t_mini *m, int x, int y)
 	temp_cyl = m->cyl;
 	collisions_aux(m);
 	if (m->ray->t > -1)
-		my_mlx_pixel_put(m, x, y, m->ray->color);
+		my_mlx_pixel_put(m, x, y, phong(m, m->ray));
 	else
-		my_mlx_pixel_put(m, x, y, m->al->color);
+		my_mlx_pixel_put(m, x, y, 0);
 	m->plane = temp_pl;
 	m->sp = temp_sp;
 	m->cyl = temp_cyl;

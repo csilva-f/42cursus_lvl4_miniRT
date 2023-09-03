@@ -24,10 +24,10 @@ typedef struct s_ray
 }		t_ray;
 */
 
-t_vector	reflected_ray(t_ray *r)
+t_vector	reflected_ray(t_ray *r, t_vector l)
 {
 	float	dot_product;
 
-	dot_product = 2 * vector_dot(r->v1, r->norm_v);
-	return (vector_sub(r->v1, vector_mult_const(r->norm_v, dot_product)));
+	dot_product = 2 * vector_dot(l, r->norm_v);
+	return (vector_sub(vector_mult_const(r->norm_v, dot_product), l));
 }
