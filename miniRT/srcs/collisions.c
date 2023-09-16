@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:42:57 by fvieira           #+#    #+#             */
-/*   Updated: 2023/08/30 18:42:19 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:21:44 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ bool	bases(t_cylinder *c, t_ray *r, float base)
 					return (false);
 				r->t = t;
 				r->reflex_times--;
-				//r->color = 351313;
 				r->color = c->color;
 				if (denom < 0)
 					r->norm_v = vector_mult_const(vec, -1);
