@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 18:33:31 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/16 15:35:09 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 17:14:53 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c)
 	dst = m->g->addr + (y * m->g->line_length + x
 			* (m->g->bits_per_pixel / 8));
 	*(unsigned int *)dst = (0 << 24 | (int)c.x << 16 | (int)c.y << 8 | (int)c.z);
-	//*(unsigned int *)dst = color;
 	return (0);
 }
 
@@ -32,8 +31,11 @@ int	close_game(t_mini *m)
 
 int	key_hook(int keycode, t_mini *m)
 {
+	printf("keycode: %i\n", keycode);
 	if (keycode == ESC)
 		close_game(m);
+	//if (keycode == M)
+	//	create_menu(m);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/16 15:59:48 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 17:09:36 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,30 @@
 # define WIDTH 128
 
 # define ESC 65307
-
 # define LEFT 65361
 # define UP 65362
 # define RIGHT 65363
 # define DOWN 65364
 # define R 114
 # define Z 122
+# define M 109
+# define S 115
+# define T1 65436
+# define T2 65433
+# define T3 65435
+# define T4 65430
+# define T5 65437
+# define T6 65432
+# define T7 65429
+# define T8 65431
+# define T9 65434
+# define T0 65438
 # define PLUS 65451
 # define MINUS 65453
+
+
+# define WHITE 0xFFFFFF
+# define YELLOW 0xFFCF40
 
 typedef struct s_al
 {
@@ -75,7 +90,6 @@ typedef struct s_ray
 	float			t;
 	int				reflex_times;
 	t_pos			color;
-	//int				color;
 	struct s_ray	*next;
 	struct s_ray	*prev;
 }		t_ray;
@@ -86,7 +100,6 @@ typedef struct s_sphere
 	float			d;
 	float			d_squared;
 	t_pos			color;
-	//int				color;
 	struct s_sphere	*next;
 	struct s_sphere	*prev;
 }		t_sphere;
@@ -97,7 +110,6 @@ typedef struct s_plane
 	t_vector		vec;
 	float			coef;
 	t_pos			color;
-	//int				color;
 	struct s_plane	*next;
 	struct s_plane	*prev;
 }		t_plane;
@@ -110,7 +122,6 @@ typedef struct s_cylinder
 	float				d_squared;
 	float				h;
 	t_pos				color;
-	//int					color;
 	struct s_cylinder	*next;
 	struct s_cylinder	*prev;
 }		t_cylinder;
@@ -124,6 +135,9 @@ typedef struct s_graphics
 	int		endian;
 	void	*mlx;
 	void	*win;
+	void	*menu_mlx;
+	void	*menu_win;
+	void	*menu_img;
 	int		width;
 	int		height;
 }		t_graphics;
@@ -198,6 +212,9 @@ void		check_a_vars(t_mini *m, char **vars);
 int			counter_c(t_mini *m);
 void		check_c_vars(t_mini *m, char **v, char **data);
 void		check_l_vars(t_mini *m, char **vars);
+
+//MENU
+void		create_menu(t_mini *m);
 
 // MLX
 int			my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c);

@@ -6,19 +6,16 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 14:54:48 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/16 16:07:29 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:53:15 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-#include <stdio.h>
 
 t_pos	multconstRGB(float c, t_pos color)
 {
 	t_pos result;
 
-	if (c > 0)
-		printf("%f\n", c);
     result.x = (color.x * c);
 	result.y = (color.y * c);
 	result.z = (color.z * c);

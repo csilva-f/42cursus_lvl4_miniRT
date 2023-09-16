@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:42:57 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/16 16:21:44 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:35:36 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ typedef struct s_ray
 }		t_ray;
 
 
-https://hugi.scene.org/online/hugi24/coding%20\
-graphics%20chris%20dragan%20raytracing%20shapes.htm
+https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm
 */
 
 //printf("t_minus %f t_plus %f\n", t_minus, t_plus);
