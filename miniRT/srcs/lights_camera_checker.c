@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:47:40 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/10 21:43:36 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:00:11 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	check_a_vars(t_mini *m, char **vars)
 	}
 	m->al->ratio = float_check(m, vars[1]);
 	if (m->is_valid)
-		m->al->color = fill_colors(m, vars[2], -1);
+		 fill_colors(m, vars[2], &m->al->color);
 }
 
 int	counter_c(t_mini *m)
@@ -90,7 +90,7 @@ void	check_l_vars(t_mini *m, char **vars)
 			if (m->light->ratio < 0 || m->light->ratio > 1)
 				vars_errors(m, 4);
 			else
-				m->light->color = fill_colors(m, vars[3], -1);
+				fill_colors(m, vars[3], &m->light->color);
 		}
 	}
 }

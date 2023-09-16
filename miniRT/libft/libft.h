@@ -6,7 +6,7 @@
 /*   By: csilva-f <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 10:07:17 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/09 19:57:07 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 12:11:04 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int			ft_isascii(int c);
 int			ft_isprint(int c);
 int			ft_abs(int c);
 size_t		ft_strlen(const char *str);
+int			ft_min(int a, int b);
+float		ft_fmin(float a, float b);
 void		*ft_memset(void *str, int c, size_t n);
 void		*ft_bzero(void *s, size_t n);
 void		*ft_memcpy(void *dest, const void *src, size_t n);

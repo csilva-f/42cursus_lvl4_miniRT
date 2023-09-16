@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/08/30 18:52:16 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 15:59:48 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@
 typedef struct s_al
 {
 	float	ratio;
-	int		color;
+	t_pos	color;
+	//int		color;
 }		t_al;
 
 typedef struct s_cam
@@ -61,7 +62,8 @@ typedef struct s_light
 {
 	t_pos	pos;
 	float	ratio;
-	int		color;
+	t_pos	color;
+	//int		color;
 }		t_light;
 
 typedef struct s_ray
@@ -72,7 +74,8 @@ typedef struct s_ray
 	float			sqrt_len;
 	float			t;
 	int				reflex_times;
-	int				color;
+	t_pos			color;
+	//int				color;
 	struct s_ray	*next;
 	struct s_ray	*prev;
 }		t_ray;
@@ -82,7 +85,8 @@ typedef struct s_sphere
 	t_pos			pos;
 	float			d;
 	float			d_squared;
-	int				color;
+	t_pos			color;
+	//int				color;
 	struct s_sphere	*next;
 	struct s_sphere	*prev;
 }		t_sphere;
@@ -92,7 +96,8 @@ typedef struct s_plane
 	t_pos			pos;
 	t_vector		vec;
 	float			coef;
-	int				color;
+	t_pos			color;
+	//int				color;
 	struct s_plane	*next;
 	struct s_plane	*prev;
 }		t_plane;
@@ -104,7 +109,8 @@ typedef struct s_cylinder
 	float				d;
 	float				d_squared;
 	float				h;
-	int					color;
+	t_pos				color;
+	//int					color;
 	struct s_cylinder	*next;
 	struct s_cylinder	*prev;
 }		t_cylinder;
@@ -156,7 +162,14 @@ bool		plane_collision(t_plane *pl, t_ray *r1);
 
 // COLORS
 int			rgb_to_int(int red, int green, int blue);
-int			fill_colors(t_mini *m, char *str, int c);
+void		fill_colors(t_mini *m, char *str, t_pos *col);
+
+//COLOR_OP
+t_pos		multconstRGB(float c, t_pos color);
+t_pos		multiplyRGB(t_pos color1, t_pos color2);
+t_pos		addRGB(t_pos color1, t_pos color2);
+t_pos		subRGB(t_pos color1, t_pos color2);
+t_pos		divideRGB(t_pos color1, t_pos color2);
 
 // COORD TRANSFORMATION
 void		data_transform_aux(t_mini *m);
@@ -187,7 +200,7 @@ void		check_c_vars(t_mini *m, char **v, char **data);
 void		check_l_vars(t_mini *m, char **vars);
 
 // MLX
-int			my_mlx_pixel_put(t_mini *m, int x, int y, int color);
+int			my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c);
 int			close_game(t_mini *m);
 int			key_hook(int keycode, t_mini *m);
 void		raytracing(t_mini *m);
@@ -203,7 +216,7 @@ t_vector	pixel_vec(t_pos pix);
 t_vector	reflected_ray(t_ray *r, t_vector l);
 
 // PHONG
-int			phong(t_mini *m, t_ray *r);
+t_pos		phong(t_mini *m, t_ray *r);//, float alpha);
 
 // SHAPE CHECKER
 void		check_pl_vars(t_mini *m, char **vars);

@@ -6,7 +6,7 @@
 #    By: csilva-f <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/07 19:02:20 by csilva-f          #+#    #+#              #
-#    Updated: 2023/07/09 19:50:48 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/09/16 12:11:55 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strle
 	  ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strtrim.c ft_split.c\
 	  ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c\
 	  ft_printf.c ft_printf_utils_1.c ft_printf_utils_2.c get_next_line.c get_next_line_utils.c\
-	  ft_strisdigit.c ft_remove_lb.c ft_free_split.c ft_rgb_to_hex.c ft_hex_to_int.c ft_strcmp.c
+	  ft_strisdigit.c ft_remove_lb.c ft_free_split.c ft_rgb_to_hex.c ft_hex_to_int.c ft_strcmp.c ft_min.c
 	   
 
 BONUS_SRCS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstclear.c ft_lstiter.c ft_lstdelone.c\

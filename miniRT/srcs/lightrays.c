@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:45:27 by fvieira           #+#    #+#             */
-/*   Updated: 2023/08/29 21:21:40 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 15:38:41 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	collisions(t_mini *m, int x, int y)
 	if (m->ray->t > -1)
 		my_mlx_pixel_put(m, x, y, phong(m, m->ray));
 	else
-		my_mlx_pixel_put(m, x, y, 0);
+		my_mlx_pixel_put(m, x, y, (t_pos){0, 0, 0});
 	m->plane = temp_pl;
 	m->sp = temp_sp;
 	m->cyl = temp_cyl;
@@ -81,10 +81,8 @@ void	ray_create(t_mini *m)
 	int			y;
 	float		px;
 	t_pos		p;
-	t_ray		*temp;
 
 	x = 0;
-	temp = m->ray;
 	while (x < m->g->width)
 	{
 		y = 0;
@@ -100,5 +98,4 @@ void	ray_create(t_mini *m)
 		x++;
 	}
 	mlx_put_image_to_window(m->g->mlx, m->g->win, m->g->img, 0, 0);
-	m->ray = temp;
 }

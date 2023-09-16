@@ -6,15 +6,14 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/03 16:42:34 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/09/16 16:09:11 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-
+#include <stdio.h>
 
 /*
-
 typedef struct s_al
 {
 	float	ratio;
@@ -53,21 +52,30 @@ typedef struct s_ray
 //para mandatory so temos uma luz por isso vou assumir isso
 //depois temos de alterar no bonus pq podemos ter varias e nao deve ser dificil
 
-int	phong(t_mini *m, t_ray *r)
+t_pos	phong(t_mini *m, t_ray *r)//, float alpha)
 {
-	float		i;
+	t_pos		i;
 	float		k_a;
 	float		k_d;
-	float		k_s;
-	float		alpha;
+	//float		k_s;
+	t_pos		amb;
+	t_pos		diff;
 	t_vector	l;
 
-	k_a = 1;
-	k_s = 1;
-	k_d = 1;
-	alpha = 1;
-	l = vector_create(m->light->pos, ray_pos(r->p0, r->v1, r->t));
-	i = k_a * m->al->color + k_d * vector_dot(l, r->norm_v) * m->light->color \
-	+ k_s * pow(vector_dot(reflected_ray(r, l), vector_mult_const(vector_create(ray_pos(r->p0, r->v1, r->t), coord_new(0, 0, -1)), -1)), alpha);
+	k_a = m->al->ratio;
+	//k_s = 1;
+	k_d = m->light->ratio;
+
+	l = vector_norm(vector_create(m->light->pos, ray_pos(r->p0, r->v1, r->t)));
+	amb = multconstRGB(k_a, r->color);
+	//amb = (t_pos){0, 0, 0};
+	//diff = (t_pos){0, 0, 0};
+	diff = multconstRGB(k_d * vector_dot(r->norm_v, l), r->color);
+	i = addRGB(amb, diff);
+	//printf("CORES: %i %i %i\n", (int)i.x, (int)i.y, (int)i.z);
+	/*\
+	+ k_s * pow(vector_dot(reflected_ray(r, l), \
+				vector_mult_const(vector_create(ray_pos(r->p0, r->v1, r->t), \
+						coord_new(0, 0, -1)), -1)), 1);*/
 	return (i);
 }

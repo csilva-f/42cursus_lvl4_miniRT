@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:17:36 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/11 00:44:52 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:00:22 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_plane	*pl_new(t_mini *m, char **vars, char ***data)
 			|| fabs(pl->vec.vz) > 1 || length(pl->vec) != 1)
 			vars_errors(m, 4);
 		else
-			pl->color = fill_colors(m, vars[3], -1);
+			fill_colors(m, vars[3], &pl->color);
 	}
 	pl->next = NULL;
 	pl->coef = -1 * vector_dot(pl->vec, pos_to_vector(pl->pos));
@@ -81,7 +81,7 @@ t_sphere	*sph_new(t_mini *m, char **vars, char ***data)
 	sp->pos.z = float_check(m, (*data)[2]);
 	sp->d = float_check(m, vars[2]) / 2;
 	sp->d_squared = sp->d * sp->d;
-	sp->color = fill_colors(m, vars[3], -1);
+	fill_colors(m, vars[3], &sp->color);
 	sp->next = NULL;
 	return (sp);
 }

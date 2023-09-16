@@ -6,7 +6,7 @@
 #    By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 14:33:39 by csilva-f          #+#    #+#              #
-#    Updated: 2023/08/30 18:51:00 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/09/16 15:46:23 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS =	srcs/main.c					srcs/check.c					srcs/lights_camera_checker.c \
 		srcs/solid_lst.c			srcs/solid_lst_2.c 				srcs/coord_transform.c \
 		srcs/collisions.c 			srcs/lightrays.c 				srcs/mlx_stuff.c \
 		srcs/pixel_camera.c			srcs/reflection.c				srcs/initialize.c \
-		srcs/clear.c				srcs/phong.c
+		srcs/clear.c				srcs/phong.c					srcs/color_op.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)

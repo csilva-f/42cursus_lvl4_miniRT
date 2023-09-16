@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:57:04 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/11 00:46:02 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/16 15:31:52 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ void	get_values(t_mini *m)
 	if (m->is_valid)
 		data_transform(m);
 	free(aux);
-	printf("A\n%f %i\n", m->al->ratio, m->al->color);
+	printf("A\n%f %i %i %i\n", m->al->ratio, (int)m->al->color.x, (int)m->al->color.y, (int)m->al->color.z);
 	printf("C\n%f,%f", m->cam->pos.x, m->cam->pos.y);
 	printf(",%f %f,%f,%f %i\n", m->cam->pos.z, \
 			m->cam->vec.vx, m->cam->vec.vy, m->cam->vec.vz, m->cam->fov);
-	printf("L\n%f,%f,%f %f, %i\n", m->light->pos.x, m->light->pos.y, \
-			m->light->pos.z, m->light->ratio, m->light->color);
+	printf("L\n%f,%f,%f %f, %i %i %i\n", m->light->pos.x, m->light->pos.y, \
+			m->light->pos.z, m->light->ratio, (int)m->light->color.x, (int)m->light->color.y, (int)m->light->color.z);
 	print_parser(m);
 }
 
@@ -91,20 +91,20 @@ void	print_parser(t_mini *m)
 	c = m->cyl;
 	while (pl != NULL)
 	{
-		printf("pl\n%f,%f,%f %f,%f,%f %i\n", pl->pos.x, pl->pos.y, \
-				pl->pos.z, pl->vec.vx, pl->vec.vy, pl->vec.vz, pl->color);
+		printf("pl\n%f,%f,%f %f,%f,%f %i %i %i\n", pl->pos.x, pl->pos.y, \
+				pl->pos.z, pl->vec.vx, pl->vec.vy, pl->vec.vz, (int)pl->color.x, (int)pl->color.y, (int)pl->color.z);
 		pl = pl->next;
 	}
 	while (s != NULL)
 	{
 		printf("sp\n%f,%f", s->pos.x, s->pos.y);
-		printf(",%f %f, %i\n", s->pos.z, s->d, s->color);
+		printf(",%f %f, %i %i %i\n", s->pos.z, s->d, (int)s->color.x, (int)s->color.y, (int)s->color.z);
 		s = s->next;
 	}
 	while (c != NULL)
 	{
-		printf("cy\n%f,%f,%f %f,%f,%f %f %f %i\n", c->pos.x, c->pos.y, c->pos.z, \
-				c->vec.vx, c->vec.vy, c->vec.vz, c->d, c->h, c->color);
+		printf("cy\n%f,%f,%f %f,%f,%f %f %f %i %i %i\n", c->pos.x, c->pos.y, c->pos.z, \
+				c->vec.vx, c->vec.vy, c->vec.vz, c->d, c->h, (int)c->color.x, (int)c->color.y, (int)c->color.z);
 		c = c->next;
 	}
 }

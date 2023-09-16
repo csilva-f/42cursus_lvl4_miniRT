@@ -6,19 +6,20 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 18:33:31 by fvieira           #+#    #+#             */
-/*   Updated: 2023/08/03 18:33:33 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/09/16 15:35:09 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-int	my_mlx_pixel_put(t_mini *m, int x, int y, int color)
+int	my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c)
 {
 	char	*dst;
 
 	dst = m->g->addr + (y * m->g->line_length + x
 			* (m->g->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	*(unsigned int *)dst = (0 << 24 | (int)c.x << 16 | (int)c.y << 8 | (int)c.z);
+	//*(unsigned int *)dst = color;
 	return (0);
 }
 
