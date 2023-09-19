@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/16 17:09:36 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/19 23:14:20 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@
 # define UP 65362
 # define RIGHT 65363
 # define DOWN 65364
-# define R 114
-# define Z 122
-# define M 109
+# define TR 114
+# define TZ 122
+# define TM 109
 # define S 115
 # define T1 65436
 # define T2 65433
@@ -55,15 +55,14 @@
 # define PLUS 65451
 # define MINUS 65453
 
-
 # define WHITE 0xFFFFFF
 # define YELLOW 0xFFCF40
+# define BLUE 0x80A0CC
 
 typedef struct s_al
 {
 	float	ratio;
 	t_pos	color;
-	//int		color;
 }		t_al;
 
 typedef struct s_cam
@@ -78,7 +77,6 @@ typedef struct s_light
 	t_pos	pos;
 	float	ratio;
 	t_pos	color;
-	//int		color;
 }		t_light;
 
 typedef struct s_ray
@@ -171,6 +169,13 @@ void		free_structs(t_mini *mini);
 // COLLISIONS
 float		quadratic_form(float a, float b, float c);
 bool		sphere_collision(t_sphere *sp, t_ray *r);
+void		bases_aux(t_cylinder *c, float b, t_pos *p, t_vector *v);
+void		bases_aux_2(t_ray *r, t_vector v, float *n_d);
+bool		bases(t_cylinder *c, t_ray *r, float base, float t);
+
+//COLLISIONS 2
+float		*cyl_collision_aux(t_cylinder *c, t_ray *r, t_vector *x);
+void		cyl_collision_aux2(t_cylinder *c, t_ray *r, float *d, t_vector x);
 bool		cylinder_collision(t_cylinder *c, t_ray *r);
 bool		plane_collision(t_plane *pl, t_ray *r1);
 
@@ -179,11 +184,11 @@ int			rgb_to_int(int red, int green, int blue);
 void		fill_colors(t_mini *m, char *str, t_pos *col);
 
 //COLOR_OP
-t_pos		multconstRGB(float c, t_pos color);
-t_pos		multiplyRGB(t_pos color1, t_pos color2);
-t_pos		addRGB(t_pos color1, t_pos color2);
-t_pos		subRGB(t_pos color1, t_pos color2);
-t_pos		divideRGB(t_pos color1, t_pos color2);
+t_pos		multconst_rgb(float c, t_pos color);
+t_pos		multiply_rgb(t_pos color1, t_pos color2);
+t_pos		add_rgb(t_pos color1, t_pos color2);
+t_pos		sub_rgb(t_pos color1, t_pos color2);
+t_pos		divide_rgb(t_pos color1, t_pos color2);
 
 // COORD TRANSFORMATION
 void		data_transform_aux(t_mini *m);
@@ -198,7 +203,6 @@ int			check_identifier(char *str);
 void		check_line_values(t_mini *mini, char **vars);
 void		check_lines(t_mini *mini, char *aux);
 void		get_values(t_mini *mini);
-void		print_parser(t_mini *m);
 
 // LIGHTRAYS
 t_pos		ray_pos(t_pos p, t_vector v, float t);
@@ -221,7 +225,7 @@ int			my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c);
 int			close_game(t_mini *m);
 int			key_hook(int keycode, t_mini *m);
 void		raytracing(t_mini *m);
-void		start_mlx(t_mini *m);
+//void		start_mlx(t_mini *m);
 
 // PIXEL CAMERA
 float		pixel_cam_x(float psx, t_mini *m);
@@ -235,6 +239,9 @@ t_vector	reflected_ray(t_ray *r, t_vector l);
 // PHONG
 t_pos		phong(t_mini *m, t_ray *r, bool diffuse);//, float alpha);
 bool		shadow(t_mini *m, t_ray *ray);
+
+//PRINT
+void		print_parser(t_mini *m);
 
 // SHAPE CHECKER
 void		check_pl_vars(t_mini *m, char **vars);
@@ -250,6 +257,7 @@ t_sphere	*sph_last(t_sphere *sp);
 
 // SOLID LST 2
 void		sph_add_b(t_sphere **sp, t_sphere *sp_new);
+void		cy_new_aux(t_mini *m, char ***data, t_cylinder **c);
 t_cylinder	*cy_new(t_mini *m, char **vars, char ***data);
 t_cylinder	*cy_last(t_cylinder *cy);
 void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);

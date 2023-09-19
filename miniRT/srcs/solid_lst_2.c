@@ -6,17 +6,12 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 00:28:07 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/16 16:00:30 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/19 22:15:54 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-/*float	pl_coef(t_vector vec, t_pos pos)
-{
-	return (-1 * vector_dot(vec, pos_to_vector(pos)));
-}
-*/
 void	sph_add_b(t_sphere **sp, t_sphere *sp_new)
 {
 	t_sphere	*aux;
@@ -34,13 +29,18 @@ void	sph_add_b(t_sphere **sp, t_sphere *sp_new)
 	}
 }
 
+void	cy_new_aux(t_mini *m, char ***data, t_cylinder **c)
+{
+	(*c)->pos = coord_new(float_check(m, (*data)[0]), float_check(m, \
+				(*data)[1]), float_check(m, (*data)[2]));
+}
+
 t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 {
 	t_cylinder	*c;
 
 	c = malloc(sizeof(t_cylinder));
-	c->pos = coord_new(float_check(m, (*data)[0]), float_check(m, \
-				(*data)[1]), float_check(m, (*data)[2]));
+	cy_new_aux(m, data, &c);
 	ft_free_split(*data);
 	*data = ft_split(vars[2], ',');
 	if (count_vars(*data, 3, 4, m))
