@@ -233,7 +233,8 @@ t_vector	pixel_vec(t_pos pix);
 t_vector	reflected_ray(t_ray *r, t_vector l);
 
 // PHONG
-t_pos		phong(t_mini *m, t_ray *r);//, float alpha);
+t_pos		phong(t_mini *m, t_ray *r, bool diffuse);//, float alpha);
+bool		shadow(t_mini *m, t_ray *ray);
 
 // SHAPE CHECKER
 void		check_pl_vars(t_mini *m, char **vars);

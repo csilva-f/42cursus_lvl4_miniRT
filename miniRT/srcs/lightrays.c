@@ -66,13 +66,13 @@ void	collisions(t_mini *m, int x, int y)
 	temp_sp = m->sp;
 	temp_cyl = m->cyl;
 	collisions_aux(m);
-	if (m->ray->t > -1)
-		my_mlx_pixel_put(m, x, y, phong(m, m->ray));
-	else
-		my_mlx_pixel_put(m, x, y, (t_pos){0, 0, 0});
 	m->plane = temp_pl;
 	m->sp = temp_sp;
 	m->cyl = temp_cyl;
+	if (m->ray->t > -1)
+		my_mlx_pixel_put(m, x, y, phong(m, m->ray, shadow(m, m->ray)));
+	else
+		my_mlx_pixel_put(m, x, y, (t_pos){0, 0, 0});
 }
 
 void	ray_create(t_mini *m)
