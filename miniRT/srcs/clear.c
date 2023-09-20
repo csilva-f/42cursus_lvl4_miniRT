@@ -38,16 +38,16 @@ void	free_solids(t_mini *mini)
 	}
 }
 
-void	free_structs(t_mini *mini)
+void	free_structs(t_mini *mini, int mlx)
 {
-	if (mini->is_valid)
+	if (mini->is_valid && mlx)
 	{
 		mlx_destroy_image(mini->g->mlx, mini->g->img);
 		mlx_destroy_window(mini->g->mlx, mini->g->win);
 		mlx_destroy_display(mini->g->mlx);
 		free(mini->g->mlx);
+		free(mini->g);
 	}
-	free(mini->g);
 	free(mini->al);
 	free(mini->cam);
 	free(mini->light);

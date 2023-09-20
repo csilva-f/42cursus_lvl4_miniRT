@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:47:40 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/19 22:09:19 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/20 21:56:54 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	check_a_vars(t_mini *m, char **vars)
 {
-	static int	counter_a = 0;
-
-	counter_a++;
-	if (counter_a > 1)
+	m->counter_a++;
+	if (m->counter_a > 1)
 	{
 		vars_errors(m, 7);
 		return ;
@@ -29,12 +27,10 @@ void	check_a_vars(t_mini *m, char **vars)
 
 int	counter_c(t_mini *m)
 {
-	static int	counter_c = 0;
-
-	counter_c++;
-	if (counter_c > 1)
+	m->counter_c++;
+	if (m->counter_c > 1)
 		vars_errors(m, 7);
-	return (counter_c);
+	return (m->counter_c);
 }
 
 void	check_c_vars(t_mini *m, char **v, char **data)
@@ -69,10 +65,9 @@ void	check_c_vars(t_mini *m, char **v, char **data)
 void	check_l_vars(t_mini *m, char **vars)
 {
 	char		**data;
-	static int	counterl = 0;
 
-	counterl++;
-	if (counterl > 1)
+	m->counter_l++;
+	if (m->counter_l > 1)
 	{
 		vars_errors(m, 7);
 		return ;

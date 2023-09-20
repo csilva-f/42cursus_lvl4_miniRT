@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/19 23:14:20 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/20 23:19:23 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,9 @@ typedef struct s_mini
 	char		*file;
 	int			fd;
 	int			is_valid;
+	int			counter_a;
+	int			counter_c;
+	int			counter_l;
 	t_al		*al;
 	t_cam		*cam;
 	t_light		*light;
@@ -157,6 +160,10 @@ typedef struct s_mini
 
 //-------------------------------------SRCS-------------------------------------
 
+// ALTER SOLID DIMENSIONS
+void		reset_canvas(t_mini *m, int r, int inc);
+void		cyl_height_diam(t_mini *m, int d_inc, int h_inc, t_cylinder *t_c);
+
 // CHECK
 bool		error_handler(int is_valid, int code);
 void		vars_errors(t_mini *mini, int code);
@@ -164,7 +171,7 @@ bool		check_file(char *file_name, t_mini *mini);
 
 // CLEAR
 void		free_solids(t_mini *mini);
-void		free_structs(t_mini *mini);
+void		free_structs(t_mini *mini, int mlx);
 
 // COLLISIONS
 float		quadratic_form(float a, float b, float c);
@@ -173,7 +180,7 @@ void		bases_aux(t_cylinder *c, float b, t_pos *p, t_vector *v);
 void		bases_aux_2(t_ray *r, t_vector v, float *n_d);
 bool		bases(t_cylinder *c, t_ray *r, float base, float t);
 
-//COLLISIONS 2
+// COLLISIONS 2
 float		*cyl_collision_aux(t_cylinder *c, t_ray *r, t_vector *x);
 void		cyl_collision_aux2(t_cylinder *c, t_ray *r, float *d, t_vector x);
 bool		cylinder_collision(t_cylinder *c, t_ray *r);
@@ -183,7 +190,7 @@ bool		plane_collision(t_plane *pl, t_ray *r1);
 int			rgb_to_int(int red, int green, int blue);
 void		fill_colors(t_mini *m, char *str, t_pos *col);
 
-//COLOR_OP
+// COLOR_OP
 t_pos		multconst_rgb(float c, t_pos color);
 t_pos		multiply_rgb(t_pos color1, t_pos color2);
 t_pos		add_rgb(t_pos color1, t_pos color2);
@@ -217,7 +224,7 @@ int			counter_c(t_mini *m);
 void		check_c_vars(t_mini *m, char **v, char **data);
 void		check_l_vars(t_mini *m, char **vars);
 
-//MENU
+// MENU
 void		create_menu(t_mini *m);
 
 // MLX
@@ -240,7 +247,7 @@ t_vector	reflected_ray(t_ray *r, t_vector l);
 t_pos		phong(t_mini *m, t_ray *r, bool diffuse);//, float alpha);
 bool		shadow(t_mini *m, t_ray *ray);
 
-//PRINT
+// PRINT
 void		print_parser(t_mini *m);
 
 // SHAPE CHECKER

@@ -94,6 +94,9 @@ t_sphere	*sph_last(t_sphere *sp)
 		return (NULL);
 	aux = sp;
 	while (aux->next != NULL)
+	{
+		printf("teste1 crl\n");
 		aux = aux->next;
+	}
 	return (aux);
 }

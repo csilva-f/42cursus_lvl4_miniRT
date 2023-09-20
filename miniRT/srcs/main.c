@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:34:00 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/08/29 19:54:02 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/20 21:30:51 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv)
 		if (m.is_valid)
 			init_canvas(&m);
 		else
-			free_structs(&m);
+			free_structs(&m, 1);
 		if (!m.is_valid)
 			return (1);
 	}
