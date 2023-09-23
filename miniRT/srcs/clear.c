@@ -6,11 +6,25 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:45:42 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/08/29 19:46:54 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:40:55 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
+
+void	free_solids_2(t_mini *mini)
+{
+	t_solid	*aux_s;
+
+	if (mini->s->head == 1)
+		mini->s = mini->s->next;
+	while (mini->s)
+	{
+		aux_s = mini->s->next;
+		free(mini->s);
+		mini->s = aux_s;
+	}
+}
 
 void	free_solids(t_mini *mini)
 {
@@ -36,6 +50,7 @@ void	free_solids(t_mini *mini)
 		free(mini->cyl);
 		mini->cyl = aux_c;
 	}
+	//free_solids_2(mini);
 }
 
 void	free_structs(t_mini *mini, int mlx)

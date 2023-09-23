@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/20 23:19:23 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/23 18:49:48 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,14 @@
 # define UP 65362
 # define RIGHT 65363
 # define DOWN 65364
-# define TR 114
-# define TZ 122
-# define TM 109
+# define R 114
+# define Z 122
+# define M 109
 # define S 115
+# define F 98
+# define B 102
+# define T 116
+# define I 105
 # define T1 65436
 # define T2 65433
 # define T3 65435
@@ -58,6 +62,8 @@
 # define WHITE 0xFFFFFF
 # define YELLOW 0xFFCF40
 # define BLUE 0x80A0CC
+/*# define YELLOW 0xFFFF00
+# define BLUE 0x00FFFF*/
 
 typedef struct s_al
 {
@@ -140,6 +146,17 @@ typedef struct s_graphics
 	int		height;
 }		t_graphics;
 
+typedef struct s_solid
+{
+	bool			head;
+	char			l;
+	t_plane			*pl;
+	t_sphere		*sp;
+	t_cylinder		*cyl;
+	t_pos			old_color;			
+	struct s_solid	*next;
+}		t_solid;
+
 typedef struct s_mini
 {
 	char		*file;
@@ -156,6 +173,10 @@ typedef struct s_mini
 	t_cylinder	*cyl;
 	t_ray		*ray;
 	t_graphics	*g;
+	t_solid		*s;
+	bool		hl;
+	t_pos		grey_c;
+	char		action;
 }		t_mini;
 
 //-------------------------------------SRCS-------------------------------------
@@ -268,6 +289,21 @@ void		cy_new_aux(t_mini *m, char ***data, t_cylinder **c);
 t_cylinder	*cy_new(t_mini *m, char **vars, char ***data);
 t_cylinder	*cy_last(t_cylinder *cy);
 void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
+
+// SOLID MOVEMENTS
+t_solid		*s_last(t_solid *s);
+void		solid_add_b(t_solid **s, t_solid *s_new);
+t_solid		*solid_new(t_mini *m, t_plane *p, t_sphere *s, t_cylinder *c);
+void		print_solid_list(t_mini *m);
+void		fill_solid_list(t_mini *m);
+
+// SOLID MOVEMENTS 2
+void		highlight_solid(t_mini *m);
+
+
+// TRANSLATION
+void		cam_translation(t_mini *m, int x, int y, int z);
+void		rotate_translate(t_mini *m, int action, int	iter, char c);
 
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);
