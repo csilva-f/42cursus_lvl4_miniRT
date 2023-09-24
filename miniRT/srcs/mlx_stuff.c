@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 18:33:31 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/23 19:03:08 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:15:51 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,73 +30,19 @@ int	close_game(t_mini *m)
 	return (EXIT_SUCCESS);
 }
 
-void	key_hook_aux(int keycode, t_mini *m)
+void	destroy_create_image(t_mini *m)
 {
-	if (keycode == DOWN && !m->hl)
-		cam_translation(m, 0, -1, 0);
-	else if (keycode == F && !m->hl)
-		cam_translation(m, 0, 0, 1);
-	else if (keycode == B && !m->hl)
-		cam_translation(m, 0, 0, -1);
-	else if (keycode == T)
-	{
-		m->action = 't';
-		rotate_translate(m, 1, 0, '0');	
-	}
-	else if (keycode == R)
-	{
-		m->action = 'r';
-		rotate_translate(m, 2, 0, '0');
-	}
-	else if (keycode == RIGHT && m->hl)
-		rotate_translate(m, 0, 0, 'r');
-	else if (keycode == LEFT && m->hl)
-		rotate_translate(m, 0, 0, 'l');
-	else if (keycode == UP && m->hl)
-		rotate_translate(m, 0, 0, 'u');
-	else if (keycode == DOWN && m->hl)
-		rotate_translate(m, 0, 0, 'd');
-	else if (keycode == F && m->hl)
-		rotate_translate(m, 0, 0, 'f');
-	else if (keycode == B && m->hl)
-		rotate_translate(m, 0, 0, 'b');
-	else if (keycode == I)
-		rotate_translate(m, 0, 1, '0');
-}
-
-int	key_hook(int keycode, t_mini *m)
-{
-	printf("keycode: %d\n", keycode);
-	if (keycode == ESC)
-		close_game(m);
-	else if (keycode == S)
-		reset_canvas(m, 1, 0);
-	else if (keycode == T1)
-		reset_canvas(m, 0, 1);
-	else if (keycode == T2)
-		reset_canvas(m, 0, -1);
-	else if (keycode == T3)
-		cyl_height_diam(m, 1, 0, NULL);
-	else if (keycode == T4)
-		cyl_height_diam(m, -1, 0, NULL);
-	else if (keycode == T5)
-		cyl_height_diam(m, 0, 1, NULL);
-	else if (keycode == T6)
-		cyl_height_diam(m, 0, -1, NULL);
-	else if (keycode == RIGHT && !m->hl)
-		cam_translation(m, 1, 0, 0);
-	else if (keycode == LEFT && !m->hl)
-		cam_translation(m, -1, 0, 0);
-	else if (keycode == UP && !m->hl)
-		cam_translation(m, 0, 1, 0);
-	else
-		key_hook_aux(keycode, m);
-	return (0);
+	mlx_destroy_image(m->g->mlx, m->g->img);
+	m->g->img = mlx_new_image(m->g->mlx, m->g->width, m->g->height);
+	m->g->addr = mlx_get_data_addr(m->g->img, &m->g->bits_per_pixel, \
+			&m->g->line_length, &m->g->endian);
+	raytracing(m);
 }
 
 void	raytracing(t_mini *m)
 {
 	static int	n = 0;
+
 	ray_create(m);
 	if (!n)
 		fill_solid_list(m);

@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 22:39:06 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/23 18:47:33 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:16:40 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 		{
 			x.vx = dx_v_ce[0] * dx_v_ce[1] + dx_v_ce[2];
 			x.vy = distance(c->pos, ray_pos(c->pos, c->vec, c->h));
-			//x.vy = distance(ray_pos(c->pos, vector_mult_const(c->vec, -1), c->h / 2), ray_pos(c->pos, c->vec, c->h / 2));
 			if (x.vx > 0 && x.vx < x.vy)
 			{
 				cyl_collision_aux2(c, r, dx_v_ce, x);
@@ -64,6 +63,8 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 	free(dx_v_ce);
 	return (true);
 }
+//x.vy = distance(ray_pos(c->pos, vector_mult_const(c->vec, -1),
+//c->h / 2), ray_pos(c->pos, c->vec, c->h / 2));*/
 
 bool	plane_collision(t_plane *pl, t_ray *r1)
 {

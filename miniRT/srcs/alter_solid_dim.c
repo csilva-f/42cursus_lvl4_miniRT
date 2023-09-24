@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 23:17:29 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/20 23:32:40 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:00:20 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@ void	reset_canvas(t_mini *m, int r, int inc)
 		init(m);
 		get_values(m);
 	}
-	mlx_destroy_image(m->g->mlx, m->g->img);
-	m->g->img = mlx_new_image(m->g->mlx, m->g->width, m->g->height);
-	m->g->addr = mlx_get_data_addr(m->g->img, &m->g->bits_per_pixel, \
-			&m->g->line_length, &m->g->endian);
-	raytracing(m);
+	destroy_create_image(m);
 }
 
 void	cyl_height_diam(t_mini *m, int d_inc, int h_inc, t_cylinder *t_c)
@@ -61,9 +57,5 @@ void	cyl_height_diam(t_mini *m, int d_inc, int h_inc, t_cylinder *t_c)
 		}
 	}
 	m->cyl = t_c;
-	mlx_destroy_image(m->g->mlx, m->g->img);
-	m->g->img = mlx_new_image(m->g->mlx, m->g->width, m->g->height);
-	m->g->addr = mlx_get_data_addr(m->g->img, &m->g->bits_per_pixel, \
-			&m->g->line_length, &m->g->endian);
-	raytracing(m);
+	destroy_create_image(m);
 }

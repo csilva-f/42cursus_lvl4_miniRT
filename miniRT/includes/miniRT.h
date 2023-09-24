@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/23 18:49:48 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:10:57 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,10 @@ void		check_line_values(t_mini *mini, char **vars);
 void		check_lines(t_mini *mini, char *aux);
 void		get_values(t_mini *mini);
 
+//KEY HOOK
+void		key_hook_aux(int keycode, t_mini *m);
+int			key_hook(int keycode, t_mini *m);
+
 // LIGHTRAYS
 t_pos		ray_pos(t_pos p, t_vector v, float t);
 t_ray		*ray_new(t_pos p, t_vector v);
@@ -251,9 +255,8 @@ void		create_menu(t_mini *m);
 // MLX
 int			my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c);
 int			close_game(t_mini *m);
-int			key_hook(int keycode, t_mini *m);
+void		destroy_create_image(t_mini *m);
 void		raytracing(t_mini *m);
-//void		start_mlx(t_mini *m);
 
 // PIXEL CAMERA
 float		pixel_cam_x(float psx, t_mini *m);
@@ -299,11 +302,14 @@ void		fill_solid_list(t_mini *m);
 
 // SOLID MOVEMENTS 2
 void		highlight_solid(t_mini *m);
-
+void		apply_action_iterate(t_mini *m, int iter);
+void		rotate_translate(t_mini *m, int action, int	iter, char c);
 
 // TRANSLATION
+void		solid_iteration(t_mini *m, int x, int y, int z);
 void		cam_translation(t_mini *m, int x, int y, int z);
-void		rotate_translate(t_mini *m, int action, int	iter, char c);
+void		translate_solids_2(t_mini *m, char c, int n);
+void		translate_solids(t_mini *m, char c);
 
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);
