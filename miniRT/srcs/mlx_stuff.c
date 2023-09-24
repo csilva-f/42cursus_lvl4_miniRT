@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 18:33:31 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/24 13:15:51 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 16:58:10 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,34 @@ int	close_game(t_mini *m)
 	return (EXIT_SUCCESS);
 }
 
-void	destroy_create_image(t_mini *m)
+void	print_action(t_mini *m, int action)
+{
+	if (action)
+	{
+		mlx_set_font(m->g->mlx, m->g->win, "6x12");
+		if (action == 1)
+			mlx_string_put(m->g->mlx, m->g->win, 10, 15, \
+					WHITE, "SOLIDS TRANSLATION");
+		else if (action == 2)
+			mlx_string_put(m->g->mlx, m->g->win, 10, 15, \
+					WHITE, "SOLIDS ROTATION");
+		else if (action == 3)
+			mlx_string_put(m->g->mlx, m->g->win, 10, 15, \
+					WHITE, "SOLIDS DIMENSIONS");
+		else if (action == 4)
+			mlx_string_put(m->g->mlx, m->g->win, 10, 15, \
+					WHITE, "CYLINDER HEIGHT");
+	}
+}
+
+void	destroy_create_image(t_mini *m, int action)
 {
 	mlx_destroy_image(m->g->mlx, m->g->img);
 	m->g->img = mlx_new_image(m->g->mlx, m->g->width, m->g->height);
 	m->g->addr = mlx_get_data_addr(m->g->img, &m->g->bits_per_pixel, \
 			&m->g->line_length, &m->g->endian);
 	raytracing(m);
+	print_action(m, action);
 }
 
 void	raytracing(t_mini *m)
@@ -44,7 +65,7 @@ void	raytracing(t_mini *m)
 	static int	n = 0;
 
 	ray_create(m);
-	if (!n)
+	if (!n || m->reset)
 		fill_solid_list(m);
 	n++;
 }

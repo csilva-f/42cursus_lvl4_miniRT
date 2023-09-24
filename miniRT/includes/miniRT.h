@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 13:10:57 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 17:34:46 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define UP 65362
 # define RIGHT 65363
 # define DOWN 65364
+# define PLUS 65451
+# define MINUS 65453
 # define R 114
 # define Z 122
 # define M 109
@@ -46,6 +48,8 @@
 # define B 102
 # define T 116
 # define I 105
+# define D 100
+# define H 104
 # define T1 65436
 # define T2 65433
 # define T3 65435
@@ -177,13 +181,14 @@ typedef struct s_mini
 	bool		hl;
 	t_pos		grey_c;
 	char		action;
+	bool		reset;
 }		t_mini;
 
 //-------------------------------------SRCS-------------------------------------
 
 // ALTER SOLID DIMENSIONS
-void		reset_canvas(t_mini *m, int r, int inc);
-void		cyl_height_diam(t_mini *m, int d_inc, int h_inc, t_cylinder *t_c);
+void		reset_canvas(t_mini *m);
+void		solids_dimensions(t_mini *m, char c);
 
 // CHECK
 bool		error_handler(int is_valid, int code);
@@ -250,12 +255,14 @@ void		check_c_vars(t_mini *m, char **v, char **data);
 void		check_l_vars(t_mini *m, char **vars);
 
 // MENU
+void		create_menu_aux(int y, void *mlx, void *win);
 void		create_menu(t_mini *m);
 
 // MLX
 int			my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c);
 int			close_game(t_mini *m);
-void		destroy_create_image(t_mini *m);
+void		print_action(t_mini *m, int action);
+void		destroy_create_image(t_mini *m, int action);
 void		raytracing(t_mini *m);
 
 // PIXEL CAMERA
@@ -303,7 +310,9 @@ void		fill_solid_list(t_mini *m);
 // SOLID MOVEMENTS 2
 void		highlight_solid(t_mini *m);
 void		apply_action_iterate(t_mini *m, int iter);
-void		rotate_translate(t_mini *m, int action, int	iter, char c);
+void		init_hl_mode(t_mini *m, int action);
+int			def_tip_action(t_mini *m, int action);
+void		dim_rot_trans(t_mini *m, int action, int iter, char c);
 
 // TRANSLATION
 void		solid_iteration(t_mini *m, int x, int y, int z);

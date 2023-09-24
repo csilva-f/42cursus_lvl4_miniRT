@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 11:50:23 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 13:08:16 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 17:24:38 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	cam_translation(t_mini *m, int x, int y, int z)
 	m->sp = t_sp;
 	m->cyl = t_cyl;
 	m->plane = t_pl;
-	destroy_create_image(m);
+	destroy_create_image(m, 0);
 }
 
 void	translate_solids_2(t_mini *m, char c, int n)
@@ -93,4 +93,11 @@ void	translate_solids(t_mini *m, char c)
 	}
 	else
 		translate_solids_2(m, c, n);
+}
+
+void	light_translation(t_mini *m, int x, int y, int z)
+{
+	m->light->pos.x += x * 1;
+	m->light->pos.y += y * 1;
+	m->light->pos.z += z * 1;
 }
