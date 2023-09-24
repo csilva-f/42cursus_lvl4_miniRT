@@ -6,11 +6,12 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 18:33:31 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/24 16:58:10 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 18:55:32 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
+#include <stdio.h>
 
 int	my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c)
 {
@@ -47,6 +48,9 @@ void	print_action(t_mini *m, int action)
 		else if (action == 4)
 			mlx_string_put(m->g->mlx, m->g->win, 10, 15, \
 					WHITE, "CYLINDER HEIGHT");
+		else if (action == 5)
+			mlx_string_put(m->g->mlx, m->g->win, 10, 15, \
+					WHITE, "LIGHT TRANSLATION");
 	}
 }
 

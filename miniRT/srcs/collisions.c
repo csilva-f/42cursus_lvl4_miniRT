@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:42:57 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/19 22:39:30 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 18:10:17 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void	bases_aux(t_cylinder *c, float b, t_pos *p, t_vector *v)
 void	bases_aux_2(t_ray *r, t_vector v, float *n_d)
 {
 	if (n_d[1] < 0)
-		r->norm_v = vector_mult_const(v, -1);
-	else
 		r->norm_v = v;
+	else
+		r->norm_v = vector_mult_const(v, -1);
 }
 
 bool	bases(t_cylinder *c, t_ray *r, float base, float t)

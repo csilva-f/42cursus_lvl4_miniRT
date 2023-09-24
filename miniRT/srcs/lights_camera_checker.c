@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:47:40 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/20 21:56:54 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 18:48:41 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	check_l_vars(t_mini *m, char **vars)
 				vars_errors(m, 4);
 			else
 				fill_colors(m, vars[3], &m->light->color);
+			m->light->next = NULL;
 		}
 	}
 }

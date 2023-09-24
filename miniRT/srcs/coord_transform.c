@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:39:09 by fvieira           #+#    #+#             */
-/*   Updated: 2023/08/30 18:44:51 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 18:47:14 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	data_transform_aux(t_mini *m)
 		m->cyl->pos = coord_sub(m->cyl->pos, m->cam->pos);
 		m->cyl = m->cyl->next;
 	}
+	while (m->light)
+	{
+		m->light->pos = coord_sub(m->light->pos, m->cam->pos);
+		m->light = m->light->next;
+	}
 }
 
 void	data_transform(t_mini *m)
@@ -36,15 +41,18 @@ void	data_transform(t_mini *m)
 	t_sphere	*temp_sp;
 	t_plane		*temp_pl;
 	t_cylinder	*temp_cyl;
+	t_light		*temp_light;
 
 	temp_sp = m->sp;
 	temp_pl = m->plane;
 	temp_cyl = m->cyl;
+	temp_light = m->light;
 	m->cam->pos.z -= 1;
 	data_transform_aux(m);
 	m->sp = temp_sp;
 	m->plane = temp_pl;
 	m->cyl = temp_cyl;
+	m->light = temp_light;
 	m->cam->pos.x = 0;
 	m->cam->pos.y = 0;
 	m->cam->pos.z = -1;

@@ -6,11 +6,27 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 13:02:16 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 17:44:01 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 18:56:18 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
+
+void	key_hook_aux_3(int keycode, t_mini *m)
+{
+	if (keycode == RIGHT && m->action == 'l')
+		light_translation(m, 1, 0, 0);
+	else if (keycode == LEFT && m->action == 'l')
+		light_translation(m, -1, 0, 0);
+	else if (keycode == UP && m->action == 'l')
+		light_translation(m, 0, 1, 0);
+	else if (keycode == DOWN && m->action == 'l')
+		light_translation(m, 0, -1, 0);
+	else if (keycode == F && m->action == 'l')
+		light_translation(m, 0, 0, 1);
+	else if (keycode == B && m->action == 'l')
+		light_translation(m, 0, 0, -1);
+}
 
 void	key_hook_aux_2(int keycode, t_mini *m)
 {
@@ -24,6 +40,21 @@ void	key_hook_aux_2(int keycode, t_mini *m)
 		dim_rot_trans(m, 0, 0, 'b');
 	else if (keycode == I)
 		dim_rot_trans(m, 0, 1, '0');
+	else if (keycode == L)
+	{
+		if (m->action == 'l')
+		{
+			m->action = '0';
+			destroy_create_image(m, 0);
+		}
+		else
+		{
+			m->action = 'l';
+			print_action(m, 5);
+		}
+	}
+	else
+		key_hook_aux_3(keycode, m);
 }
 
 void	key_hook_aux(int keycode, t_mini *m)
@@ -61,17 +92,17 @@ int	key_hook(int keycode, t_mini *m)
 		close_game(m);
 	else if (keycode == S)
 		reset_canvas(m);
-	else if (keycode == RIGHT && !m->hl)
+	else if (keycode == RIGHT && !m->hl && m->action == '0')
 		cam_translation(m, 1, 0, 0);
-	else if (keycode == LEFT && !m->hl)
+	else if (keycode == LEFT && !m->hl && m->action == '0')
 		cam_translation(m, -1, 0, 0);
-	else if (keycode == UP && !m->hl)
+	else if (keycode == UP && !m->hl && m->action == '0')
 		cam_translation(m, 0, 1, 0);
-	else if (keycode == DOWN && !m->hl)
+	else if (keycode == DOWN && !m->hl && m->action == '0')
 		cam_translation(m, 0, -1, 0);
-	else if (keycode == F && !m->hl)
+	else if (keycode == F && !m->hl && m->action == '0')
 		cam_translation(m, 0, 0, 1);
-	else if (keycode == B && !m->hl)
+	else if (keycode == B && !m->hl && m->action == '0')
 		cam_translation(m, 0, 0, -1);
 	else if (keycode == T)
 	{

@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 17:34:46 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 18:54:57 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define I 105
 # define D 100
 # define H 104
+# define L 108
 # define T1 65436
 # define T2 65433
 # define T3 65435
@@ -84,9 +85,10 @@ typedef struct s_cam
 
 typedef struct s_light
 {
-	t_pos	pos;
-	float	ratio;
-	t_pos	color;
+	t_pos			pos;
+	float			ratio;
+	t_pos			color;
+	struct s_light	*next;
 }		t_light;
 
 typedef struct s_ray
@@ -238,6 +240,8 @@ void		check_lines(t_mini *mini, char *aux);
 void		get_values(t_mini *mini);
 
 //KEY HOOK
+void		key_hook_aux_3(int keycode, t_mini *m);
+void		key_hook_aux_2(int keycode, t_mini *m);
 void		key_hook_aux(int keycode, t_mini *m);
 int			key_hook(int keycode, t_mini *m);
 
@@ -319,6 +323,7 @@ void		solid_iteration(t_mini *m, int x, int y, int z);
 void		cam_translation(t_mini *m, int x, int y, int z);
 void		translate_solids_2(t_mini *m, char c, int n);
 void		translate_solids(t_mini *m, char c);
+void		light_translation(t_mini *m, int x, int y, int z);
 
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);
