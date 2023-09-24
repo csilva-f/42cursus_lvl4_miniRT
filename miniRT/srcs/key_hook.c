@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 13:02:16 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 17:30:43 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/24 17:44:01 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	key_hook_aux(int keycode, t_mini *m)
 
 int	key_hook(int keycode, t_mini *m)
 {
-	printf("keycode: %i\nhl: %i\n", keycode, m->hl);
 	if (keycode == ESC)
 		close_game(m);
 	else if (keycode == S)
