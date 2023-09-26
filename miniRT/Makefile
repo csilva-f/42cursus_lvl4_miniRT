@@ -29,15 +29,15 @@ LINK = -I./includes
 RM = rm -rf
 NAME = miniRT
 
-SRCS =	srcs/main.c					srcs/check.c					srcs/lights_camera_checker.c \
-		srcs/shape_checker.c		srcs/colors.c					srcs/file_reader.c \
-		srcs/solid_lst.c			srcs/solid_lst_2.c 				srcs/coord_transform.c \
-		srcs/collisions.c 			srcs/lightrays.c 				srcs/mlx_stuff.c \
-		srcs/pixel_camera.c			srcs/reflection.c				srcs/initialize.c \
-		srcs/clear.c				srcs/phong.c					srcs/color_op.c \
-		srcs/menu.c					srcs/print_parser.c				srcs/collisions_2.c \
-		srcs/alter_solid_dim.c		srcs/translations.c				srcs/solid_movs.c \
-		srcs/solid_movs_2.c			srcs/key_hook.c
+SRCS =	srcs/main.c				srcs/check.c			srcs/lights_camera_checker.c \
+		srcs/shape_checker.c	srcs/colors.c			srcs/file_reader.c \
+		srcs/solid_lst.c		srcs/solid_lst_2.c 		srcs/coord_transform.c \
+		srcs/collisions.c 		srcs/lightrays.c 		srcs/mlx_stuff.c \
+		srcs/pixel_camera.c		srcs/reflection.c		srcs/initialize.c \
+		srcs/clear.c			srcs/phong.c			srcs/color_op.c \
+		srcs/menu.c				srcs/print_parser.c		srcs/collisions_2.c \
+		srcs/alter_solid_dim.c	srcs/translations.c		srcs/solid_movs.c \
+		srcs/solid_movs_2.c		srcs/key_hook.c			srcs/solid_rot.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)

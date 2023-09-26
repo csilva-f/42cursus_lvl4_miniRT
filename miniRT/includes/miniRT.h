@@ -41,6 +41,8 @@
 # define PLUS 65451
 # define MINUS 65453
 # define R 114
+# define X 120
+# define Y 121
 # define Z 122
 # define M 109
 # define S 115
@@ -67,6 +69,8 @@
 # define WHITE 0xFFFFFF
 # define YELLOW 0xFFCF40
 # define BLUE 0x80A0CC
+
+# define PI 3.1415926
 /*# define YELLOW 0xFFFF00
 # define BLUE 0x00FFFF*/
 
