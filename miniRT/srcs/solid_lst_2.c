@@ -56,8 +56,8 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 			c->d_squared = c->d * c->d;
 			c->h = float_check(m, vars[4]);
 			fill_colors(m, vars[5], &c->color);
-			c->pos = ray_pos(c->pos, c->vec, c->h / 2);
-			c->vec = vector_mult_const(c->vec, -1);
+			//c->pos = ray_pos(c->pos, c->vec, c->h / 2);
+			//c->vec = vector_mult_const(c->vec, -1);
 		}
 	}
 	c->next = NULL;

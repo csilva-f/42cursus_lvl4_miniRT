@@ -50,9 +50,9 @@ void	free_solids(t_mini *mini)
 		free(mini->cyl);
 		mini->cyl = aux_c;
 	}
+	//if (mini->s)
+			//free_solids_2(mini);
 }
-//if (mini->s)
-		//free_solids_2(mini);
 
 void	free_structs(t_mini *mini, int mlx)
 {
@@ -61,7 +61,11 @@ void	free_structs(t_mini *mini, int mlx)
 		mlx_destroy_image(mini->g->mlx, mini->g->img);
 		mlx_destroy_window(mini->g->mlx, mini->g->win);
 		mlx_destroy_display(mini->g->mlx);
+		mlx_destroy_image(mini->g->menu_mlx, mini->g->menu_img);
+		mlx_destroy_window(mini->g->menu_mlx, mini->g->menu_win);
+		mlx_destroy_display(mini->g->menu_mlx);
 		free(mini->g->mlx);
+		free(mini->g->menu_mlx);
 		free(mini->g);
 	}
 	free(mini->al);

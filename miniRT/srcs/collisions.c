@@ -60,13 +60,13 @@ void	bases_aux(t_cylinder *c, float b, t_pos *p, t_vector *v)
 {
 	if (b >= 0.3)
 	{
-		(*p) = ray_pos(c->pos, c->vec, c->h);
+		(*p) = ray_pos(c->pos, c->vec, c->h / 2);
 		(*v) = vector_mult_const(c->vec, -1);
 	}
 	else
 	{
 		(*v) = c->vec;
-		(*p) = c->pos;
+		(*p) = ray_pos(c->pos, vector_mult_const(c->vec, -1), c->h / 2);
 	}
 }
 
@@ -94,7 +94,9 @@ bool	bases(t_cylinder *c, t_ray *r, float base, float t)
 		{
 			if (r->t == -1 || (t < r->t))
 			{
-				if (distance(pos, ray_pos(r->p0, r->v1, t)) > c->d)
+				float dist = distance(pos, ray_pos(r->p0, r->v1, t));
+				printf(" distance %f  d %f\n", dist, c->d);
+				if (dist >= c->d)
 					return (false);
 				r->t = t;
 				r->reflex_times--;

@@ -14,12 +14,15 @@
 
 void	create_menu_aux(int y, void *mlx, void *win)
 {
-	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Z-Axis: [F] [B]");
-	mlx_string_put(mlx, win, 10, y += 40, WHITE, "X-Axis: arrows");
-	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Y-Axis: arrows");
-	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Z-Axis: [F] [B]");
-	mlx_string_put(mlx, win, 10, y += 20, WHITE, "Reset: [S]");
-	mlx_string_put(mlx, win, 10, y += 20, WHITE, "Exit: ESC");
+	mlx_string_put(mlx, win, 10, y += 40, WHITE, "Cylinder height:   + -");
+	mlx_string_put(mlx, win, 10, y += 40, WHITE, "X-Axis:           arrows");
+	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Y-Axis:           arrows");
+	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Z-Axis:          [F]  [B]");
+	mlx_string_put(mlx, win, 10, y += 115, WHITE, "X-Axis:           arrows");
+	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Y-Axis:           arrows");
+	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Z-Axis:          [F]  [B]");
+	mlx_string_put(mlx, win, 10, y += 30, BLUE, "RESET: [S]");
+	mlx_string_put(mlx, win, 10, y += 20, BLUE, "EXIT: [ESC]");
 }
 
 void	create_menu(t_mini *m)
@@ -41,11 +44,12 @@ void	create_menu(t_mini *m)
 	mlx_string_put(mlx, win, 10, y += 20, BLUE, "SOLIDS DIMENSIONS MODE [D]");
 	mlx_string_put(mlx, win, 10, y += 55, BLUE, "CYLINDER HEIGHT MODE [H]");
 	mlx_string_put(mlx, win, 10, y += 40, BLUE, "SOLIDS TRANSLATION MODE [T]");
-	mlx_string_put(mlx, win, 10, y += 70, BLUE, "CAMERA TRANSLATION");
-	mlx_string_put(mlx, win, 10, y -= 150, WHITE, "Sphere diameter:   + -");
+	mlx_string_put(mlx, win, 10, y += 70, BLUE, "SOLIDS ROTATION MODE [T]");
+	mlx_string_put(mlx, win, 10, y += 20, WHITE, "X-Axis:            [X]");
+	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Y-Axis:            [Y]");
+	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Z-Axis:            [Z]");
+	mlx_string_put(mlx, win, 10, y += 25, BLUE, "CAMERA TRANSLATION");
+	mlx_string_put(mlx, win, 10, y -= 225, WHITE, "Sphere diameter:   + -");
 	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Cylinder diameter: + -");
-	mlx_string_put(mlx, win, 10, y += 40, WHITE, "Cylinder height:   + -");
-	mlx_string_put(mlx, win, 10, y += 40, WHITE, "X-Axis: arrows");
-	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Y-Axis: arrows");
 	create_menu_aux(y, mlx, win);
 }

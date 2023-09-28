@@ -47,7 +47,7 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 		{
 			x.vx = dx_v_ce[0] * dx_v_ce[1] + dx_v_ce[2];
 			x.vy = distance(c->pos, ray_pos(c->pos, c->vec, c->h));
-			if (x.vx > 0 && x.vx < x.vy)
+			if (x.vx >= -1 * x.vy / 2 && x.vx <= x.vy / 2)
 			{
 				cyl_collision_aux2(c, r, dx_v_ce, x);
 				free(dx_v_ce);
@@ -55,6 +55,7 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 			}
 			else
 			{
+				//printf("bases %f h %f dist %f\n", x.vx, c->h, x.vy / 2);
 				free(dx_v_ce);
 				return (bases(c, r, x.vx, 0));
 			}

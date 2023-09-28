@@ -26,6 +26,12 @@ void	key_hook_aux_3(int keycode, t_mini *m)
 		light_translation(m, 0, 0, 1);
 	else if (keycode == B && m->action == 'l')
 		light_translation(m, 0, 0, -1);
+	else if (keycode == X && m->action == 'r')
+		dim_rot_trans(m, 0, 0, 'x');
+	else if (keycode == Y && m->action == 'r')
+		dim_rot_trans(m, 0, 0, 'y');
+	else if (keycode == Z && m->action == 'r')
+		dim_rot_trans(m, 0, 0, 'z');
 }
 
 void	key_hook_aux_2(int keycode, t_mini *m)

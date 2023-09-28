@@ -329,6 +329,9 @@ void		translate_solids_2(t_mini *m, char c, int n);
 void		translate_solids(t_mini *m, char c);
 void		light_translation(t_mini *m, int x, int y, int z);
 
+// ROTATION
+void		rotate_solids(t_mini *m, char c);
+
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);
 float		float_check(t_mini *m, char *str);

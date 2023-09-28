@@ -105,7 +105,9 @@ void	dim_rot_trans(t_mini *m, int action, int iter, char c)
 			else if (m->action == 't')
 				translate_solids(m, c);
 			else if (m->action == 'r')
+			{
 				rotate_solids(m, c);
+			}
 		}
 	}
 	destroy_create_image(m, def_tip_action(m, action));
