@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:50:09 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/23 16:32:48 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:24:48 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,7 @@ void	print_solid_list(t_mini *m)
 	while (m->s->head != 1)
 		m->s = m->s->next;
 	while (m->s->next && m->s->next->head != 1)
-	{
-		printf("letra: %c; head: %i\n", m->s->l, m->s->head);
 		m->s = m->s->next;
-	}
-	printf("letra: %c; head: %i\n", m->s->l, m->s->head);
 	m->s = temp;
 }
 

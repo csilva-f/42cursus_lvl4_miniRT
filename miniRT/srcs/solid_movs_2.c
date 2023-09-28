@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 17:34:55 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 17:48:49 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:21:32 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ void	apply_action_iterate(t_mini *m, int iter)
 		m->s->sp->color = m->s->old_color;
 	else if (m->s->l == 'C')
 		m->s->cyl->color = m->s->old_color;
-	if (iter && m->hl)
+	if (iter && m->hl && m->s->next)
 	{
 		m->s = m->s->next;
 		while (m->action == 'd' && m->s->l != 'S' && m->s->l != 'C')
 			m->s = m->s->next;
 		while (m->action == 'h' && m->s->l != 'C')
+			m->s = m->s->next;
+		while (m->action == 'r' && m->s->l != 'P' && m->s->l != 'C')
 			m->s = m->s->next;
 		highlight_solid(m);
 	}
@@ -68,10 +70,15 @@ void	init_hl_mode(t_mini *m, int action)
 		m->action = 'd';
 	else if (action == 4)
 		m->action = 'h';
-	while (action == 3 && m->s->l != 'S' && m->s->l != 'C')
-		m->s = m->s->next;
-	while (action == 4 && m->s->l != 'C')
-		m->s = m->s->next;
+	if (m->s->next)
+	{
+		while (action == 3 && m->s->l != 'S' && m->s->l != 'C')
+			m->s = m->s->next;
+		while (action == 4 && m->s->l != 'C')
+			m->s = m->s->next;
+		while (action == 2 && m->s->l != 'P' && m->s->l != 'C')
+			m->s = m->s->next;
+	}
 	highlight_solid(m);
 }
 
@@ -103,11 +110,14 @@ void	dim_rot_trans(t_mini *m, int action, int iter, char c)
 			if (m->action == 'd' || m->action == 'h')
 				solids_dimensions(m, c);
 			else if (m->action == 't')
-				translate_solids(m, c);
-			else if (m->action == 'r')
 			{
-				rotate_solids(m, c);
+				if (c == 'r' || c == 'u' || c == 'f')
+					translate_solids(m, c, 0.3);
+				else if (c == 'l' || c == 'd' || c == 'b')
+					translate_solids(m, c, -0.3);
 			}
+			else if (m->action == 'r')
+				rotate_solids(m, c);
 		}
 	}
 	destroy_create_image(m, def_tip_action(m, action));

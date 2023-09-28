@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 13:02:16 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 18:56:18 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:01:33 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	key_hook_aux_2(int keycode, t_mini *m)
 			m->action = '0';
 			destroy_create_image(m, 0);
 		}
-		else
+		else if (m->action == '0')
 		{
 			m->action = 'l';
 			print_action(m, 5);

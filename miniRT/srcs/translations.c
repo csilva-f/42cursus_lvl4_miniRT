@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 11:50:23 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 18:42:04 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:15:22 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,36 +53,15 @@ void	cam_translation(t_mini *m, int x, int y, int z)
 	destroy_create_image(m, 0);
 }
 
-void	translate_solids_2(t_mini *m, char c, int n)
+void	translate_solids(t_mini *m, char c, float n)
 {
-	if (c == 'f' || c == 'b')
-	{
-		if (m->s->l == 'P')
-			m->s->pl->pos.z += n;
-		else if (m->s->l == 'S')
-			m->s->sp->pos.z += n;
-		else if (m->s->l == 'C')
-			m->s->cyl->pos.z += n;
-	}
-}
-
-void	translate_solids(t_mini *m, char c)
-{
-	float	n;
-
-	n = 0.3;
-	if (c == 'l' || c == 'd' || c == 'b')
-		n = -0.3;
-	if (c == 'r' || c == 'l')
-	{
-		if (m->s->l == 'P')
-			m->s->pl->pos.x += n;
-		else if (m->s->l == 'S')
-			m->s->sp->pos.x += n;
-		else if (m->s->l == 'C')
-			m->s->cyl->pos.x += n;
-	}
-	else if (c == 'u' || c == 'd')
+	if (m->s->l == 'P' && (c == 'r' || c == 'l'))
+		m->s->pl->pos.x += n;
+	else if (m->s->l == 'S' && (c == 'r' || c == 'l'))
+		m->s->sp->pos.x += n;
+	else if (m->s->l == 'C' && (c == 'r' || c == 'l'))
+		m->s->cyl->pos.x += n;
+	if (c == 'u' || c == 'd')
 	{
 		if (m->s->l == 'P')
 			m->s->pl->pos.y += n;
@@ -91,8 +70,15 @@ void	translate_solids(t_mini *m, char c)
 		else if (m->s->l == 'C')
 			m->s->cyl->pos.y += n;
 	}
-	else
-		translate_solids_2(m, c, n);
+	else if (c == 'f' || c == 'b')
+	{
+		if (m->s->l == 'P')
+			m->s->pl->pos.z += n;
+		else if (m->s->l == 'S')
+			m->s->sp->pos.z += n;
+		else if (m->s->l == 'C')
+			m->s->cyl->pos.z += n;
+	}
 }
 
 void	light_translation(t_mini *m, int x, int y, int z)

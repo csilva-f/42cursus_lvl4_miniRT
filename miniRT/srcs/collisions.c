@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:42:57 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/24 18:10:17 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:13:40 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ bool	bases(t_cylinder *c, t_ray *r, float base, float t)
 	float		n_d[2];
 	t_pos		pos;
 	t_vector	vec;
+	float		dist;
 
 	bases_aux(c, base, &pos, &vec);
 	n_d[1] = vector_dot(r->v1, vec);
@@ -94,8 +95,7 @@ bool	bases(t_cylinder *c, t_ray *r, float base, float t)
 		{
 			if (r->t == -1 || (t < r->t))
 			{
-				float dist = distance(pos, ray_pos(r->p0, r->v1, t));
-				printf(" distance %f  d %f\n", dist, c->d);
+				dist = distance(pos, ray_pos(r->p0, r->v1, t));
 				if (dist >= c->d)
 					return (false);
 				r->t = t;

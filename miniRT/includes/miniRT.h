@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 18:54:57 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:07:56 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,8 +325,7 @@ void		dim_rot_trans(t_mini *m, int action, int iter, char c);
 // TRANSLATION
 void		solid_iteration(t_mini *m, int x, int y, int z);
 void		cam_translation(t_mini *m, int x, int y, int z);
-void		translate_solids_2(t_mini *m, char c, int n);
-void		translate_solids(t_mini *m, char c);
+void		translate_solids(t_mini *m, char c, float n);
 void		light_translation(t_mini *m, int x, int y, int z);
 
 // ROTATION

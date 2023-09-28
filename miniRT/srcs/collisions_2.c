@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 22:39:06 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 13:16:40 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:25:27 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 			}
 			else
 			{
-				//printf("bases %f h %f dist %f\n", x.vx, c->h, x.vy / 2);
 				free(dx_v_ce);
 				return (bases(c, r, x.vx, 0));
 			}

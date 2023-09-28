@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:17:36 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/16 16:00:22 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:24:29 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,6 @@ t_sphere	*sph_last(t_sphere *sp)
 		return (NULL);
 	aux = sp;
 	while (aux->next != NULL)
-	{
-		printf("teste1 crl\n");
 		aux = aux->next;
-	}
 	return (aux);
 }
