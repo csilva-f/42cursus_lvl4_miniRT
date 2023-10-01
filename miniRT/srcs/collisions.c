@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:42:57 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/28 22:13:40 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/01 13:00:42 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,55 +56,68 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 	return (false);
 }
 
-void	bases_aux(t_cylinder *c, float b, t_pos *p, t_vector *v)
+void	bases_aux_2(t_ray *r, t_vector v)
 {
-	if (b >= 0.3)
-	{
-		(*p) = ray_pos(c->pos, c->vec, c->h / 2);
-		(*v) = vector_mult_const(c->vec, -1);
-	}
-	else
-	{
-		(*v) = c->vec;
-		(*p) = ray_pos(c->pos, vector_mult_const(c->vec, -1), c->h / 2);
-	}
-}
-
-void	bases_aux_2(t_ray *r, t_vector v, float *n_d)
-{
-	if (n_d[1] < 0)
+	if (vector_dot(r->v1, v) < 0)
 		r->norm_v = v;
 	else
 		r->norm_v = vector_mult_const(v, -1);
 }
 
-bool	bases(t_cylinder *c, t_ray *r, float base, float t)
+float	bases_aux(float *n, t_pos *pos, t_vector *vec, t_cylinder *c)
 {
-	float		n_d[2];
+	float	t[3];
+
+	if (n[1] == 0)
+		t[1] = -1;
+	else
+		t[1] = -1 * n[0] / n[1];
+	if (n[3] == 0)
+		t[2] = -1;
+	else
+		t[2] = -1 * n[2] / n[3];
+	if (t[1] > 0 && (t[2] < 0 || t[1] < t[2]))
+	{
+		(*pos) = ray_pos(c->pos, vector_mult_const(c->vec, -1), c->h / 2);
+		(*vec) = c->vec;
+		t[0] = t[1];
+	}
+	else if (t[2] > 0)
+	{
+		(*pos) = ray_pos(c->pos, c->vec, c->h / 2);
+		(*vec) = vector_mult_const(c->vec, -1);
+		t[0] = t[2];
+	}
+	else
+		t[0] = -1;
+	return (t[0]);
+}
+
+float	bases(t_cylinder *c, t_ray *r, float t)
+{
+	float		n[4];
 	t_pos		pos;
 	t_vector	vec;
-	float		dist;
 
-	bases_aux(c, base, &pos, &vec);
-	n_d[1] = vector_dot(r->v1, vec);
-	n_d[0] = vector_dot(vector_create(r->p0, pos), vec);
-	if ((n_d[1] < 0 && n_d[0] >= 0) || (n_d[1] > 0 && n_d[0] <= 0))
+	n[1] = vector_dot(r->v1, c->vec);
+	n[0] = vector_dot(vector_create(r->p0, ray_pos(c->pos, \
+		vector_mult_const(c->vec, -1), c->h / 2)), c->vec);
+	n[3] = vector_dot(r->v1, vector_mult_const(c->vec, -1));
+	n[2] = vector_dot(vector_create(r->p0, ray_pos(c->pos, c->vec, c->h / 2)), \
+		vector_mult_const(c->vec, -1));
+	t = bases_aux(n, &pos, &vec, c);
+	if (t > 0)
 	{
-		t = -1 * n_d[0] / n_d[1];
-		if (t > 0)
+		if (r->t == -1 || (t < r->t))
 		{
-			if (r->t == -1 || (t < r->t))
-			{
-				dist = distance(pos, ray_pos(r->p0, r->v1, t));
-				if (dist >= c->d)
-					return (false);
-				r->t = t;
-				r->reflex_times--;
-				r->color = c->color;
-				bases_aux_2(r, vec, n_d);
-				return (true);
-			}
+			if (distance(pos, ray_pos(r->p0, r->v1, t)) >= c->d)
+				return (-1);
+			r->t = t;
+			r->reflex_times--;
+			r->color = c->color;
+			bases_aux_2(r, vec);
+			return (t);
 		}
 	}
-	return (false);
+	return (-1);
 }

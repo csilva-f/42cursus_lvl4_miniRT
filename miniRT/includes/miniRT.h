@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/28 20:07:56 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/01 13:02:16 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,12 +208,12 @@ void		free_structs(t_mini *mini, int mlx);
 // COLLISIONS
 float		quadratic_form(float a, float b, float c);
 bool		sphere_collision(t_sphere *sp, t_ray *r);
-void		bases_aux(t_cylinder *c, float b, t_pos *p, t_vector *v);
-void		bases_aux_2(t_ray *r, t_vector v, float *n_d);
-bool		bases(t_cylinder *c, t_ray *r, float base, float t);
+void		bases_aux_2(t_ray *r, t_vector v);
+float		bases_aux(float *n, t_pos *pos, t_vector *vec, t_cylinder *c);
+float		bases(t_cylinder *c, t_ray *r, float t);
 
 // COLLISIONS 2
-float		*cyl_collision_aux(t_cylinder *c, t_ray *r, t_vector *x);
+void		cyl_collision_aux(float *d, t_cylinder *c, t_ray *r, t_vector *x);
 void		cyl_collision_aux2(t_cylinder *c, t_ray *r, float *d, t_vector x);
 bool		cylinder_collision(t_cylinder *c, t_ray *r);
 bool		plane_collision(t_plane *pl, t_ray *r1);
@@ -322,6 +322,13 @@ void		init_hl_mode(t_mini *m, int action);
 int			def_tip_action(t_mini *m, int action);
 void		dim_rot_trans(t_mini *m, int action, int iter, char c);
 
+//SOLID ROTATION
+t_vector	rotate_vector(t_vector orig, t_vector axis, float angle);
+t_vector	rotate_vector_x(t_vector orig, float angle);
+t_vector	rotate_vector_y(t_vector orig, float angle);
+t_vector	rotate_vector_z(t_vector orig, float angle);
+void		rotate_solids(t_mini *m, char c);
+
 // TRANSLATION
 void		solid_iteration(t_mini *m, int x, int y, int z);
 void		cam_translation(t_mini *m, int x, int y, int z);
@@ -329,7 +336,7 @@ void		translate_solids(t_mini *m, char c, float n);
 void		light_translation(t_mini *m, int x, int y, int z);
 
 // ROTATION
-void		rotate_solids(t_mini *m, char c);
+void		cam_rotation(t_mini *m, char c);
 
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);
