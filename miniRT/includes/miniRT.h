@@ -252,7 +252,7 @@ int			key_hook(int keycode, t_mini *m);
 // LIGHTRAYS
 t_pos		ray_pos(t_pos p, t_vector v, float t);
 t_ray		*ray_new(t_pos p, t_vector v);
-void		collisions_aux(t_mini *m);
+void		collisions_aux(t_mini *m, t_ray *ray);
 void		collisions(t_mini *m, int x, int y);
 void		ray_create(t_mini *m);
 
@@ -284,7 +284,7 @@ t_vector	reflected_ray(t_ray *r, t_vector l);
 
 // PHONG
 t_pos		phong(t_mini *m, t_ray *r, bool diffuse);//, float alpha);
-bool		shadow(t_mini *m, t_ray *ray);
+bool		shadow(t_mini *m);
 
 // PRINT
 void		print_parser(t_mini *m);

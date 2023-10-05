@@ -37,21 +37,21 @@ t_ray	*ray_new(t_pos p, t_vector v)
 	return (ray);
 }
 
-void	collisions_aux(t_mini *m)
+void	collisions_aux(t_mini *m, t_ray *ray)
 {
 	while (m->sp)
 	{
-		sphere_collision(m->sp, m->ray);
+		sphere_collision(m->sp, ray);
 		m->sp = m->sp->next;
 	}
 	while (m->plane)
 	{
-		plane_collision(m->plane, m->ray);
+		plane_collision(m->plane, ray);
 		m->plane = m->plane->next;
 	}
 	while (m->cyl)
 	{
-		cylinder_collision(m->cyl, m->ray);
+		cylinder_collision(m->cyl, ray);
 		m->cyl = m->cyl->next;
 	}
 }
@@ -61,16 +61,20 @@ void	collisions(t_mini *m, int x, int y)
 	t_sphere	*temp_sp;
 	t_plane		*temp_pl;
 	t_cylinder	*temp_cyl;
+	bool		diffuse;
 
 	temp_pl = m->plane;
 	temp_sp = m->sp;
 	temp_cyl = m->cyl;
-	collisions_aux(m);
+	collisions_aux(m, m->ray);
 	m->plane = temp_pl;
 	m->sp = temp_sp;
 	m->cyl = temp_cyl;
 	if (m->ray->t > -1)
-		my_mlx_pixel_put(m, x, y, phong(m, m->ray, shadow(m, m->ray)));
+	{
+		diffuse = shadow(m);
+		my_mlx_pixel_put(m, x, y, phong(m, m->ray, diffuse));
+	}
 	else
 		my_mlx_pixel_put(m, x, y, (t_pos){0, 0, 0});
 }

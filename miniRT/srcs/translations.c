@@ -42,14 +42,24 @@ void	cam_translation(t_mini *m, int x, int y, int z)
 	t_sphere	*t_sp;
 	t_cylinder	*t_cyl;
 	t_plane		*t_pl;
+	t_light		*t_l;
 
 	t_sp = m->sp;
 	t_cyl = m->cyl;
 	t_pl = m->plane;
+	t_l = m->light;
 	solid_iteration(m, x, y, z);
+	while (m->light)
+	{
+		m->light->pos.x += x * -1;
+		m->light->pos.y += y * -1;
+		m->light->pos.z += z * -1;
+		m->light = m->light->next;
+	}
 	m->sp = t_sp;
 	m->cyl = t_cyl;
 	m->plane = t_pl;
+	m->light = t_l;
 	destroy_create_image(m, 0);
 }
 

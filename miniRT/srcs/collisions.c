@@ -20,14 +20,14 @@ https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%2\
 float	quadratic_form(float a, float b, float c)
 {
 	float	t_plus;
-	float	t_minus;
+	float	t_minu;
 
 	t_plus = (-1 * b + sqrt(b * b - 4 * a * c)) / (2 * a);
-	t_minus = (-1 * b - sqrt(b * b - 4 * a * c)) / (2 * a);
-	if (t_plus >= 0 && (t_minus <= 0 || t_plus <= t_minus))
+	t_minu = (-1 * b - sqrt(b * b - 4 * a * c)) / (2 * a);
+	if (t_plus >= 0 && (t_minu <= 0 || t_plus <= t_minu))
 		return (t_plus);
-	else if (t_minus >= 0)
-		return (t_minus);
+	else if (t_minu >= 0)
+		return (t_minu);
 	else
 		return (-1);
 }
@@ -41,7 +41,7 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 	x = vector_create(r->p0, sp->pos);
 	c = vector_dot(x, x) - sp->d_squared;
 	t = quadratic_form(r->sqrt_len, vector_dot(r->v1, x) * 2, c);
-	if (t > -1)
+	if (t > 0)
 	{
 		if (r->t == -1 || (t < r->t))
 		{

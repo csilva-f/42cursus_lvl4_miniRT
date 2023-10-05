@@ -13,8 +13,8 @@
 #include "../includes/miniRT.h"
 
 /*
-https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-
-	  //tracing-generating-camera-rays/generating-camera-rays.html
+https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating
+//-camera-rays/generating-camera-rays.html
 */
 
 float	pixel_cam_x(float psx, t_mini *m)
