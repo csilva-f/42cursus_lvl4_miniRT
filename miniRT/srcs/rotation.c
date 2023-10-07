@@ -32,12 +32,13 @@ void	cam_rotation(t_mini *m, char c)
 	t_sphere	*t_sp;
 	t_cylinder	*t_cyl;
 	t_plane		*t_pl;
-	t_vector	axis;
+	t_light		*t_l;
 
+	t_l = m->light;
 	t_sp = m->sp;
 	t_cyl = m->cyl;
 	t_pl = m->plane;
-	axis = rotation_axis(c);
-	m->cam->vec = rotate_vector(m->cam->vec, axis, 15);
+	m->cam->vec = rotate_vector(m->cam->vec, rotation_axis(c), 15);
+	//data_transform(m);
 	destroy_create_image(m, 0);
 }

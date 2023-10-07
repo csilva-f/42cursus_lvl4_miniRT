@@ -18,7 +18,7 @@ t_vector	vector_cross(t_vector v1, t_vector v2)
 
 	novo.vx = v1.vy * v2.vz - v1.vz * v2.vy;
 	novo.vy = v1.vz * v2.vx - v1.vx * v2.vz;
-	novo.vz = v1.vx - v2.vy - v1.vy * v2.vx;
+	novo.vz = v1.vx * v2.vy - v1.vy * v2.vx;
 	return (novo);
 }
 

@@ -92,6 +92,7 @@ typedef struct s_light
 	t_pos			pos;
 	float			ratio;
 	t_pos			color;
+	t_vector		orig;
 	struct s_light	*next;
 }		t_light;
 
@@ -114,6 +115,7 @@ typedef struct s_sphere
 	float			d;
 	float			d_squared;
 	t_pos			color;
+	t_vector		orig;
 	struct s_sphere	*next;
 	struct s_sphere	*prev;
 }		t_sphere;
@@ -123,6 +125,7 @@ typedef struct s_plane
 	t_pos			pos;
 	t_vector		vec;
 	float			coef;
+	t_vector		orig;
 	t_pos			color;
 	struct s_plane	*next;
 	struct s_plane	*prev;
@@ -135,6 +138,7 @@ typedef struct s_cylinder
 	float				d;
 	float				d_squared;
 	float				h;
+	t_vector			orig;
 	t_pos				color;
 	struct s_cylinder	*next;
 	struct s_cylinder	*prev;

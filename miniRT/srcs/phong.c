@@ -64,7 +64,8 @@ bool	shadow(t_mini *m)
 	temp->p0 = hit_c;
 	temp->t = -1;
 	light_collisions(m, temp);
-	if (temp->t == -1) //falta condicao para quando ha obj atras da luz
+	if (temp->t == -1 || distance(m->light->pos, temp->p0) \
+		< distance(ray_pos(temp->p0, temp->v1, temp->t),temp->p0))
 	{
 		free(temp);
 		return (true);
