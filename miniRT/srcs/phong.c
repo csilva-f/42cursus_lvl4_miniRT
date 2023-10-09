@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/19 22:04:53 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/09 21:25:41 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	shadow(t_mini *m)
 	temp->t = -1;
 	light_collisions(m, temp);
 	if (temp->t == -1 || distance(m->light->pos, temp->p0) \
-		< distance(ray_pos(temp->p0, temp->v1, temp->t),temp->p0))
+		< distance(ray_pos(temp->p0, temp->v1, temp->t), temp->p0))
 	{
 		free(temp);
 		return (true);
@@ -74,28 +74,22 @@ bool	shadow(t_mini *m)
 	return (false);
 }
 
-//para mandatory so temos uma luz por isso vou assumir isso
-//depois temos de alterar no bonus pq podemos ter varias e nao deve ser dificil
-
 t_pos	phong(t_mini *m, t_ray *r, bool diffuse)
 {
 	t_pos		i;
-	float		k_a;
-	float		k_d;
+	float		k[2];
 	t_pos		amb;
 	t_pos		diff;
 	t_vector	l;
-	/*float		k_s;
-	t_pos		spec;*/
 
-	k_a = m->al->ratio;
-	//k_s = 1;
-	k_d = m->light->ratio;
-	l = vector_norm(vector_create(m->light->pos, ray_pos(r->p0, r->v1, r->t * 0.99999)));
-	amb = multconst_rgb(k_a, r->color);
+	k[0] = m->al->ratio;
+	k[1] = m->light->ratio;
+	l = vector_norm(vector_create(m->light->pos, ray_pos(r->p0, \
+					r->v1, r->t * 0.99999)));
+	amb = multconst_rgb(k[0], r->color);
 	(void)diffuse;
 	if (diffuse)
-		diff = multconst_rgb(k_d * vector_dot(r->norm_v, l), r->color);
+		diff = multconst_rgb(k[1] * vector_dot(r->norm_v, l), r->color);
 	else
 		diff = (t_pos){0, 0, 0};
 	i = add_rgb(amb, diff);
