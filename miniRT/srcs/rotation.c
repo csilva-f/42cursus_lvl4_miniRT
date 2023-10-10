@@ -39,6 +39,6 @@ void	cam_rotation(t_mini *m, char c)
 	t_cyl = m->cyl;
 	t_pl = m->plane;
 	m->cam->vec = rotate_vector(m->cam->vec, rotation_axis(c), 15);
-	//data_transform(m);
+	data_transform(m);
 	destroy_create_image(m, 0);
 }
