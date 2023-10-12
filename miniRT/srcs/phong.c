@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/10/12 21:55:45 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/12 22:24:31 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ bool	shadow(t_mini *m)
 	temp->p0 = hit_c;
 	temp->t = -1;
 	light_collisions(m, temp);
-	if (temp->t < 0.5 && temp->t >= 0)
+	if (temp->t < 0.05 && temp->t >= 0)
 		temp->t = -1;
 	if (temp->t == -1 || distance(m->light->pos, temp->p0) \
 		< distance(ray_pos(temp->p0, temp->v1, temp->t), temp->p0))
