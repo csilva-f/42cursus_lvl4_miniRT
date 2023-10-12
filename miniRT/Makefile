@@ -6,7 +6,7 @@
 #    By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 14:33:39 by csilva-f          #+#    #+#              #
-#    Updated: 2023/10/01 12:26:30 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/10/12 23:22:53 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,22 @@ SRCS =	srcs/main.c				srcs/check.c			srcs/lights_camera_checker.c \
 		srcs/solid_movs_2.c		srcs/key_hook.c			srcs/solid_rot.c \
 		srcs/rotation.c
 
+SRCS_BONUS = srcs_bonus/alter_solid_dim_bonus.c			srcs_bonus/check_bonus.c			srcs_bonus/clear_bonus.c \
+			 srcs_bonus/collisions_bonus.c				srcs_bonus/collisions_2_bonus.c		srcs_bonus/color_op_bonus.c \
+			 srcs_bonus/colors_bonus.c					srcs_bonus/coord_transform_bonus.c	srcs_bonus/file_reader_bonus.c \
+			 srcs_bonus/initialize_bonus.c				srcs_bonus/key_hook_bonus.c			srcs_bonus/lightrays_bonus.c \
+			 srcs_bonus/lights_camera_checker_bonus.c	srcs_bonus/main_bonus.c				srcs_bonus/menu_bonus.c \
+			 srcs_bonus/mlx_stuff_bonus.c				srcs_bonus/phong_bonus.c			srcs_bonus/pixel_camera_bonus.c \
+			 srcs_bonus/print_parser_bonus.c			srcs_bonus/reflection_bonus.c		srcs_bonus/rotation_bonus.c \
+			 srcs_bonus/shape_checker_bonus.c			srcs_bonus/solid_lst_bonus.c		srcs_bonus/solid_lst_2_bonus.c \
+			 srcs_bonus/solid_movs_bonus.c				srcs_bonus/solid_movs_2_bonus.c		srcs_bonus/solid_rot_bonus.c \
+			 srcs_bonus/translations_bonus.c
+
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)
+
+OBJS_BONUS_DIR = obj_bonus
+OBJS_BONUS = $(SRCS_BONUS:%.c=%.o)
 
 all: $(NAME)
 
@@ -50,6 +64,11 @@ $(NAME): $(OBJS) $(LIBFT) $(COORD_VECTOR)
 	$(MAKE) -C ./$(MLX)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(COORD_VECTOR) $(MLX_FLAGS) -lm -o $(NAME)
 
+bonus: $(OBJS_BONUS) $(LIBFT) $(COORD_VECTOR)
+	$(info Compiling miniRT_Bonus)
+	$(MAKE) -C ./$(MLX)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(COORD_VECTOR) $(MLX_FLAGS) -lm -o $(NAME)
+
 $(LIBFT):
 	$(MAKE) -C ./libft
 
@@ -57,12 +76,12 @@ $(COORD_VECTOR):
 	$(MAKE) -C ./coords_vectors
 
 clean:
-	$(RM) $(OBJ_DIR) $(OBJS) 
+	$(RM) $(OBJ_DIR) $(OBJS) $(OBJS_BONUS_DIR) $(OBJS_BONUS)
 	$(MAKE) clean -C ./libft
 	$(MAKE) clean -C ./coords_vectors
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(BONUS)
 	$(MAKE) fclean -C ./libft
 	$(MAKE) fclean -C ./coords_vectors
 
@@ -72,11 +91,11 @@ re: fclean all
 
 run: fclean all
 	echo ""
-	./$(NAME) $(TEST_FILE)
+	./$(NAME) ./$(BONUS) $(TEST_FILE)
 
 noleaks: fclean all
 	echo ""
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) ./$(BONUS)
 
 .SILENT:
 
