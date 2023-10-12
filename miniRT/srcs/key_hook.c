@@ -6,12 +6,11 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 13:02:16 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/01 12:25:59 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/12 22:03:08 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-#include <stdio.h>
 
 void	key_hook_aux_3(int keycode, t_mini *m)
 {
@@ -34,11 +33,11 @@ void	key_hook_aux_3(int keycode, t_mini *m)
 	else if (keycode == Z && m->action == 'r')
 		dim_rot_trans(m, 0, 0, 'z');
 	else if (keycode == X && !m->hl)
-		cam_rotation(m, 'x');
+		cam_rotation(m, 'x', (float [2]){0});
 	else if (keycode == Y && !m->hl)
-		cam_rotation(m, 'y');
+		cam_rotation(m, 'y', (float [2]){0});
 	else if (keycode == Z && !m->hl)
-		cam_rotation(m, 'z');
+		cam_rotation(m, 'z', (float [2]){0});
 }
 
 void	key_hook_aux_2(int keycode, t_mini *m)
@@ -101,7 +100,6 @@ void	key_hook_aux(int keycode, t_mini *m)
 
 int	key_hook(int keycode, t_mini *m)
 {
-	printf("keycode: %i\n", keycode);
 	if (keycode == ESC)
 		close_game(m);
 	else if (keycode == S)

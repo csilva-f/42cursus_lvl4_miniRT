@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/01 13:02:16 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/12 21:40:53 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,7 +340,10 @@ void		translate_solids(t_mini *m, char c, float n);
 void		light_translation(t_mini *m, int x, int y, int z);
 
 // ROTATION
-void		cam_rotation(t_mini *m, char c);
+t_vector	rotation_axis(char c);
+t_vector	rotation_matrix(char c, t_vector v, float angle, float *n);
+t_vector	vector_origin(t_vector v, t_pos o, int sub);
+void		cam_rotation(t_mini *m, char c, float *n);
 
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);

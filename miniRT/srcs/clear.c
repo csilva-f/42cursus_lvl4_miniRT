@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:45:42 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/28 22:17:24 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/12 21:57:52 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	free_solids_2(t_mini *mini)
 
 	if (mini->s->head == 1)
 		mini->s = mini->s->next;
-	while (mini->s)
+	while (mini->s->head != 1)
 	{
 		aux_s = mini->s->next;
 		free(mini->s);
 		mini->s = aux_s;
 	}
+	free(mini->s);
 }
 
 void	free_solids(t_mini *mini)
@@ -50,6 +51,7 @@ void	free_solids(t_mini *mini)
 		free(mini->cyl);
 		mini->cyl = aux_c;
 	}
+	free_solids_2(mini);
 }
 
 void	free_structs(t_mini *mini, int mlx)
