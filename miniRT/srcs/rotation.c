@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 12:10:03 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/12 21:40:44 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:49:26 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_vector	rotation_matrix(char c, t_vector v, float angle, float *n)
 	else if (c == 'z')
 	{
 		u.vx = v.vx * n[0] - v.vy * n[1];
-		u.vy = v.vy * n[1] + v.vy * n[0];
+		u.vy = v.vx * n[1] + v.vy * n[0];
 		u.vz = v.vz;
 	}
 	else
