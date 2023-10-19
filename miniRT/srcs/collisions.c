@@ -41,7 +41,7 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 	x = vector_create(r->p0, sp->pos);
 	c = vector_dot(x, x) - sp->d_squared;
 	t = quadratic_form(r->sqrt_len, vector_dot(r->v1, x) * 2, c);
-	if (t > 0)
+	if (t > 0.005)
 	{
 		if (r->t == -1 || (t < r->t))
 		{
@@ -106,18 +106,15 @@ float	bases(t_cylinder *c, t_ray *r, float t)
 	n[2] = vector_dot(vector_create(r->p0, ray_pos(c->pos, c->vec, c->h / 2)), \
 		vector_mult_const(c->vec, -1));
 	t = bases_aux(n, &pos, &vec, c);
-	if (t > 0)
+	if (t > 0 && (r->t == -1 || (t < r->t)))
 	{
-		if (r->t == -1 || (t < r->t))
-		{
-			if (distance(pos, ray_pos(r->p0, r->v1, t)) >= c->d)
-				return (-1);
-			r->t = t;
-			r->reflex_times--;
-			r->color = c->color;
-			bases_aux_2(r, vec);
-			return (t);
-		}
+		if (distance(pos, ray_pos(r->p0, r->v1, t)) >= c->d)
+			return (-1);
+		r->t = t;
+		r->reflex_times--;
+		r->color = c->color;
+		bases_aux_2(r, vec);
+		return (r->t);
 	}
 	return (-1);
 }

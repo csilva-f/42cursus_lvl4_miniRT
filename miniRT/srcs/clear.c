@@ -51,7 +51,8 @@ void	free_solids(t_mini *mini)
 		free(mini->cyl);
 		mini->cyl = aux_c;
 	}
-	free_solids_2(mini);
+	if (mini->s)
+		free_solids_2(mini);
 }
 
 void	free_structs(t_mini *mini, int mlx)

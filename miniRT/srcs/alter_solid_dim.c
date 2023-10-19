@@ -29,6 +29,11 @@ void	solids_dimensions(t_mini *m, char c)
 	n = 1;
 	if (c == 'd')
 		n = -1;
+	// vais ver isto quando fizeres a norma, tive de adicionar este if
+	// pq a esfera e o cilindro aumentam com a tecla F e B em vez de ser so
+	// com o + e -, mas o problema deve estar para tras
+	if (c == 'f' || c == 'b')
+		return ;
 	if (m->action == 'd')
 	{
 		if (m->s->l == 'S')
