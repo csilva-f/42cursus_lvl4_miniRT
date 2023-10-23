@@ -27,7 +27,7 @@ t_vector	rotation_axis(char c)
 	return (axis);
 }
 
-t_vector	rotation_matrix(char c, t_vector v, float angle, float *n)
+t_vector	rotation_matrix(char c, t_vector v, double angle, double *n)
 {
 	t_vector	u;
 
@@ -75,7 +75,7 @@ t_vector	vector_origin(t_vector v, t_pos o, int sub)
 	return (u);
 }
 
-void	cam_rotation(t_mini *m, char c, float *n)
+void	cam_rotation(t_mini *m, char c, double *n)
 {
 	t_cylinder	*t_cyl;
 	t_plane		*t_pl;

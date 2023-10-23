@@ -79,7 +79,7 @@ bool	shadow(t_mini *m)
 t_pos	phong(t_mini *m, t_ray *r, bool diffuse)
 {
 	t_pos		i;
-	float		k[2];
+	double		k[2];
 	t_pos		amb;
 	t_pos		diff;
 	t_vector	l;

@@ -12,12 +12,12 @@
 
 #include "coords_vectors.h"
 
-float	length(t_vector v1)
+double	length(t_vector v1)
 {
 	return (sqrt(v1.vx * v1.vx + v1.vy * v1.vy + v1.vz * v1.vz));
 }
 
-t_vector	vector_mult_const(t_vector v1, float c)
+t_vector	vector_mult_const(t_vector v1, double c)
 {
 	t_vector	novo;
 

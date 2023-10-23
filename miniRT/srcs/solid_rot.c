@@ -12,12 +12,12 @@
 
 #include "../includes/miniRT.h"
 
-t_vector	rotate_vector(t_vector orig, t_vector axis, float angle)
+t_vector	rotate_vector(t_vector orig, t_vector axis, double angle)
 {
-	float		rad;
-	float		coss;
-	float		sen;
-	float		one_coss;
+	double		rad;
+	double		coss;
+	double		sen;
+	double		one_coss;
 	t_vector	rot;
 
 	rad = angle * PI / 180.0;
@@ -36,10 +36,10 @@ t_vector	rotate_vector(t_vector orig, t_vector axis, float angle)
 	return (vector_norm(rot));
 }
 
-t_vector	rotate_vector_x(t_vector orig, float angle)
+t_vector	rotate_vector_x(t_vector orig, double angle)
 {
-	float		coss;
-	float		sen;
+	double		coss;
+	double		sen;
 	t_vector	rot;
 
 	coss = cos(angle * PI / 180.0);
@@ -50,10 +50,10 @@ t_vector	rotate_vector_x(t_vector orig, float angle)
 	return (vector_norm(rot));
 }
 
-t_vector	rotate_vector_y(t_vector orig, float angle)
+t_vector	rotate_vector_y(t_vector orig, double angle)
 {
-	float		coss;
-	float		sen;
+	double		coss;
+	double		sen;
 	t_vector	rot;
 
 	coss = cos(angle * PI / 180.0);
@@ -64,10 +64,10 @@ t_vector	rotate_vector_y(t_vector orig, float angle)
 	return (vector_norm(rot));
 }
 
-t_vector	rotate_vector_z(t_vector orig, float angle)
+t_vector	rotate_vector_z(t_vector orig, double angle)
 {
-	float		coss;
-	float		sen;
+	double		coss;
+	double		sen;
 	t_vector	rot;
 
 	coss = cos(angle * PI / 180.0);

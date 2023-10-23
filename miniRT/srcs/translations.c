@@ -63,7 +63,7 @@ void	cam_translation(t_mini *m, int x, int y, int z)
 	destroy_create_image(m, 0);
 }
 
-void	translate_solids(t_mini *m, char c, float n)
+void	translate_solids(t_mini *m, char c, double n)
 {
 	if (m->s->l == 'P' && (c == 'r' || c == 'l'))
 		m->s->pl->pos.x += n;

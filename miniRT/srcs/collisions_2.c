@@ -12,7 +12,7 @@
 
 #include "../includes/miniRT.h"
 
-void	cyl_collision_aux(float *d, t_cylinder *c, t_ray *r, t_vector *x)
+void	cyl_collision_aux(double *d, t_cylinder *c, t_ray *r, t_vector *x)
 {
 	(*x) = vector_create(r->p0, c->pos);
 	d[0] = vector_dot(r->v1, c->vec);
@@ -22,7 +22,7 @@ void	cyl_collision_aux(float *d, t_cylinder *c, t_ray *r, t_vector *x)
 		(vector_dot(r->v1, (*x)) - d[0] * d[2]) * 2, d[1]);
 }
 
-void	cyl_collision_aux2(t_cylinder *c, t_ray *r, float *d, t_vector x)
+void	cyl_collision_aux2(t_cylinder *c, t_ray *r, double *d, t_vector x)
 {
 	r->t = d[1];
 	r->reflex_times--;
@@ -34,7 +34,7 @@ void	cyl_collision_aux2(t_cylinder *c, t_ray *r, float *d, t_vector x)
 bool	cylinder_collision(t_cylinder *c, t_ray *r)
 {
 	t_vector	x;
-	float		dx_v_ce[3];
+	double		dx_v_ce[3];
 
 	cyl_collision_aux(dx_v_ce, c, r, &x);
 	if (dx_v_ce[1] > 0)
@@ -63,9 +63,9 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 
 bool	plane_collision(t_plane *pl, t_ray *r1)
 {
-	float	denom;
-	float	nom;
-	float	t;
+	double	denom;
+	double	nom;
+	double	t;
 
 	denom = vector_dot(r1->v1, pl->vec);
 	nom = vector_dot(vector_create(r1->p0, pl->pos), pl->vec);

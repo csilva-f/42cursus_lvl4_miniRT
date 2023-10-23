@@ -6,7 +6,7 @@
 #    By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 14:33:39 by csilva-f          #+#    #+#              #
-#    Updated: 2023/10/12 23:22:53 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/10/24 00:11:00 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRCS =	srcs/main.c				srcs/check.c			srcs/lights_camera_checker.c \
 		srcs/menu.c				srcs/print_parser.c		srcs/collisions_2.c \
 		srcs/alter_solid_dim.c	srcs/translations.c		srcs/solid_movs.c \
 		srcs/solid_movs_2.c		srcs/key_hook.c			srcs/solid_rot.c \
-		srcs/rotation.c
+		srcs/rotation.c			srcs/ang_calculate.c
 
 SRCS_BONUS = srcs_bonus/alter_solid_dim_bonus.c			srcs_bonus/check_bonus.c			srcs_bonus/clear_bonus.c \
 			 srcs_bonus/collisions_bonus.c				srcs_bonus/collisions_2_bonus.c		srcs_bonus/color_op_bonus.c \

@@ -22,7 +22,7 @@ t_vector	vector_cross(t_vector v1, t_vector v2)
 	return (novo);
 }
 
-float	vector_dot(t_vector v1, t_vector v2)
+double	vector_dot(t_vector v1, t_vector v2)
 {
 	return (v1.vx * v2.vx + v1.vy * v2.vy + v1.vz * v2.vz);
 }

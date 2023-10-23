@@ -12,7 +12,7 @@
 
 #include "../includes/miniRT.h"
 
-t_pos	ray_pos(t_pos p, t_vector v, float t)
+t_pos	ray_pos(t_pos p, t_vector v, double t)
 {
 	return (coord_add(p, coord_mult_const(vector_to_pos(v), t)));
 }
@@ -83,7 +83,7 @@ void	ray_create(t_mini *m)
 {
 	int			x;
 	int			y;
-	float		px;
+	double		px;
 	t_pos		p;
 
 	x = 0;

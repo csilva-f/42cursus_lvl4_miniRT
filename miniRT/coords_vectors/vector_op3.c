@@ -12,7 +12,7 @@
 
 #include "coords_vectors.h"
 
-t_vector	vector_new(float c1, float c2, float c3)
+t_vector	vector_new(double c1, double c2, double c3)
 {
 	t_vector	novo;
 

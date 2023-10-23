@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 23:17:29 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/24 17:28:24 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/24 00:27:24 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	reset_canvas(t_mini *m)
 	init(m);
 	m->reset = 1;
 	get_values(m);
+	m->init = 0;
 	destroy_create_image(m, 0);
 	m->reset = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:45:42 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/12 21:57:52 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/23 23:43:14 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	free_solids_2(t_mini *mini)
 {
 	t_solid	*aux_s;
 
-	if (mini->s->head == 1)
+	while (mini->s->head != 1)
+		mini->s = mini->s->next;
+	if (mini->s->head == 1 && mini->s->next->head != 1)
 		mini->s = mini->s->next;
 	while (mini->s->head != 1)
 	{

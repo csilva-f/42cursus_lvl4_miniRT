@@ -32,7 +32,7 @@ t_pos	coord_sub(t_pos c1, t_pos c2)
 	return (novo);
 }
 
-t_pos	coord_mult_const(t_pos c1, float c)
+t_pos	coord_mult_const(t_pos c1, double c)
 {
 	t_pos	novo;
 
@@ -42,11 +42,11 @@ t_pos	coord_mult_const(t_pos c1, float c)
 	return (novo);
 }
 
-float	distance(t_pos p1, t_pos p2)
+double	distance(t_pos p1, t_pos p2)
 {
-	float	xpart;
-	float	ypart;
-	float	zpart;
+	double	xpart;
+	double	ypart;
+	double	zpart;
 
 	xpart = (p1.x - p2.x) * (p1.x - p2.x);
 	ypart = (p1.y - p2.y) * (p1.y - p2.y);
@@ -54,7 +54,7 @@ float	distance(t_pos p1, t_pos p2)
 	return (sqrt(xpart + ypart + zpart));
 }
 
-t_pos	coord_new(float c1, float c2, float c3)
+t_pos	coord_new(double c1, double c2, double c3)
 {
 	t_pos	novo;
 

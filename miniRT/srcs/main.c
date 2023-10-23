@@ -45,9 +45,9 @@ int	count_vars(char **vars, int equal, int code, t_mini *m)
 	}
 }
 
-float	float_check(t_mini *m, char *str)
+double	float_check(t_mini *m, char *str)
 {
-	float	nbr;
+	double	nbr;
 	char	**parts;
 
 	nbr = -1;
@@ -55,7 +55,7 @@ float	float_check(t_mini *m, char *str)
 	if (count_vars(parts, 1, 4, m) == 2)
 	{
 		if (ft_str_isd(parts[0]) && ft_str_isd(parts[1]))
-			nbr = ft_atoi(parts[0]) + (float)ft_atoi(parts[1])
+			nbr = ft_atoi(parts[0]) + (double)ft_atoi(parts[1])
 				/ powf(10, ft_strlen(parts[1]));
 		else
 			vars_errors(m, 4);

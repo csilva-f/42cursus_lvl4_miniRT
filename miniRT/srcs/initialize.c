@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:37:13 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/10 20:04:17 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/24 00:26:02 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init(t_mini *mini)
 {
 	mini->is_valid = 1;
+	mini->init = 1;
 	mini->hl = 0;
 	mini->action = '0';
 	mini->reset = 0;
@@ -52,6 +53,7 @@ void	init_canvas(t_mini *m)
 			&m->g->line_length, &m->g->endian);
 	create_menu(m);
 	raytracing(m);
+	m->init = 0;
 	mlx_key_hook(m->g->win, key_hook, m);
 	mlx_hook(m->g->win, 17, 1L << 17, close_game, m);
 	mlx_loop(m->g->mlx);

@@ -6,14 +6,13 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/12 23:27:49 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:35:47 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_BONUS_H
 # define MINIRT_BONUS_H
 
-#include <cmath>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -77,7 +76,7 @@
 
 typedef struct s_al
 {
-	float	ratio;
+	double	ratio;
 	t_pos	color;
 }		t_al;
 
@@ -91,7 +90,7 @@ typedef struct s_cam
 typedef struct s_light
 {
 	t_pos			pos;
-	float			ratio;
+	double			ratio;
 	t_pos			color;
 	t_vector		orig;
 	struct s_light	*next;
@@ -102,8 +101,8 @@ typedef struct s_ray
 	t_pos			p0;
 	t_vector		v1;
 	t_vector		norm_v;
-	float			sqrt_len;
-	float			t;
+	double			sqrt_len;
+	double			t;
 	int				reflex_times;
 	t_pos			color;
 	struct s_ray	*next;
@@ -113,8 +112,8 @@ typedef struct s_ray
 typedef struct s_sphere
 {
 	t_pos			pos;
-	float			d;
-	float			d_squared;
+	double			d;
+	double			d_squared;
 	t_pos			color;
 	t_vector		orig;
 	struct s_sphere	*next;
@@ -125,7 +124,7 @@ typedef struct s_plane
 {
 	t_pos			pos;
 	t_vector		vec;
-	float			coef;
+	double			coef;
 	t_vector		orig;
 	t_pos			color;
 	struct s_plane	*next;
@@ -136,9 +135,9 @@ typedef struct s_cylinder
 {
 	t_pos				pos;
 	t_vector			vec;
-	float				d;
-	float				d_squared;
-	float				h;
+	double				d;
+	double				d_squared;
+	double				h;
 	t_vector			orig;
 	t_pos				color;
 	struct s_cylinder	*next;
@@ -149,9 +148,9 @@ typedef struct s_cone
 {
 	t_pos				pos;
 	t_vector			vec;
-	float				d;
-	float				d_squared;
-	float				h;
+	double				d;
+	double				d_squared;
+	double				h;
 	t_vector			orig;
 	t_pos				color;
 	struct s_cone		*next;
@@ -226,15 +225,15 @@ void		free_solids(t_mini *mini);
 void		free_structs(t_mini *mini, int mlx);
 
 // COLLISIONS
-float		quadratic_form(float a, float b, float c);
+double		quadratic_form(double a, double b, double c);
 bool		sphere_collision(t_sphere *sp, t_ray *r);
 void		bases_aux_2(t_ray *r, t_vector v);
-float		bases_aux(float *n, t_pos *pos, t_vector *vec, t_cylinder *c);
-float		bases(t_cylinder *c, t_ray *r, float t);
+double		bases_aux(double *n, t_pos *pos, t_vector *vec, t_cylinder *c);
+double		bases(t_cylinder *c, t_ray *r, double t);
 
 // COLLISIONS 2
-void		cyl_collision_aux(float *d, t_cylinder *c, t_ray *r, t_vector *x);
-void		cyl_collision_aux2(t_cylinder *c, t_ray *r, float *d, t_vector x);
+void		cyl_collision_aux(double *d, t_cylinder *c, t_ray *r, t_vector *x);
+void		cyl_collision_aux2(t_cylinder *c, t_ray *r, double *d, t_vector x);
 bool		cylinder_collision(t_cylinder *c, t_ray *r);
 bool		plane_collision(t_plane *pl, t_ray *r1);
 
@@ -243,7 +242,7 @@ int			rgb_to_int(int red, int green, int blue);
 void		fill_colors(t_mini *m, char *str, t_pos *col);
 
 // COLOR_OP
-t_pos		multconst_rgb(float c, t_pos color);
+t_pos		multconst_rgb(double c, t_pos color);
 t_pos		multiply_rgb(t_pos color1, t_pos color2);
 t_pos		add_rgb(t_pos color1, t_pos color2);
 t_pos		sub_rgb(t_pos color1, t_pos color2);
@@ -270,7 +269,7 @@ void		key_hook_aux(int keycode, t_mini *m);
 int			key_hook(int keycode, t_mini *m);
 
 // LIGHTRAYS
-t_pos		ray_pos(t_pos p, t_vector v, float t);
+t_pos		ray_pos(t_pos p, t_vector v, double t);
 t_ray		*ray_new(t_pos p, t_vector v);
 void		collisions_aux(t_mini *m, t_ray *ray);
 void		collisions(t_mini *m, int x, int y);
@@ -294,16 +293,16 @@ void		destroy_create_image(t_mini *m, int action);
 void		raytracing(t_mini *m);
 
 // PIXEL CAMERA
-float		pixel_cam_x(float psx, t_mini *m);
-float		pixel_cam_y(float psy, t_mini *m);
-t_pos		pixel_pos(float psx, float psy, t_mini *m);
+double		pixel_cam_x(double psx, t_mini *m);
+double		pixel_cam_y(double psy, t_mini *m);
+t_pos		pixel_pos(double psx, double psy, t_mini *m);
 t_vector	pixel_vec(t_pos pix);
 
 // REFLECTION
 t_vector	reflected_ray(t_ray *r, t_vector l);
 
 // PHONG
-t_pos		phong(t_mini *m, t_ray *r, bool diffuse);//, float alpha);
+t_pos		phong(t_mini *m, t_ray *r, bool diffuse);//, double alpha);
 bool		shadow(t_mini *m);
 
 // PRINT
@@ -343,26 +342,26 @@ int			def_tip_action(t_mini *m, int action);
 void		dim_rot_trans(t_mini *m, int action, int iter, char c);
 
 //SOLID ROTATION
-t_vector	rotate_vector(t_vector orig, t_vector axis, float angle);
-t_vector	rotate_vector_x(t_vector orig, float angle);
-t_vector	rotate_vector_y(t_vector orig, float angle);
-t_vector	rotate_vector_z(t_vector orig, float angle);
+t_vector	rotate_vector(t_vector orig, t_vector axis, double angle);
+t_vector	rotate_vector_x(t_vector orig, double angle);
+t_vector	rotate_vector_y(t_vector orig, double angle);
+t_vector	rotate_vector_z(t_vector orig, double angle);
 void		rotate_solids(t_mini *m, char c);
 
 // TRANSLATION
 void		solid_iteration(t_mini *m, int x, int y, int z);
 void		cam_translation(t_mini *m, int x, int y, int z);
-void		translate_solids(t_mini *m, char c, float n);
+void		translate_solids(t_mini *m, char c, double n);
 void		light_translation(t_mini *m, int x, int y, int z);
 
 // ROTATION
 t_vector	rotation_axis(char c);
-t_vector	rotation_matrix(char c, t_vector v, float angle, float *n);
+t_vector	rotation_matrix(char c, t_vector v, double angle, double *n);
 t_vector	vector_origin(t_vector v, t_pos o, int sub);
-void		cam_rotation(t_mini *m, char c, float *n);
+void		cam_rotation(t_mini *m, char c, double *n);
 
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);
-float		float_check(t_mini *m, char *str);
+double		float_check(t_mini *m, char *str);
 
 #endif

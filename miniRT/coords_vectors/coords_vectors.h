@@ -17,37 +17,37 @@
 
 typedef struct s_pos
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }			t_pos;
 
 typedef struct s_vector
 {
-	float	vx;
-	float	vy;
-	float	vz;
+	double	vx;
+	double	vy;
+	double	vz;
 }			t_vector;
 
 // COORDINATES
 
 t_pos		coord_add(t_pos c1, t_pos c2);
-t_pos		coord_new(float c1, float c2, float c3);
+t_pos		coord_new(double c1, double c2, double c3);
 t_pos		coord_sub(t_pos c1, t_pos c2);
-t_pos		coord_mult_const(t_pos c1, float c);
-float		distance(t_pos p1, t_pos p2);
+t_pos		coord_mult_const(t_pos c1, double c);
+double		distance(t_pos p1, t_pos p2);
 
 // VECTORS
 
-float		length(t_vector v1);
+double		length(t_vector v1);
 t_vector	vector_norm(t_vector v);
-t_vector	vector_mult_const(t_vector v1, float c);
+t_vector	vector_mult_const(t_vector v1, double c);
 t_vector	vector_add(t_vector v1, t_vector v2);
 t_vector	vector_sub(t_vector v1, t_vector v2);
 t_vector	vector_cross(t_vector v1, t_vector v2);
-float		vector_dot(t_vector v1, t_vector v2);
+double		vector_dot(t_vector v1, t_vector v2);
 t_vector	vector_create(t_pos p1, t_pos p2);
-t_vector	vector_new(float c1, float c2, float c3);
+t_vector	vector_new(double c1, double c2, double c3);
 
 // MIX
 
