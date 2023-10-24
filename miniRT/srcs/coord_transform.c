@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:39:09 by fvieira           #+#    #+#             */
-/*   Updated: 2023/10/24 22:24:16 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:33:08 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	data_transform_aux_2(t_mini *m, double angle, t_vector axis, t_pos o)
 		m->cyl->orig = vector_norm(vector_create(m->cyl->pos, o));
 		m->cyl->orig = rotate_vector_2(m, m->cyl->orig, axis, angle);
 		m->cyl->pos = ray_pos(o, m->cyl->orig, distance(m->cyl->pos, o));
-		if (m->init)
-			m->cyl->vec = orientation(m, m->cyl->vec);
+		/*if (m->init)
+			m->cyl->vec = orientation(m, m->cyl->vec);*/
 		m->cyl = m->cyl->next;
 	}
 	while (m->light)
@@ -117,8 +117,8 @@ void	data_transform_aux(t_mini *m)
 		m->plane->orig = vector_norm(vector_create(m->plane->pos, o));
 		m->plane->orig = rotate_vector_2(m, m->plane->orig, axis_of_rot, angle);
 		m->plane->pos = ray_pos(o, m->plane->orig, distance(m->plane->pos, o));
-		if (m->init)
-			m->plane->vec = orientation(m, m->plane->vec);
+		/*if (m->init)
+			m->plane->vec = orientation(m, m->plane->vec);*/
 		m->plane = m->plane->next;
 	}
 	data_transform_aux_2(m, angle, axis_of_rot, o);
