@@ -18,21 +18,21 @@ void	collisions_aux2(t_mini *m, t_ray *ray)
 	{
 		sphere_collision(m->sp, ray);
 		m->sp = m->sp->next;
-		if (ray->t >= 0.05)
+		if (ray->t >= 0.0005)
 			return ;
 	}
 	while (m->plane)
 	{
 		plane_collision(m->plane, ray);
 		m->plane = m->plane->next;
-		if (ray->t >= 0.05)
+		if (ray->t >= 0.0005)
 			return ;
 	}
 	while (m->cyl)
 	{
 		cylinder_collision(m->cyl, ray);
 		m->cyl = m->cyl->next;
-		if (ray->t >= 0.05)
+		if (ray->t >= 0.0005)
 			return ;
 	}
 }
@@ -64,7 +64,7 @@ bool	shadow(t_mini *m)
 	temp->p0 = hit_c;
 	temp->t = -1;
 	light_collisions(m, temp);
-	if (temp->t < 0.05 && temp->t >= 0)
+	if (temp->t < 0.0005 && temp->t >= 0)
 		temp->t = -1;
 	if (temp->t == -1 || distance(m->light->pos, temp->p0) \
 		< distance(ray_pos(temp->p0, temp->v1, temp->t), temp->p0))

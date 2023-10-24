@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/24 00:25:07 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:25:42 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ typedef struct s_mini
 	t_pos		grey_c;
 	char		action;
 	bool		reset;
+	bool		flag;
 	bool		init;
 }		t_mini;
 
@@ -308,7 +309,8 @@ void		print_parser(t_mini *m);
 t_vector	rotation_axis(char c);
 t_vector	rotation_matrix(char c, t_vector v, double angle, double *n);
 t_vector	vector_origin(t_vector v, t_pos o, int sub);
-void		cam_rotation(t_mini *m, char c, double *n);
+void		cam_rotation(t_mini *m, char c, double *n, t_plane *t_pl);
+t_vector	orientation(t_mini *mini, t_vector v);
 
 // SHAPE CHECKER
 void		check_pl_vars(t_mini *m, char **vars);

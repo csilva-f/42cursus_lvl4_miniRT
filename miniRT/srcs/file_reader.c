@@ -67,6 +67,7 @@ void	get_values(t_mini *m)
 		check_lines(m, aux);
 		free(aux);
 	}
+	m->flag = true;
 	if (m->is_valid)
 		data_transform(m);
 	free(aux);

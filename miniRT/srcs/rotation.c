@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 12:10:03 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/14 14:49:26 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:27:00 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,9 @@ t_vector	vector_origin(t_vector v, t_pos o, int sub)
 	return (u);
 }
 
-void	cam_rotation(t_mini *m, char c, double *n)
+void	cam_rotation(t_mini *m, char c, double *n, t_plane *t_pl)
 {
 	t_cylinder	*t_cyl;
-	t_plane		*t_pl;
 
 	t_cyl = m->cyl;
 	t_pl = m->plane;
@@ -100,6 +99,23 @@ void	cam_rotation(t_mini *m, char c, double *n)
 	}
 	m->cyl = t_cyl;
 	m->plane = t_pl;
+	m->flag = false;
 	data_transform(m);
 	destroy_create_image(m, 0);
+}
+
+t_vector	orientation(t_mini *mini, t_vector v)
+{
+	t_vector	r;
+	t_vector	u;
+	t_vector	d;
+	t_vector	w;
+
+	d = vector_mult_const(mini->cam->vec, -1);
+	r = vector_cross((t_vector){0, 1, 0}, d);
+	u = vector_cross(d, r);
+	w.vx = v.vx * r.vx + v.vy * r.vy + v.vz * r.vz;
+	w.vy = v.vx * u.vx + v.vy * u.vy + v.vz * u.vz;
+	w.vz = v.vx * d.vx + v.vy * d.vy + v.vz * d.vz;
+	return (w);
 }

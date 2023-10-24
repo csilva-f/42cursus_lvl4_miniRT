@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 23:17:29 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/24 00:27:24 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:23:12 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ void	solids_dimensions(t_mini *m, char c)
 	n = 1;
 	if (c == 'd')
 		n = -1;
-	// vais ver isto quando fizeres a norma, tive de adicionar este if
-	// pq a esfera e o cilindro aumentam com a tecla F e B em vez de ser so
-	// com o + e -, mas o problema deve estar para tras
-	if (c == 'f' || c == 'b')
-		return ;
 	if (m->action == 'd')
 	{
 		if (m->s->l == 'S')
