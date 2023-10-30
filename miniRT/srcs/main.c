@@ -12,23 +12,6 @@
 
 #include "../includes/miniRT.h"
 
-/*void	ft_s_clear(t_plane **pl, t_sphere **sp, t_cylinder **cy)
-{
-	t_plane		*aux_p;
-	t_sphere	*aux_s;
-	t_cylinder	*aux_c;
-
-	if ((*pl) && pl)
-	{
-		while (*pl && pl)
-		{
-			aux_p = (*pl)->next;
-			free(*pl);
-			*pl = aux_p;
-		}
-	}
-}*/
-
 int	count_vars(char **vars, int equal, int code, t_mini *m)
 {
 	int	i;

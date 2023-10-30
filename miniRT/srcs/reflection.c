@@ -12,18 +12,6 @@
 
 #include "../includes/miniRT.h"
 
-/*
-typedef struct s_ray
-{
-	t_pos			p0;
-	t_vector		v1;
-	t_vector		norm_v;
-	int				reflex_times;
-	struct s_ray	*next;
-	struct s_ray	*prev;
-}		t_ray;
-*/
-
 t_vector	reflected_ray(t_ray *r, t_vector l)
 {
 	double	dot_product;

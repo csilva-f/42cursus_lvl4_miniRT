@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 22:39:06 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/01 13:03:30 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:30:41 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 				return (true);
 			}
 			else
-			{
 				return (bases(c, r, 0));
-			}
 		}
 	}
 	return (false);

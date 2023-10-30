@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 13:02:16 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/24 22:26:25 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:16:35 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	key_hook_aux_3(int keycode, t_mini *m)
 	else if (keycode == Z && m->action == 'r')
 		dim_rot_trans(m, 0, 0, 'z');
 	else if (keycode == X && !m->hl)
-		cam_rotation(m, 'x', (double [2]){0}, NULL);
+		cam_rotation(m, 'x', (double [2]){0});
 	else if (keycode == Y && !m->hl)
-		cam_rotation(m, 'y', (double [2]){0}, NULL);
+		cam_rotation(m, 'y', (double [2]){0});
 	else if (keycode == Z && !m->hl)
-		cam_rotation(m, 'z', (double [2]){0}, NULL);
+		cam_rotation(m, 'z', (double [2]){0});
 }
 
 void	key_hook_aux_2(int keycode, t_mini *m)

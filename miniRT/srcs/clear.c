@@ -6,27 +6,27 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:45:42 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/23 23:43:14 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:24:29 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-void	free_solids_2(t_mini *mini)
+void	free_solids_2(t_mini *m)
 {
 	t_solid	*aux_s;
 
-	while (mini->s->head != 1)
-		mini->s = mini->s->next;
-	if (mini->s->head == 1 && mini->s->next->head != 1)
-		mini->s = mini->s->next;
-	while (mini->s->head != 1)
+	while (m->s->head != 1)
+		m->s = m->s->next;
+	if (m->s->head == 1 && m->s->next && m->s->next->head != 1)
+		m->s = m->s->next;
+	while (m->s->head != 1)
 	{
-		aux_s = mini->s->next;
-		free(mini->s);
-		mini->s = aux_s;
+		aux_s = m->s->next;
+		free(m->s);
+		m->s = aux_s;
 	}
-	free(mini->s);
+	free(m->s);
 }
 
 void	free_solids(t_mini *mini)

@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:57:04 by fvieira           #+#    #+#             */
-/*   Updated: 2023/10/01 12:04:58 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:01:43 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ void	get_values(t_mini *m)
 		aux = get_next_line(m->fd);
 		if (aux == NULL || !m->is_valid)
 			break ;
-		aux = ft_remove_lb(aux);
-		check_lines(m, aux);
+		if (aux[0] != '\n' && aux[0] != '#')
+		{
+			aux = ft_remove_lb(aux);
+			check_lines(m, aux);
+		}
 		free(aux);
 	}
 	m->flag = true;
