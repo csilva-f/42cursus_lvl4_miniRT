@@ -18,21 +18,28 @@ void	collisions_aux2(t_mini *m, t_ray *ray)
 	{
 		sphere_collision(m->sp, ray);
 		m->sp = m->sp->next;
-		if (ray->t >= 0.05)
+		if (ray->t >= 0.0005)
 			return ;
 	}
 	while (m->plane)
 	{
 		plane_collision(m->plane, ray);
 		m->plane = m->plane->next;
-		if (ray->t >= 0.05)
+		if (ray->t >= 0.0005)
 			return ;
 	}
 	while (m->cyl)
 	{
 		cylinder_collision(m->cyl, ray);
 		m->cyl = m->cyl->next;
-		if (ray->t >= 0.05)
+		if (ray->t >= 0.0005)
+			return ;
+	}
+	while (m->co)
+	{
+		cone_collision(m->co, ray);
+		m->co = m->co->next;
+		if (ray->t >= 0.0005)
 			return ;
 	}
 }
@@ -42,14 +49,17 @@ void	light_collisions(t_mini *m, t_ray *temp)
 	t_sphere	*temp_sp;
 	t_plane		*temp_pl;
 	t_cylinder	*temp_cyl;
+	t_cone		*temp_co;
 
 	temp_pl = m->plane;
 	temp_sp = m->sp;
 	temp_cyl = m->cyl;
+	temp_co = m->co;
 	collisions_aux2(m, temp);
 	m->plane = temp_pl;
 	m->sp = temp_sp;
 	m->cyl = temp_cyl;
+	m->co = temp_co;
 }
 
 bool	shadow(t_mini *m)
@@ -64,7 +74,7 @@ bool	shadow(t_mini *m)
 	temp->p0 = hit_c;
 	temp->t = -1;
 	light_collisions(m, temp);
-	if (temp->t < 0.05 && temp->t >= 0)
+	if (temp->t < 0.0005 && temp->t >= 0)
 		temp->t = -1;
 	if (temp->t == -1 || distance(m->light->pos, temp->p0) \
 		< distance(ray_pos(temp->p0, temp->v1, temp->t), temp->p0))
@@ -79,7 +89,7 @@ bool	shadow(t_mini *m)
 t_pos	phong(t_mini *m, t_ray *r, bool diffuse)
 {
 	t_pos		i;
-	float		k[2];
+	double		k[2];
 	t_pos		amb;
 	t_pos		diff;
 	t_vector	l;

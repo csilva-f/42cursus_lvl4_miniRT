@@ -12,18 +12,18 @@
 
 #include "../includes/miniRT_bonus.h"
 
-void	cone_new_aux(t_mini *m, char ***data, t_cone **c)
+void	co_new_aux(t_mini *m, char ***data, t_cone **c)
 {
 	(*c)->pos = coord_new(float_check(m, (*data)[0]), float_check(m, \
 				(*data)[1]), float_check(m, (*data)[2]));
 }
 
-t_cone	*cone_new(t_mini *m, char **vars, char ***data)
+t_cone	*co_new(t_mini *m, char **vars, char ***data)
 {
 	t_cone	*c;
 
-	c = malloc(sizeof(t_cylinder));
-	cone_new_aux(m, data, &c);
+	c = malloc(sizeof(t_cone));
+	co_new_aux(m, data, &c);
 	ft_free_split(*data);
 	*data = ft_split(vars[2], ',');
 	if (count_vars(*data, 3, 4, m))
@@ -35,8 +35,10 @@ t_cone	*cone_new(t_mini *m, char **vars, char ***data)
 			vars_errors(m, 4);
 		else
 		{
-			c->d = float_check(m, vars[3]) / 2;
-			c->d_squared = c->d * c->d;
+			c->k = float_check(m, vars[3]) * PI / 180;
+			if (c->k < 0 || c->k > 180)
+				vars_errors(m, 4);
+			c->k_k = 1 + c->k * c->k;
 			c->h = float_check(m, vars[4]);
 			fill_colors(m, vars[5], &c->color);
 		}
@@ -45,7 +47,7 @@ t_cone	*cone_new(t_mini *m, char **vars, char ***data)
 	return (c);
 }
 
-t_cone	*cone_last(t_cone *cone)
+t_cone	*co_last(t_cone *cone)
 {
 	t_cone	*aux;
 
@@ -57,7 +59,7 @@ t_cone	*cone_last(t_cone *cone)
 	return (aux);
 }
 
-void	cone_add_b(t_cone **cone, t_cone *cone_new)
+void	co_add_b(t_cone **cone, t_cone *co_new)
 {
 	t_cone	*aux;
 
@@ -65,11 +67,11 @@ void	cone_add_b(t_cone **cone, t_cone *cone_new)
 	{
 		if (*cone)
 		{
-			aux = cone_last(*cone);
-			aux->next = cone_new;
-			cone_new = aux;
+			aux = co_last(*cone);
+			aux->next = co_new;
+			co_new = aux;
 		}
 		else
-			*cone = cone_new;
+			*cone = co_new;
 	}
 }

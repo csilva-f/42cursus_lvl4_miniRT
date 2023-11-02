@@ -13,14 +13,14 @@
 #include "../includes/miniRT_bonus.h"
 
 /*
-https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%2\
-	  0dragan%20raytracing%20shapes.htm
+https://hugi.scene.org/online/hugi24/coding%20graphics%20chris%
+20dragan%20raytracing%20shapes.htm
 */
 
-float	quadratic_form(float a, float b, float c)
+double	quadratic_form(double a, double b, double c)
 {
-	float	t_plus;
-	float	t_minu;
+	double	t_plus;
+	double	t_minu;
 
 	t_plus = (-1 * b + sqrt(b * b - 4 * a * c)) / (2 * a);
 	t_minu = (-1 * b - sqrt(b * b - 4 * a * c)) / (2 * a);
@@ -35,13 +35,13 @@ float	quadratic_form(float a, float b, float c)
 bool	sphere_collision(t_sphere *sp, t_ray *r)
 {
 	t_vector	x;
-	float		c;
-	float		t;
+	double		c;
+	double		t;
 
 	x = vector_create(r->p0, sp->pos);
 	c = vector_dot(x, x) - sp->d_squared;
 	t = quadratic_form(r->sqrt_len, vector_dot(r->v1, x) * 2, c);
-	if (t > 0)
+	if (t > 0.005)
 	{
 		if (r->t == -1 || (t < r->t))
 		{
@@ -64,9 +64,9 @@ void	bases_aux_2(t_ray *r, t_vector v)
 		r->norm_v = vector_mult_const(v, -1);
 }
 
-float	bases_aux(float *n, t_pos *pos, t_vector *vec, t_cylinder *c)
+double	bases_aux(double *n, t_pos *pos, t_vector *vec, t_cylinder *c)
 {
-	float	t[3];
+	double	t[3];
 
 	if (n[1] == 0)
 		t[1] = -1;
@@ -93,9 +93,9 @@ float	bases_aux(float *n, t_pos *pos, t_vector *vec, t_cylinder *c)
 	return (t[0]);
 }
 
-float	bases(t_cylinder *c, t_ray *r, float t)
+double	bases(t_cylinder *c, t_ray *r, double t)
 {
-	float		n[4];
+	double		n[4];
 	t_pos		pos;
 	t_vector	vec;
 
@@ -106,18 +106,15 @@ float	bases(t_cylinder *c, t_ray *r, float t)
 	n[2] = vector_dot(vector_create(r->p0, ray_pos(c->pos, c->vec, c->h / 2)), \
 		vector_mult_const(c->vec, -1));
 	t = bases_aux(n, &pos, &vec, c);
-	if (t > 0)
+	if (t > 0 && (r->t == -1 || (t < r->t)))
 	{
-		if (r->t == -1 || (t < r->t))
-		{
-			if (distance(pos, ray_pos(r->p0, r->v1, t)) >= c->d)
-				return (-1);
-			r->t = t;
-			r->reflex_times--;
-			r->color = c->color;
-			bases_aux_2(r, vec);
-			return (t);
-		}
+		if (distance(pos, ray_pos(r->p0, r->v1, t)) >= c->d)
+			return (-1);
+		r->t = t;
+		r->reflex_times--;
+		r->color = c->color;
+		bases_aux_2(r, vec);
+		return (r->t);
 	}
 	return (-1);
 }

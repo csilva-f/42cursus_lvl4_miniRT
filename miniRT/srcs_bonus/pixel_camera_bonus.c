@@ -17,18 +17,18 @@ https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating
 //-camera-rays/generating-camera-rays.html
 */
 
-float	pixel_cam_x(float psx, t_mini *m)
+double	pixel_cam_x(double psx, t_mini *m)
 {
 	return ((2 * psx - 1) * m->g->width / \
 			m->g->height * tan(m->cam->fov / 2.0));
 }
 
-float	pixel_cam_y(float psy, t_mini *m)
+double	pixel_cam_y(double psy, t_mini *m)
 {
 	return ((1 - 2 * psy) * tan(m->cam->fov / 2.0));
 }
 
-t_pos	pixel_pos(float psx, float psy, t_mini *m)
+t_pos	pixel_pos(double psx, double psy, t_mini *m)
 {
 	t_pos	pos;
 

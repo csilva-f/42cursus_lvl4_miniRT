@@ -48,7 +48,7 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 		c->vec = vector_new(float_check(m, (*data)[0]), float_check(m, \
 					(*data)[1]), float_check(m, (*data)[2]));
 		if (fabs(c->vec.vx) > 1 || fabs(c->vec.vy) > 1 || fabs(c->vec.vz) > 1
-			|| length(c->vec) != (float) 1)
+			|| length(c->vec) != (double) 1)
 			vars_errors(m, 4);
 		else
 		{

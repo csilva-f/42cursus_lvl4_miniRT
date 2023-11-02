@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
-#include <stdio.h>
 
 int	my_mlx_pixel_put(t_mini *m, int x, int y, t_pos c)
 {

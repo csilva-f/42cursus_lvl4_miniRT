@@ -30,8 +30,8 @@
 #  include <X11/X.h>
 # endif
 
-# define HEIGHT 72
-# define WIDTH 128
+# define HEIGHT 72.0/4
+# define WIDTH 128.0/4
 
 # define ESC 65307
 # define LEFT 65361
@@ -148,8 +148,8 @@ typedef struct s_cone
 {
 	t_pos				pos;
 	t_vector			vec;
-	double				d;
-	double				d_squared;
+	double				k;
+	double				k_k;
 	double				h;
 	t_vector			orig;
 	t_pos				color;
@@ -185,6 +185,13 @@ typedef struct s_solid
 	struct s_solid	*next;
 }		t_solid;
 
+typedef struct s_angles
+{
+	double			teta;
+	double			fi;
+	double			psi;
+}		t_angles;
+
 typedef struct s_mini
 {
 	char		*file;
@@ -199,7 +206,7 @@ typedef struct s_mini
 	t_sphere	*sp;
 	t_plane		*plane;
 	t_cylinder	*cyl;
-	t_cone		*cone;
+	t_cone		*co;
 	t_ray		*ray;
 	t_graphics	*g;
 	t_solid		*s;
@@ -207,6 +214,8 @@ typedef struct s_mini
 	t_pos		grey_c;
 	char		action;
 	bool		reset;
+	bool		flag;
+	bool		init;
 }		t_mini;
 
 //-------------------------------------SRCS-------------------------------------
@@ -215,12 +224,16 @@ typedef struct s_mini
 void		reset_canvas(t_mini *m);
 void		solids_dimensions(t_mini *m, char c);
 
+// ANGLES CALCULATE
+t_angles	three_d_angles(t_vector a, t_vector b);
+
 // CHECK
 bool		error_handler(int is_valid, int code);
 void		vars_errors(t_mini *mini, int code);
 bool		check_file(char *file_name, t_mini *mini);
 
 // CLEAR
+void		free_solids_2(t_mini *m);
 void		free_solids(t_mini *mini);
 void		free_structs(t_mini *mini, int mlx);
 
@@ -236,10 +249,7 @@ void		cyl_collision_aux(double *d, t_cylinder *c, t_ray *r, t_vector *x);
 void		cyl_collision_aux2(t_cylinder *c, t_ray *r, double *d, t_vector x);
 bool		cylinder_collision(t_cylinder *c, t_ray *r);
 bool		plane_collision(t_plane *pl, t_ray *r1);
-
-// COLORS
-int			rgb_to_int(int red, int green, int blue);
-void		fill_colors(t_mini *m, char *str, t_pos *col);
+bool		cone_collision(t_cone *co, t_ray *r);
 
 // COLOR_OP
 t_pos		multconst_rgb(double c, t_pos color);
@@ -248,13 +258,19 @@ t_pos		add_rgb(t_pos color1, t_pos color2);
 t_pos		sub_rgb(t_pos color1, t_pos color2);
 t_pos		divide_rgb(t_pos color1, t_pos color2);
 
+// COLORS
+int			rgb_to_int(int red, int green, int blue);
+void		fill_colors(t_mini *m, char *str, t_pos *col);
+
 // COORD TRANSFORMATION
-void		data_transform_aux(t_mini *m);
+t_vector	rotate_vector_aux(double angle, t_vector axis, t_vector v);
+t_vector	rotate_vector_2(t_mini *m, t_vector v, t_vector axis, double angle);
+void		data_transform_aux_2(t_mini *m, double angle, t_vector axis, t_pos o);
+void		data_transform_aux(t_mini *m, double a, t_pos o, t_vector axis_of_rot);
 void		data_transform(t_mini *m);
 
-// INITIALIZE
-void		init(t_mini *mini);
-void		init_canvas(t_mini *m);
+// COORD TRANSFORMATION 2
+t_vector	eq_transform(t_mini *m, double *angle);
 
 // FILE READER
 int			check_identifier(char *str);
@@ -262,9 +278,14 @@ void		check_line_values(t_mini *mini, char **vars);
 void		check_lines(t_mini *mini, char *aux);
 void		get_values(t_mini *mini);
 
+// INITIALIZE
+void		init(t_mini *mini);
+void		init_canvas(t_mini *m);
+
 //KEY HOOK
 void		key_hook_aux_3(int keycode, t_mini *m);
 void		key_hook_aux_2(int keycode, t_mini *m);
+void		key_hook_dim_rot_tr(int k, t_mini *m);
 void		key_hook_aux(int keycode, t_mini *m);
 int			key_hook(int keycode, t_mini *m);
 
@@ -292,26 +313,35 @@ void		print_action(t_mini *m, int action);
 void		destroy_create_image(t_mini *m, int action);
 void		raytracing(t_mini *m);
 
+// PHONG
+t_pos		phong(t_mini *m, t_ray *r, bool diffuse);//, double alpha);
+bool		shadow(t_mini *m);
+
 // PIXEL CAMERA
 double		pixel_cam_x(double psx, t_mini *m);
 double		pixel_cam_y(double psy, t_mini *m);
 t_pos		pixel_pos(double psx, double psy, t_mini *m);
 t_vector	pixel_vec(t_pos pix);
 
+// PRINT
+void		print_parser_aux(t_mini *m);
+void		print_parser(t_mini *m);
+
 // REFLECTION
 t_vector	reflected_ray(t_ray *r, t_vector l);
 
-// PHONG
-t_pos		phong(t_mini *m, t_ray *r, bool diffuse);//, double alpha);
-bool		shadow(t_mini *m);
-
-// PRINT
-void		print_parser(t_mini *m);
+// ROTATION
+t_vector	rotation_axis(char c);
+t_vector	rotation_matrix(char c, t_vector v, double angle, double *n);
+t_vector	vector_origin(t_vector v, t_pos o, int sub);
+void		cam_rotation_aux(t_mini *m, char c, double *n);
+void		cam_rotation(t_mini *m, char c, double *n);
 
 // SHAPE CHECKER
 void		check_pl_vars(t_mini *m, char **vars);
 void		check_sp_vars(t_mini *m, char **vars);
 void		check_cy_vars(t_mini *m, char **vars);
+void		check_co_vars(t_mini *m, char **vars);
 
 // SOLID LST
 t_plane		*pl_new(t_mini *m, char **vars, char ***data);
@@ -327,10 +357,15 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data);
 t_cylinder	*cy_last(t_cylinder *cy);
 void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
 
+// SOLID LST 3
+void		co_add_b(t_cone **cone, t_cone *co_new);
+t_cone		*co_last(t_cone *cone);
+t_cone		*co_new(t_mini *m, char **vars, char ***data);
+void		co_new_aux(t_mini *m, char ***data, t_cone **c);
 // SOLID MOVEMENTS
 t_solid		*s_last(t_solid *s);
 void		solid_add_b(t_solid **s, t_solid *s_new);
-t_solid		*solid_new(t_mini *m, t_plane *p, t_sphere *s, t_cylinder *c);
+t_solid		*solid_new(t_mini *m, t_plane *p, t_sphere *s, t_cylinder *c, t_cone *co);
 void		print_solid_list(t_mini *m);
 void		fill_solid_list(t_mini *m);
 
@@ -353,12 +388,6 @@ void		solid_iteration(t_mini *m, int x, int y, int z);
 void		cam_translation(t_mini *m, int x, int y, int z);
 void		translate_solids(t_mini *m, char c, double n);
 void		light_translation(t_mini *m, int x, int y, int z);
-
-// ROTATION
-t_vector	rotation_axis(char c);
-t_vector	rotation_matrix(char c, t_vector v, double angle, double *n);
-t_vector	vector_origin(t_vector v, t_pos o, int sub);
-void		cam_rotation(t_mini *m, char c, double *n);
 
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);

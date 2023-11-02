@@ -16,7 +16,8 @@ int	check_identifier(char *str)
 {
 	if (ft_strncmp(str, "A", 2) && ft_strncmp(str, "C", 2) \
 			&& ft_strncmp(str, "L", 2) && ft_strncmp(str, "pl", 3) \
-			&& ft_strncmp(str, "sp", 3) && ft_strncmp(str, "cy", 3))
+			&& ft_strncmp(str, "sp", 3) && ft_strncmp(str, "cy", 3) \
+			&& ft_strncmp(str, "co", 3))
 	{
 		error_handler(1, 6);
 		return (0);
@@ -38,6 +39,8 @@ void	check_line_values(t_mini *mini, char **vars)
 		check_sp_vars(mini, vars);
 	else if (!ft_strncmp(vars[0], "cy", 3) && count_vars(vars, 6, 5, mini))
 		check_cy_vars(mini, vars);
+	else if (!ft_strncmp(vars[0], "co", 3) && count_vars(vars, 6, 5, mini))
+		check_co_vars(mini, vars);
 }
 
 void	check_lines(t_mini *mini, char *aux)
@@ -63,12 +66,17 @@ void	get_values(t_mini *m)
 		aux = get_next_line(m->fd);
 		if (aux == NULL || !m->is_valid)
 			break ;
-		aux = ft_remove_lb(aux);
-		check_lines(m, aux);
+		if (aux[0] != '\n' && aux[0] != '#')
+		{
+			aux = ft_remove_lb(aux);
+			check_lines(m, aux);
+		}
 		free(aux);
 	}
+	m->flag = true;
 	if (m->is_valid)
 		data_transform(m);
 	free(aux);
 	close(m->fd);
 }
+

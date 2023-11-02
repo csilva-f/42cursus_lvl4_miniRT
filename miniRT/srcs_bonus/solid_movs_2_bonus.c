@@ -29,6 +29,11 @@ void	highlight_solid(t_mini *m)
 		m->s->old_color = m->s->cyl->color;
 		m->s->cyl->color = m->grey_c;
 	}
+	else if (m->s->l == 'O')
+	{
+		m->s->old_color = m->s->co->color;
+		m->s->co->color = m->grey_c;
+	}
 }
 
 void	apply_action_iterate(t_mini *m, int iter)
@@ -39,14 +44,16 @@ void	apply_action_iterate(t_mini *m, int iter)
 		m->s->sp->color = m->s->old_color;
 	else if (m->s->l == 'C')
 		m->s->cyl->color = m->s->old_color;
+	else if (m->s->l == 'O')
+		m->s->co->color = m->s->old_color;
 	if (iter && m->hl && m->s->next)
 	{
 		m->s = m->s->next;
 		while (m->action == 'd' && m->s->l != 'S' && m->s->l != 'C')
 			m->s = m->s->next;
-		while (m->action == 'h' && m->s->l != 'C')
+		while (m->action == 'h' && m->s->l != 'C' && m->s->l != 'O')
 			m->s = m->s->next;
-		while (m->action == 'r' && m->s->l != 'P' && m->s->l != 'C')
+		while (m->action == 'r' && m->s->l == 'S')
 			m->s = m->s->next;
 		highlight_solid(m);
 	}
@@ -74,9 +81,9 @@ void	init_hl_mode(t_mini *m, int action)
 	{
 		while (action == 3 && m->s->l != 'S' && m->s->l != 'C')
 			m->s = m->s->next;
-		while (action == 4 && m->s->l != 'C')
+		while (action == 4 && m->s->l != 'C' && m->s->l != 'O')
 			m->s = m->s->next;
-		while (action == 2 && m->s->l != 'P' && m->s->l != 'C')
+		while (action == 2 && m->s->l == 'O')
 			m->s = m->s->next;
 	}
 	highlight_solid(m);

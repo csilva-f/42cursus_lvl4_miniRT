@@ -45,3 +45,13 @@ void	check_cy_vars(t_mini *m, char **vars)
 		cy_add_b(&m->cyl, cy_new(m, vars, &data));
 	ft_free_split(data);
 }
+
+void	check_co_vars(t_mini *m, char **vars)
+{
+	char		**data;
+
+	data = ft_split(vars[1], ',');
+	if (count_vars(data, 3, 4, m))
+		co_add_b(&m->co, co_new(m, vars, &data));
+	ft_free_split(data);
+}

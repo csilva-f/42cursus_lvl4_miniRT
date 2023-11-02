@@ -50,8 +50,8 @@ void	check_c_vars(t_mini *m, char **v, char **data)
 			m->cam->vec.vx = float_check(m, data[0]);
 			m->cam->vec.vy = float_check(m, data[1]);
 			m->cam->vec.vz = float_check(m, data[2]);
-			if (fabsf(m->cam->vec.vx) > 1 || fabsf(m->cam->vec.vy) > 1 \
-					|| fabsf(m->cam->vec.vz) > 1 || length(m->cam->vec) != 1)
+			if (fabs(m->cam->vec.vx) > 1 || fabs(m->cam->vec.vy) > 1 || \
+					fabs(m->cam->vec.vz) > 1 || fabs(length(m->cam->vec)) != 1)
 				vars_errors(m, 4);
 			ft_free_split(data);
 			if (ft_str_isd(v[3]) && ft_atoi(v[3]) <= 180 && ft_atoi(v[3]) >= 0)

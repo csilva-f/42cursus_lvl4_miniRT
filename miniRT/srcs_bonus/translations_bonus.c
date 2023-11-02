@@ -35,6 +35,13 @@ void	solid_iteration(t_mini *m, int x, int y, int z)
 		m->plane->pos.z += z * -1;
 		m->plane = m->plane->next;
 	}
+	while (m->co)
+	{
+		m->co->pos.x += x * -1;
+		m->co->pos.y += y * -1;
+		m->co->pos.z += z * -1;
+		m->co = m->co->next;
+	}
 }
 
 void	cam_translation(t_mini *m, int x, int y, int z)
@@ -42,10 +49,12 @@ void	cam_translation(t_mini *m, int x, int y, int z)
 	t_sphere	*t_sp;
 	t_cylinder	*t_cyl;
 	t_plane		*t_pl;
+	t_cone		*t_co;
 	t_light		*t_l;
 
 	t_sp = m->sp;
 	t_cyl = m->cyl;
+	t_co = m->co;
 	t_pl = m->plane;
 	t_l = m->light;
 	solid_iteration(m, x, y, z);
@@ -58,12 +67,13 @@ void	cam_translation(t_mini *m, int x, int y, int z)
 	}
 	m->sp = t_sp;
 	m->cyl = t_cyl;
+	m->co = t_co;
 	m->plane = t_pl;
 	m->light = t_l;
 	destroy_create_image(m, 0);
 }
 
-void	translate_solids(t_mini *m, char c, float n)
+void	translate_solids(t_mini *m, char c, double n)
 {
 	if (m->s->l == 'P' && (c == 'r' || c == 'l'))
 		m->s->pl->pos.x += n;
@@ -71,6 +81,8 @@ void	translate_solids(t_mini *m, char c, float n)
 		m->s->sp->pos.x += n;
 	else if (m->s->l == 'C' && (c == 'r' || c == 'l'))
 		m->s->cyl->pos.x += n;
+	else if (m->s->l == 'O' && (c == 'r' || c == 'l'))
+		m->s->co->pos.x += n;
 	if (c == 'u' || c == 'd')
 	{
 		if (m->s->l == 'P')
@@ -79,6 +91,8 @@ void	translate_solids(t_mini *m, char c, float n)
 			m->s->sp->pos.y += n;
 		else if (m->s->l == 'C')
 			m->s->cyl->pos.y += n;
+		else if (m->s->l == 'O')
+			m->s->co->pos.y += n;
 	}
 	else if (c == 'f' || c == 'b')
 	{
@@ -88,6 +102,8 @@ void	translate_solids(t_mini *m, char c, float n)
 			m->s->sp->pos.z += n;
 		else if (m->s->l == 'C')
 			m->s->cyl->pos.z += n;
+		else if (m->s->l == 'O')
+			m->s->co->pos.z += n;
 	}
 }
 

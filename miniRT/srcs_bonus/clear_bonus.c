@@ -12,19 +12,21 @@
 
 #include "../includes/miniRT_bonus.h"
 
-void	free_solids_2(t_mini *mini)
+void	free_solids_2(t_mini *m)
 {
 	t_solid	*aux_s;
 
-	if (mini->s->head == 1)
-		mini->s = mini->s->next;
-	while (mini->s->head != 1)
+	while (m->s->head != 1)
+		m->s = m->s->next;
+	if (m->s->head == 1 && m->s->next && m->s->next->head != 1)
+		m->s = m->s->next;
+	while (m->s->head != 1)
 	{
-		aux_s = mini->s->next;
-		free(mini->s);
-		mini->s = aux_s;
+		aux_s = m->s->next;
+		free(m->s);
+		m->s = aux_s;
 	}
-	free(mini->s);
+	free(m->s);
 }
 
 void	free_solids(t_mini *mini)
@@ -32,6 +34,7 @@ void	free_solids(t_mini *mini)
 	t_plane		*aux_p;
 	t_sphere	*aux_s;
 	t_cylinder	*aux_c;
+	t_cone		*aux_co;
 
 	while (mini->plane)
 	{
@@ -51,7 +54,14 @@ void	free_solids(t_mini *mini)
 		free(mini->cyl);
 		mini->cyl = aux_c;
 	}
-	free_solids_2(mini);
+	while (mini->co)
+	{
+		aux_co = mini->co->next;
+		free(mini->co);
+		mini->co = aux_co;
+	}
+	if (mini->s)
+		free_solids_2(mini);
 }
 
 void	free_structs(t_mini *mini, int mlx)

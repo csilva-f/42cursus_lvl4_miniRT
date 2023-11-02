@@ -15,6 +15,7 @@
 void	init(t_mini *mini)
 {
 	mini->is_valid = 1;
+	mini->init = 1;
 	mini->hl = 0;
 	mini->action = '0';
 	mini->reset = 0;
@@ -30,8 +31,8 @@ void	init(t_mini *mini)
 	mini->plane = NULL;
 	mini->sp = NULL;
 	mini->cyl = NULL;
+	mini->co = NULL;
 	mini->ray = NULL;
-	mini->cone = NULL;
 	mini->s = NULL;
 }
 
@@ -53,7 +54,8 @@ void	init_canvas(t_mini *m)
 			&m->g->line_length, &m->g->endian);
 	create_menu(m);
 	raytracing(m);
-	mlx_key_hook(m->g->win, key_hook, m);
+	m->init = 0;
+	mlx_hook(m->g->win, 2, 1L << 0, key_hook, m);
 	mlx_hook(m->g->win, 17, 1L << 17, close_game, m);
 	mlx_loop(m->g->mlx);
 }

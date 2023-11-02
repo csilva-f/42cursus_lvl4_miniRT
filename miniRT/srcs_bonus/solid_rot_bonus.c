@@ -12,12 +12,12 @@
 
 #include "../includes/miniRT_bonus.h"
 
-t_vector	rotate_vector(t_vector orig, t_vector axis, float angle)
+t_vector	rotate_vector(t_vector orig, t_vector axis, double angle)
 {
-	float		rad;
-	float		coss;
-	float		sen;
-	float		one_coss;
+	double		rad;
+	double		coss;
+	double		sen;
+	double		one_coss;
 	t_vector	rot;
 
 	rad = angle * PI / 180.0;
@@ -36,10 +36,10 @@ t_vector	rotate_vector(t_vector orig, t_vector axis, float angle)
 	return (vector_norm(rot));
 }
 
-t_vector	rotate_vector_x(t_vector orig, float angle)
+t_vector	rotate_vector_x(t_vector orig, double angle)
 {
-	float		coss;
-	float		sen;
+	double		coss;
+	double		sen;
 	t_vector	rot;
 
 	coss = cos(angle * PI / 180.0);
@@ -50,10 +50,10 @@ t_vector	rotate_vector_x(t_vector orig, float angle)
 	return (vector_norm(rot));
 }
 
-t_vector	rotate_vector_y(t_vector orig, float angle)
+t_vector	rotate_vector_y(t_vector orig, double angle)
 {
-	float		coss;
-	float		sen;
+	double		coss;
+	double		sen;
 	t_vector	rot;
 
 	coss = cos(angle * PI / 180.0);
@@ -64,10 +64,10 @@ t_vector	rotate_vector_y(t_vector orig, float angle)
 	return (vector_norm(rot));
 }
 
-t_vector	rotate_vector_z(t_vector orig, float angle)
+t_vector	rotate_vector_z(t_vector orig, double angle)
 {
-	float		coss;
-	float		sen;
+	double		coss;
+	double		sen;
 	t_vector	rot;
 
 	coss = cos(angle * PI / 180.0);
@@ -94,4 +94,6 @@ void	rotate_solids(t_mini *m, char c)
 		m->s->pl->vec = rotate_vector(m->s->pl->vec, axis, 15);
 	else if (m->s->l == 'C' && (axis.vx != 0 || axis.vy != 0 || axis.vz != 0))
 		m->s->cyl->vec = rotate_vector(m->s->cyl->vec, axis, 15);
+	else if (m->s->l == 'O' && (axis.vx != 0 || axis.vy != 0 || axis.vz != 0))
+		m->s->co->vec = rotate_vector(m->s->co->vec, axis, 15);
 }

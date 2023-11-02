@@ -12,7 +12,7 @@
 
 #include "../includes/miniRT_bonus.h"
 
-t_pos	multconst_rgb(float c, t_pos color)
+t_pos	multconst_rgb(double c, t_pos color)
 {
 	t_pos	result;
 

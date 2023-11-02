@@ -12,7 +12,7 @@
 
 #include "../includes/miniRT_bonus.h"
 
-t_pos	ray_pos(t_pos p, t_vector v, float t)
+t_pos	ray_pos(t_pos p, t_vector v, double t)
 {
 	return (coord_add(p, coord_mult_const(vector_to_pos(v), t)));
 }
@@ -39,6 +39,11 @@ t_ray	*ray_new(t_pos p, t_vector v)
 
 void	collisions_aux(t_mini *m, t_ray *ray)
 {
+	while (m->cyl)
+	{
+		cylinder_collision(m->cyl, ray);
+		m->cyl = m->cyl->next;
+	}
 	while (m->sp)
 	{
 		sphere_collision(m->sp, ray);
@@ -49,10 +54,10 @@ void	collisions_aux(t_mini *m, t_ray *ray)
 		plane_collision(m->plane, ray);
 		m->plane = m->plane->next;
 	}
-	while (m->cyl)
+	while (m->co)
 	{
-		cylinder_collision(m->cyl, ray);
-		m->cyl = m->cyl->next;
+		cone_collision(m->co, ray);
+		m->co = m->co->next;
 	}
 }
 
@@ -61,20 +66,19 @@ void	collisions(t_mini *m, int x, int y)
 	t_sphere	*temp_sp;
 	t_plane		*temp_pl;
 	t_cylinder	*temp_cyl;
-	bool		diffuse;
+	t_cone		*temp_co;
 
 	temp_pl = m->plane;
 	temp_sp = m->sp;
 	temp_cyl = m->cyl;
+	temp_co = m->co;
 	collisions_aux(m, m->ray);
 	m->plane = temp_pl;
 	m->sp = temp_sp;
 	m->cyl = temp_cyl;
+	m->co = temp_co;
 	if (m->ray->t > -1)
-	{
-		diffuse = shadow(m);
-		my_mlx_pixel_put(m, x, y, phong(m, m->ray, diffuse));
-	}
+		my_mlx_pixel_put(m, x, y, phong(m, m->ray, shadow(m)));
 	else
 		my_mlx_pixel_put(m, x, y, (t_pos){0, 0, 0});
 }
@@ -83,7 +87,7 @@ void	ray_create(t_mini *m)
 {
 	int			x;
 	int			y;
-	float		px;
+	double		px;
 	t_pos		p;
 
 	x = 0;

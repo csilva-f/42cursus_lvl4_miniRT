@@ -44,7 +44,7 @@ void	solid_add_b(t_solid **s, t_solid *s_new)
 	}
 }
 
-t_solid	*solid_new(t_mini *m, t_plane *p, t_sphere *s, t_cylinder *c)
+t_solid	*solid_new(t_mini *m, t_plane *p, t_sphere *s, t_cylinder *c, t_cone *co)
 {
 	t_solid	*solid;
 
@@ -67,6 +67,11 @@ t_solid	*solid_new(t_mini *m, t_plane *p, t_sphere *s, t_cylinder *c)
 		solid->l = 'C';
 		solid->cyl = c;
 	}
+	else if (co)
+	{
+		solid->l = 'O';
+		solid->co = co;
+	}
 	solid->next = m->s;
 	return (solid);
 }
@@ -88,26 +93,34 @@ void	fill_solid_list(t_mini *m)
 	t_plane		*t_pl;
 	t_sphere	*t_sp;
 	t_cylinder	*t_cyl;
+	t_cone		*t_co;
 
 	t_pl = m->plane;
 	t_sp = m->sp;
 	t_cyl = m->cyl;
+	t_co = m->co;
 	while (m->plane)
 	{
-		solid_add_b(&m->s, solid_new(m, m->plane, NULL, NULL));
+		solid_add_b(&m->s, solid_new(m, m->plane, NULL, NULL, NULL));
 		m->plane = m->plane->next;
 	}
 	while (m->sp)
 	{
-		solid_add_b(&m->s, solid_new(m, NULL, m->sp, NULL));
+		solid_add_b(&m->s, solid_new(m, NULL, m->sp, NULL, NULL));
 		m->sp = m->sp->next;
 	}
 	while (m->cyl)
 	{
-		solid_add_b(&m->s, solid_new(m, NULL, NULL, m->cyl));
+		solid_add_b(&m->s, solid_new(m, NULL, NULL, m->cyl, NULL));
 		m->cyl = m->cyl->next;
+	}
+	while (m->co)
+	{
+		solid_add_b(&m->s, solid_new(m, NULL, NULL, NULL, m->co));
+		m->co = m->co->next;
 	}
 	m->plane = t_pl;
 	m->sp = t_sp;
 	m->cyl = t_cyl;
+	m->co = t_co;
 }

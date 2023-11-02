@@ -16,9 +16,11 @@ void	print_parser_aux(t_mini *m)
 {
 	t_sphere	*s;
 	t_cylinder	*c;
+	t_cone		*co;
 
 	s = m->sp;
 	c = m->cyl;
+	co = m->co;
 	while (s != NULL)
 	{
 		printf("sp\n%f,%f", s->pos.x, s->pos.y);
@@ -32,6 +34,13 @@ void	print_parser_aux(t_mini *m)
 				c->pos.z, c->vec.vx, c->vec.vy, c->vec.vz, c->d, c->h, \
 				(int)c->color.x, (int)c->color.y, (int)c->color.z);
 		c = c->next;
+	}
+	while (co != NULL)
+	{
+		printf("co\n%f,%f,%f %f,%f,%f %f %f %i %i %i\n", co->pos.x, co->pos.y, \
+				co->pos.z, co->vec.vx, co->vec.vy, co->vec.vz, co->k, co->h, \
+				(int)co->color.x, (int)co->color.y, (int)co->color.z);
+		co = co->next;
 	}
 }
 

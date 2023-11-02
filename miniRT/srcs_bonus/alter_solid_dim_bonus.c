@@ -18,6 +18,7 @@ void	reset_canvas(t_mini *m)
 	init(m);
 	m->reset = 1;
 	get_values(m);
+	m->init = 0;
 	destroy_create_image(m, 0);
 	m->reset = 0;
 }
@@ -45,3 +46,4 @@ void	solids_dimensions(t_mini *m, char c)
 	else if (m->action == 'h' && m->s->l == 'C')
 		m->s->cyl->h = m->s->cyl->h + n * 0.1 * m->s->cyl->h;
 }
+
