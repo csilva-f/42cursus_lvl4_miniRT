@@ -42,17 +42,17 @@ void	init_canvas(t_mini *m)
 	if (!m->g)
 		return ;
 	m->g->mlx = mlx_init();
-	m->g->menu_mlx = mlx_init();
+	//m->g->menu_mlx = mlx_init();
 	m->g->width = WIDTH * 10;
 	m->g->height = HEIGHT * 10;
 	m->g->win = mlx_new_window(m->g->mlx, m->g->width, \
 			m->g->height, "miniRT");
-	m->g->menu_win = mlx_new_window(m->g->menu_mlx, 300, 550, "Menu");
+	//m->g->menu_win = mlx_new_window(m->g->menu_mlx, 300, 550, "Menu");
 	m->g->img = mlx_new_image(m->g->mlx, m->g->width, m->g->height);
-	m->g->menu_img = mlx_new_image(m->g->menu_mlx, 300, 550);
+	//m->g->menu_img = mlx_new_image(m->g->menu_mlx, 300, 550);
 	m->g->addr = mlx_get_data_addr(m->g->img, &m->g->bits_per_pixel, \
 			&m->g->line_length, &m->g->endian);
-	create_menu(m);
+	//create_menu(m);
 	raytracing(m);
 	m->init = 0;
 	mlx_hook(m->g->win, 2, 1L << 0, key_hook, m);

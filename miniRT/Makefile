@@ -50,7 +50,7 @@ SRCS_BONUS = srcs_bonus/alter_solid_dim_bonus.c			srcs_bonus/check_bonus.c			src
 			 srcs_bonus/shape_checker_bonus.c			srcs_bonus/solid_lst_bonus.c		srcs_bonus/solid_lst_2_bonus.c \
 			 srcs_bonus/solid_movs_bonus.c				srcs_bonus/solid_movs_2_bonus.c		srcs_bonus/solid_rot_bonus.c \
 			 srcs_bonus/translations_bonus.c			srcs_bonus/ang_calculate_bonus.c	srcs_bonus/coord_transform_2_bonus.c \
-			 srcs_bonus/solid_lst_3_bonus.c
+			 srcs_bonus/solid_lst_3_bonus.c				srcs_bonus/collisions_3_bonus.c		srcs_bonus/solid_movs_3_bonus.c			
 
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)

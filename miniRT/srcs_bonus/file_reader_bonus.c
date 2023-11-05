@@ -79,4 +79,3 @@ void	get_values(t_mini *m)
 	free(aux);
 	close(m->fd);
 }
-

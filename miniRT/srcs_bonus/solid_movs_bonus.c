@@ -44,38 +44,6 @@ void	solid_add_b(t_solid **s, t_solid *s_new)
 	}
 }
 
-t_solid	*solid_new(t_mini *m, t_plane *p, t_sphere *s, t_cylinder *c, t_cone *co)
-{
-	t_solid	*solid;
-
-	solid = malloc(sizeof(t_solid));
-	if (!solid)
-		return (NULL);
-	solid->head = 0;
-	if (p)
-	{
-		solid->l = 'P';
-		solid->pl = p;
-	}
-	else if (s)
-	{
-		solid->l = 'S';
-		solid->sp = s;
-	}
-	else if (c)
-	{
-		solid->l = 'C';
-		solid->cyl = c;
-	}
-	else if (co)
-	{
-		solid->l = 'O';
-		solid->co = co;
-	}
-	solid->next = m->s;
-	return (solid);
-}
-
 void	print_solid_list(t_mini *m)
 {
 	t_solid	*temp;
@@ -86,6 +54,20 @@ void	print_solid_list(t_mini *m)
 	while (m->s->next && m->s->next->head != 1)
 		m->s = m->s->next;
 	m->s = temp;
+}
+
+void	fill_solid_list_aux(t_mini *m)
+{
+	while (m->cyl)
+	{
+		solid_add_b(&m->s, solid_new2(m, m->cyl, NULL));
+		m->cyl = m->cyl->next;
+	}
+	while (m->co)
+	{
+		solid_add_b(&m->s, solid_new2(m, NULL, m->co));
+		m->co = m->co->next;
+	}
 }
 
 void	fill_solid_list(t_mini *m)
@@ -101,24 +83,15 @@ void	fill_solid_list(t_mini *m)
 	t_co = m->co;
 	while (m->plane)
 	{
-		solid_add_b(&m->s, solid_new(m, m->plane, NULL, NULL, NULL));
+		solid_add_b(&m->s, solid_new(m, m->plane, NULL));
 		m->plane = m->plane->next;
 	}
 	while (m->sp)
 	{
-		solid_add_b(&m->s, solid_new(m, NULL, m->sp, NULL, NULL));
+		solid_add_b(&m->s, solid_new(m, NULL, m->sp));
 		m->sp = m->sp->next;
 	}
-	while (m->cyl)
-	{
-		solid_add_b(&m->s, solid_new(m, NULL, NULL, m->cyl, NULL));
-		m->cyl = m->cyl->next;
-	}
-	while (m->co)
-	{
-		solid_add_b(&m->s, solid_new(m, NULL, NULL, NULL, m->co));
-		m->co = m->co->next;
-	}
+	fill_solid_list_aux(m);
 	m->plane = t_pl;
 	m->sp = t_sp;
 	m->cyl = t_cyl;

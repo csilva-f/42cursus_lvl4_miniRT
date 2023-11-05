@@ -365,7 +365,9 @@ void		co_new_aux(t_mini *m, char ***data, t_cone **c);
 // SOLID MOVEMENTS
 t_solid		*s_last(t_solid *s);
 void		solid_add_b(t_solid **s, t_solid *s_new);
-t_solid		*solid_new(t_mini *m, t_plane *p, t_sphere *s, t_cylinder *c, t_cone *co);
+t_solid		*solid_new2(t_mini *m, t_cylinder *c, t_cone *co);
+t_solid		*solid_new(t_mini *m, t_plane *p, t_sphere *s);
+
 void		print_solid_list(t_mini *m);
 void		fill_solid_list(t_mini *m);
 

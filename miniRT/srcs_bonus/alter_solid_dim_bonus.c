@@ -46,4 +46,3 @@ void	solids_dimensions(t_mini *m, char c)
 	else if (m->action == 'h' && m->s->l == 'C')
 		m->s->cyl->h = m->s->cyl->h + n * 0.1 * m->s->cyl->h;
 }
-

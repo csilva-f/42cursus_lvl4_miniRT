@@ -44,6 +44,11 @@ void	collisions_aux(t_mini *m, t_ray *ray)
 		cylinder_collision(m->cyl, ray);
 		m->cyl = m->cyl->next;
 	}
+	while (m->co)
+	{
+		cone_collision(m->co, ray);
+		m->co = m->co->next;
+	}
 	while (m->sp)
 	{
 		sphere_collision(m->sp, ray);
@@ -53,11 +58,6 @@ void	collisions_aux(t_mini *m, t_ray *ray)
 	{
 		plane_collision(m->plane, ray);
 		m->plane = m->plane->next;
-	}
-	while (m->co)
-	{
-		cone_collision(m->co, ray);
-		m->co = m->co->next;
 	}
 }
 

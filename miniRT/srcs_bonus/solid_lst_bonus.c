@@ -97,4 +97,3 @@ t_sphere	*sph_last(t_sphere *sp)
 		aux = aux->next;
 	return (aux);
 }
-

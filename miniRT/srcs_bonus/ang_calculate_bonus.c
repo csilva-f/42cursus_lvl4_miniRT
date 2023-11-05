@@ -25,4 +25,3 @@ t_angles	three_d_angles(t_vector a, t_vector b)
 	ang.psi = acos(proj.vx / sqrt(pow(proj.vx, 2) + pow(proj.vy, 2)));
 	return (ang);
 }
-
