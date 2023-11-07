@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/23 19:35:47 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/07 23:22:23 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_cone
 {
 	t_pos				pos;
 	t_vector			vec;
+	double				ang;
 	double				k;
 	double				k_k;
 	double				h;
@@ -222,7 +223,7 @@ typedef struct s_mini
 
 // ALTER SOLID DIMENSIONS
 void		reset_canvas(t_mini *m);
-void		solids_dimensions(t_mini *m, char c);
+void		solids_dimensions(t_mini *m, char c, int n);
 
 // ANGLES CALCULATE
 t_angles	three_d_angles(t_vector a, t_vector b);
@@ -234,6 +235,7 @@ bool		check_file(char *file_name, t_mini *mini);
 
 // CLEAR
 void		free_solids_2(t_mini *m);
+void		free_solids_3(t_mini *mini);
 void		free_solids(t_mini *mini);
 void		free_structs(t_mini *mini, int mlx);
 
@@ -249,6 +251,11 @@ void		cyl_collision_aux(double *d, t_cylinder *c, t_ray *r, t_vector *x);
 void		cyl_collision_aux2(t_cylinder *c, t_ray *r, double *d, t_vector x);
 bool		cylinder_collision(t_cylinder *c, t_ray *r);
 bool		plane_collision(t_plane *pl, t_ray *r1);
+
+// COLLISIONS 3
+void		cone_norm(t_cone *co, t_ray *r, double t, double m);
+double		quadratic_form_cone(double a, double b, double c, double *t);
+double		cone_bases(t_cone *c, t_ray *r, double t);
 bool		cone_collision(t_cone *co, t_ray *r);
 
 // COLOR_OP
@@ -335,6 +342,10 @@ t_vector	rotation_axis(char c);
 t_vector	rotation_matrix(char c, t_vector v, double angle, double *n);
 t_vector	vector_origin(t_vector v, t_pos o, int sub);
 void		cam_rotation_aux(t_mini *m, char c, double *n);
+void		cam_rotation_aux2(t_mini *m, char c, double *n);
+
+// ROTATION 2
+void		cam_rotation_aux3(t_mini *m, char c, double *n);
 void		cam_rotation(t_mini *m, char c, double *n);
 
 // SHAPE CHECKER
@@ -362,13 +373,12 @@ void		co_add_b(t_cone **cone, t_cone *co_new);
 t_cone		*co_last(t_cone *cone);
 t_cone		*co_new(t_mini *m, char **vars, char ***data);
 void		co_new_aux(t_mini *m, char ***data, t_cone **c);
+
 // SOLID MOVEMENTS
 t_solid		*s_last(t_solid *s);
 void		solid_add_b(t_solid **s, t_solid *s_new);
-t_solid		*solid_new2(t_mini *m, t_cylinder *c, t_cone *co);
-t_solid		*solid_new(t_mini *m, t_plane *p, t_sphere *s);
-
 void		print_solid_list(t_mini *m);
+void		fill_solid_list_aux(t_mini *m);
 void		fill_solid_list(t_mini *m);
 
 // SOLID MOVEMENTS 2
@@ -378,6 +388,10 @@ void		init_hl_mode(t_mini *m, int action);
 int			def_tip_action(t_mini *m, int action);
 void		dim_rot_trans(t_mini *m, int action, int iter, char c);
 
+// SOLID MOVEMENTS 3
+t_solid		*solid_new2(t_mini *m, t_cylinder *c, t_cone *co);
+t_solid		*solid_new(t_mini *m, t_plane *p, t_sphere *s);
+
 //SOLID ROTATION
 t_vector	rotate_vector(t_vector orig, t_vector axis, double angle);
 t_vector	rotate_vector_x(t_vector orig, double angle);
@@ -386,9 +400,13 @@ t_vector	rotate_vector_z(t_vector orig, double angle);
 void		rotate_solids(t_mini *m, char c);
 
 // TRANSLATION
+void		solid_iteration_aux(t_mini *m, int x, int y, int z);
 void		solid_iteration(t_mini *m, int x, int y, int z);
 void		cam_translation(t_mini *m, int x, int y, int z);
+void		translate_solids_aux(t_mini *m, char c, double n);
 void		translate_solids(t_mini *m, char c, double n);
+
+// TRANSLATION 2
 void		light_translation(t_mini *m, int x, int y, int z);
 
 // MAIN

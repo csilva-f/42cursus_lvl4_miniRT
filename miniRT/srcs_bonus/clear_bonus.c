@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear.c                                            :+:      :+:    :+:   */
+/*   clear_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:45:42 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/12 21:57:52 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/07 23:05:38 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,23 @@ void	free_solids_2(t_mini *m)
 	free(m->s);
 }
 
+void	free_solids_3(t_mini *mini)
+{
+	t_cone	*aux_co;
+
+	while (mini->co)
+	{
+		aux_co = mini->co->next;
+		free(mini->co);
+		mini->co = aux_co;
+	}
+}
+
 void	free_solids(t_mini *mini)
 {
 	t_plane		*aux_p;
 	t_sphere	*aux_s;
 	t_cylinder	*aux_c;
-	t_cone		*aux_co;
 
 	while (mini->plane)
 	{
@@ -54,12 +65,7 @@ void	free_solids(t_mini *mini)
 		free(mini->cyl);
 		mini->cyl = aux_c;
 	}
-	while (mini->co)
-	{
-		aux_co = mini->co->next;
-		free(mini->co);
-		mini->co = aux_co;
-	}
+	free_solids_3(mini);
 	if (mini->s)
 		free_solids_2(mini);
 }

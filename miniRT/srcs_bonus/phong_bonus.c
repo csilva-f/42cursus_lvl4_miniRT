@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phong.c                                            :+:      :+:    :+:   */
+/*   phong_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/10/12 22:24:31 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/07 23:01:36 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
+
+void	collisions_aux3(t_mini *m, t_ray *ray)
+{
+	while (m->co)
+	{
+		cone_collision(m->co, ray);
+		m->co = m->co->next;
+		if (ray->t >= 0.0005)
+			return ;
+	}
+}
 
 void	collisions_aux2(t_mini *m, t_ray *ray)
 {
@@ -35,13 +46,7 @@ void	collisions_aux2(t_mini *m, t_ray *ray)
 		if (ray->t >= 0.0005)
 			return ;
 	}
-	while (m->co)
-	{
-		cone_collision(m->co, ray);
-		m->co = m->co->next;
-		if (ray->t >= 0.0005)
-			return ;
-	}
+	collisions_aux3(m, ray);
 }
 
 void	light_collisions(t_mini *m, t_ray *temp)

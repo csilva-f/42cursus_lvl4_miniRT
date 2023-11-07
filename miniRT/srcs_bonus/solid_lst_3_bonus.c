@@ -35,11 +35,11 @@ t_cone	*co_new(t_mini *m, char **vars, char ***data)
 			vars_errors(m, 4);
 		else
 		{
-			c->k = float_check(m, vars[3]) * PI / 180;
-			if (c->k < 0 || c->k > 180)
+			c->ang = float_check(m, vars[3]) * PI / 180;
+			if (c->ang < 0 || c->ang > 180)
 				vars_errors(m, 4);
 			else
-				c->k = tan(c->k);
+				c->k = tan(c->ang);
 			c->k_k = 1 + c->k * c->k;
 			c->h = float_check(m, vars[4]);
 			fill_colors(m, vars[5], &c->color);

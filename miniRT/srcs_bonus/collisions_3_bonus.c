@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:49:33 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/05 11:49:35 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/11/07 23:03:14 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	cone_norm(t_cone *co, t_ray *r, double t, double m)
 
 	new = vector_create(ray_pos(r->p0, r->v1, t), co->pos);
 	new = vector_sub(new, vector_mult_const(co->vec, pow(co->k, 2) * m));
-	r->norm_v =vector_norm(new);
+	r->norm_v = vector_norm(new);
 	r->reflex_times--;
 	r->color = co->color;
 	r->t = t;
@@ -89,13 +89,15 @@ bool	cone_collision(t_cone *co, t_ray *r)
 	a = quadratic_form_cone(a, b, c, t);
 	if (a > 0.05)
 	{
-		if (vector_dot(vector_create(ray_pos(r->p0, r->v1, a), co->pos), co->vec) < 0)
+		if (vector_dot(vector_create(ray_pos(r->p0, r->v1, a), co->pos), \
+					co->vec) < 0)
 		{
 			if (a == t[0])
 				a = t[1];
 			else if (a == t[1])
 				a = t[0];
-			if (a < 0.05 || vector_dot(vector_create(ray_pos(r->p0, r->v1, a), co->pos), co->vec) < 0)
+			if (a < 0.05 || vector_dot(vector_create(ray_pos(r->p0, r->v1, a), \
+							co->pos), co->vec) < 0)
 				return (false);
 		}
 		if (r->t == -1 || (a < r->t))

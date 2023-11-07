@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solid_movs_2.c                                     :+:      :+:    :+:   */
+/*   solid_movs_2_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 17:34:55 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/28 20:21:32 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/07 23:24:07 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	apply_action_iterate(t_mini *m, int iter)
 	if (iter && m->hl && m->s->next)
 	{
 		m->s = m->s->next;
-		while (m->action == 'd' && m->s->l != 'S' && m->s->l != 'C')
+		while (m->action == 'd' && m->s->l != 'S' && m->s->l != 'C' \
+				&& m->s->l != 'O')
 			m->s = m->s->next;
 		while (m->action == 'h' && m->s->l != 'C' && m->s->l != 'O')
 			m->s = m->s->next;
@@ -115,7 +116,7 @@ void	dim_rot_trans(t_mini *m, int action, int iter, char c)
 		else
 		{
 			if (m->action == 'd' || m->action == 'h')
-				solids_dimensions(m, c);
+				solids_dimensions(m, c, 1);
 			else if (m->action == 't')
 			{
 				if (c == 'r' || c == 'u' || c == 'f')
