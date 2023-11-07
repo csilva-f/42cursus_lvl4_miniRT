@@ -77,7 +77,7 @@ void	collisions(t_mini *m, int x, int y)
 	m->sp = temp_sp;
 	m->cyl = temp_cyl;
 	m->co = temp_co;
-	if (m->ray->t > -1)
+	if (m->ray->t > 0)
 		my_mlx_pixel_put(m, x, y, phong(m, m->ray, shadow(m)));
 	else
 		my_mlx_pixel_put(m, x, y, (t_pos){0, 0, 0});

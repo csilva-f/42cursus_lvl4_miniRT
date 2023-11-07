@@ -108,8 +108,8 @@ void	cam_rotation(t_mini *m, char c, double *n)
 	{
 		m->co->vec = vector_origin(m->co->vec, m->cam->pos, 1);
 		m->co->vec = rotation_matrix(c, m->co->vec, 5.0 * PI / 60.0, n);
-		m->co->vec = vector_norm(vector_origin(m->co->vec, \
-					m->cam->pos, 0));
+		m->co->vec = vector_norm(m->co->vec);
+		m->co->vec = vector_norm(vector_origin(m->co->vec, m->cam->pos, 0));
 		m->co = m->co->next;
 	}
 	m->cyl = t_cyl;

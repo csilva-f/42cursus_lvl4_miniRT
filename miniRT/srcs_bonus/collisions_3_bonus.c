@@ -48,19 +48,19 @@ double	cone_bases(t_cone *c, t_ray *r, double t)
 	double		n[2];
 	t_pos		pos;
 
+	pos = ray_pos(c->pos, c->vec, c->h);
 	n[1] = vector_dot(r->v1, c->vec);
-	n[0] = vector_dot(vector_create(r->p0, ray_pos(c->pos, c->vec, c->h)), c->vec);
+	n[0] = vector_dot(vector_create(r->p0, pos), c->vec);
 	if (n[1] == 0)
 		return (-1);
 	t = -1 * n[0] / n[1];
-	pos = ray_pos(c->pos, c->vec, c->h);
 	if (t > 0 && (r->t == -1 || (t < r->t)))
 	{
-		if (distance(pos, ray_pos(r->p0, r->v1, t)) > tan(c->k) * c->h)
+		if (distance(pos, ray_pos(r->p0, r->v1, t)) >= c->k * c->h)
 			return (-1);
 		r->t = t;
 		r->reflex_times--;
-		r->color = (t_pos){0,0,200};
+		r->color = c->color;
 		if (vector_dot(r->v1, c->vec) < 0)
 			r->norm_v = c->vec;
 		else
@@ -95,7 +95,7 @@ bool	cone_collision(t_cone *co, t_ray *r)
 				a = t[1];
 			else if (a == t[1])
 				a = t[0];
-			if (vector_dot(vector_create(ray_pos(r->p0, r->v1, a), co->pos), co->vec) < 0 || a < 0.05)
+			if (a < 0.05 || vector_dot(vector_create(ray_pos(r->p0, r->v1, a), co->pos), co->vec) < 0)
 				return (false);
 		}
 		if (r->t == -1 || (a < r->t))
