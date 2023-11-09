@@ -43,6 +43,8 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 	t = quadratic_form(r->sqrt_len, vector_dot(r->v1, x) * 2, c);
 	if (t > 0.005)
 	{
+		if (r->t > 0)
+			printf("t antes %f, t da esfera %f\n", r->t, t);
 		if (r->t == -1 || (t < r->t))
 		{
 			r->t = t;

@@ -30,8 +30,8 @@
 #  include <X11/X.h>
 # endif
 
-# define HEIGHT 72.0/2
-# define WIDTH 128.0/2
+# define HEIGHT 72.0/4
+# define WIDTH 128.0/4
 
 # define ESC 65307
 # define LEFT 65361

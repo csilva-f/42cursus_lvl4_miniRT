@@ -105,5 +105,7 @@ void	ray_create(t_mini *m)
 		}
 		x++;
 	}
+	//printf("cone %f %f %f\n", m->co->pos.x, m->co->pos.y, m->co->pos.z);
+	//printf("plane %f %f %f\n", m->plane->pos.x, m->plane->pos.y, m->plane->pos.z);
 	mlx_put_image_to_window(m->g->mlx, m->g->win, m->g->img, 0, 0);
 }

@@ -14,18 +14,6 @@
 
 // co -> pos vec k(degrees) h color
 
-void	cone_norm(t_cone *co, t_ray *r, double t, double m)
-{
-	t_vector	new;
-
-	new = vector_create(ray_pos(r->p0, r->v1, t), co->pos);
-	new = vector_sub(new, vector_mult_const(co->vec, pow(co->k, 2) * m));
-	r->norm_v = vector_norm(new);
-	r->reflex_times--;
-	r->color = co->color;
-	r->t = t;
-}
-
 double	quadratic_form_cone(double a, double b, double c, double *t)
 {
 	double	t_plus;
@@ -70,6 +58,18 @@ double	cone_bases(t_cone *c, t_ray *r, double t)
 	return (-1);
 }
 
+void	cone_norm(t_cone *co, t_ray *r, double t, double m)
+{
+	t_vector	new;
+
+	new = vector_create(ray_pos(r->p0, r->v1, t), co->pos);
+	new = vector_sub(new, vector_mult_const(co->vec, pow(co->k, 2) * m));
+	r->norm_v = vector_norm(new);
+	r->reflex_times--;
+	r->color = co->color;
+	r->t = t;
+}
+
 bool	cone_collision(t_cone *co, t_ray *r)
 {
 	double		a;
@@ -97,21 +97,21 @@ bool	cone_collision(t_cone *co, t_ray *r)
 			else if (a == t[1])
 				a = t[0];
 			if (a < 0.05 || vector_dot(vector_create(ray_pos(r->p0, r->v1, a), \
-							co->pos), co->vec) < 0)
+				co->pos), co->vec) < 0)
 				return (false);
 		}
 		if (r->t == -1 || (a < r->t))
 		{
 			c = d_v * a + x_v;
 			b = distance(co->pos, ray_pos(co->pos, co->vec, co->h));
-			if (c <= b)
+			if (c < b)
 			{
 				r->t = cone_bases(co, r, 0);
-				if (a < r->t || r->t <= 0)
-					cone_norm(co, r, b, c);
+				if (a < r->t || r->t < 0)
+					cone_norm(co, r, a, c);
 				return (true);
 			}
-			else if (c > b)
+			else if (c >= b)
 				return (cone_bases(co, r, 0));
 		}
 	}
