@@ -6,11 +6,12 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/11 18:05:18 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:16:11 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
+#include <stdio.h>
 
 void	collisions_aux3(t_mini *m, t_ray *ray)
 {
@@ -104,12 +105,12 @@ t_pos	phong(t_mini *m, t_ray *r)
 	aux_l = m->light;
 	k[0] = m->al->ratio;
 	i = (t_pos){0, 0, 0};
+	amb = multconst_rgb(k[0], r->color);
 	while (aux_l != NULL)
 	{
 		k[1] = aux_l->ratio;
 		l = vector_norm(vector_create(aux_l->pos, ray_pos(r->p0, \
 						r->v1, r->t * 0.99999)));
-		amb = multconst_rgb(k[0], r->color);
 		diffuse = shadow(m, aux_l);
 		if (diffuse)
 			diff = multconst_rgb(k[1] * vector_dot(r->norm_v, l), r->color);

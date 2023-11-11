@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:53:52 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/09 21:31:59 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:30:43 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_light	*light_new(t_mini *m, char **vars, char ***data)
 	l->pos.x = float_check(m, (*data)[0]);
 	l->pos.y = float_check(m, (*data)[1]);
 	l->pos.z = float_check(m, (*data)[2]);
+	l->f = 0;
 	if (m->is_valid)
 	{
 		l->ratio = float_check(m, vars[2]);

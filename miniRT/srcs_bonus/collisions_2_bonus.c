@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 22:39:06 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/11 18:06:09 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:17:39 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,27 +61,27 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 
 t_pos	color_condition(t_plane *pl, t_pos p)
 {
-	double	u;
-	double	v;
+	double	a;
+	double	b;
 
-	u = 0;
-	v = 0;
+	a = 0;
+	b = 0;
 	if (pl->vec.vx != 0)
 	{
-		u = p.z;
-		v = p.y;
+		a = p.z;
+		b = p.y;
 	}
 	else if (pl->vec.vy != 0)
 	{
-		u = p.x;
-		v = p.z;
+		a = p.x;
+		b = p.z;
 	}
 	else if (pl->vec.vz != 0)
 	{
-		u = p.x;
-		v = p.y;
+		a = p.x;
+		b = p.y;
 	}
-	if ((int)(floor(u) + floor(v)) % 2)
+	if ((int)(floor(a) + floor(b)) % 2)
 		return (pl->color);
 	else
 		return (pl->color2);
