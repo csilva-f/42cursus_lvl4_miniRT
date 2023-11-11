@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:02:28 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/02 12:02:31 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/11/09 20:18:27 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,23 @@ t_vector	eq_transform(t_mini *m, double *angle)
 	if (axis.vx == 0 && axis.vy == 0 && axis.vz == 0)
 		axis.vy = 1;
 	return (vector_norm(axis));
+}
+
+t_vector	rotate_vector_aux(double angle, t_vector axis, t_vector v)
+{
+	t_vector	result;
+	double		coss;
+	double		sen;
+
+	axis = vector_norm(axis);
+	coss = cos(angle);
+	sen = sin(angle);
+	angle = 0.261799;
+	coss = cos(angle);
+	sen = sin(angle);
+	axis = vector_norm(axis);
+	result.vx = v.vx * coss - v.vy * sen;
+	result.vy = v.vx * sen + v.vy * coss;
+	result.vz = v.vz;
+	return (vector_norm(result));
 }

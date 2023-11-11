@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 22:39:06 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/01 13:03:30 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:06:09 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,37 @@ bool	cylinder_collision(t_cylinder *c, t_ray *r)
 //x.vy = distance(ray_pos(c->pos, vector_mult_const(c->vec, -1),
 //c->h / 2), ray_pos(c->pos, c->vec, c->h / 2));*/
 
-bool	plane_collision(t_plane *pl, t_ray *r1)
+t_pos	color_condition(t_plane *pl, t_pos p)
+{
+	double	u;
+	double	v;
+
+	u = 0;
+	v = 0;
+	if (pl->vec.vx != 0)
+	{
+		u = p.z;
+		v = p.y;
+	}
+	else if (pl->vec.vy != 0)
+	{
+		u = p.x;
+		v = p.z;
+	}
+	else if (pl->vec.vz != 0)
+	{
+		u = p.x;
+		v = p.y;
+	}
+	if ((int)(floor(u) + floor(v)) % 2)
+		return (pl->color);
+	else
+		return (pl->color2);
+}
+
+bool	plane_collision(t_plane *pl, t_ray *r1, double t, double nom)
 {
 	double	denom;
-	double	nom;
-	double	t;
 
 	denom = vector_dot(r1->v1, pl->vec);
 	nom = vector_dot(vector_create(r1->p0, pl->pos), pl->vec);
@@ -81,6 +107,8 @@ bool	plane_collision(t_plane *pl, t_ray *r1)
 					r1->norm_v = pl->vec;
 				else
 					r1->norm_v = vector_mult_const(pl->vec, -1);
+				if (pl->checkboard == 1)
+					r1->color = color_condition(pl, ray_pos(r1->p0, r1->v1, t));
 				return (true);
 			}
 		}

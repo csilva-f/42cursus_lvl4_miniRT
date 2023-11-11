@@ -6,11 +6,35 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 23:29:10 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/12 23:46:14 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 12:38:55 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
+
+void	cy_add_b(t_cylinder **cy, t_cylinder *cy_new)
+{
+	t_cylinder	*aux;
+
+	if (cy)
+	{
+		if (*cy)
+		{
+			aux = cy_last(*cy);
+			aux->next = cy_new;
+			cy_new = aux;
+		}
+		else
+			*cy = cy_new;
+	}
+}
+
+void	co_new_aux2(t_mini *m, t_cone **c, char **vars)
+{
+	(*c)->k_k = 1 + (*c)->k * (*c)->k;
+	(*c)->h = float_check(m, vars[4]);
+	fill_colors(m, vars[5], &(*c)->color);
+}
 
 void	co_new_aux(t_mini *m, char ***data, t_cone **c)
 {
@@ -40,9 +64,7 @@ t_cone	*co_new(t_mini *m, char **vars, char ***data)
 				vars_errors(m, 4);
 			else
 				c->k = tan(c->ang);
-			c->k_k = 1 + c->k * c->k;
-			c->h = float_check(m, vars[4]);
-			fill_colors(m, vars[5], &c->color);
+			co_new_aux2(m, &c, vars);
 		}
 	}
 	c->next = NULL;
@@ -59,21 +81,4 @@ t_cone	*co_last(t_cone *cone)
 	while (aux->next != NULL)
 		aux = aux->next;
 	return (aux);
-}
-
-void	co_add_b(t_cone **cone, t_cone *co_new)
-{
-	t_cone	*aux;
-
-	if (cone)
-	{
-		if (*cone)
-		{
-			aux = co_last(*cone);
-			aux->next = co_new;
-			co_new = aux;
-		}
-		else
-			*cone = co_new;
-	}
 }

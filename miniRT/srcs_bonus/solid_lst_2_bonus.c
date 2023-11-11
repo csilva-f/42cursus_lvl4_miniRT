@@ -6,11 +6,23 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 00:28:07 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/28 22:15:49 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 12:38:11 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
+
+t_sphere	*sph_last(t_sphere *sp)
+{
+	t_sphere	*aux;
+
+	if (!sp)
+		return (NULL);
+	aux = sp;
+	while (aux->next != NULL)
+		aux = aux->next;
+	return (aux);
+}
 
 void	sph_add_b(t_sphere **sp, t_sphere *sp_new)
 {
@@ -72,21 +84,4 @@ t_cylinder	*cy_last(t_cylinder *cy)
 	while (aux->next != NULL)
 		aux = aux->next;
 	return (aux);
-}
-
-void	cy_add_b(t_cylinder **cy, t_cylinder *cy_new)
-{
-	t_cylinder	*aux;
-
-	if (cy)
-	{
-		if (*cy)
-		{
-			aux = cy_last(*cy);
-			aux->next = cy_new;
-			cy_new = aux;
-		}
-		else
-			*cy = cy_new;
-	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:34:00 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/20 21:30:51 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 12:24:23 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	count_vars(char **vars, int equal, int code, t_mini *m)
 	i = 0;
 	while (vars[i] != 0 && ft_strncmp(vars[i], "\0", 1))
 		i++;
-	if ((i == equal) || (equal == 1 && i == 2))
+	if ((i == equal) || (equal == 1 && i == 2) || (!ft_strncmp(vars[0], \
+					"pl", ft_strlen(vars[0]) + 1) && i == equal + 1))
 		return (i);
 	else
 	{

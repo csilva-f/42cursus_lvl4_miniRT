@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   collisions.c                                       :+:      :+:    :+:   */
+/*   collisions_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:42:57 by fvieira           #+#    #+#             */
-/*   Updated: 2023/10/01 13:00:42 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 10:48:13 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 	t = quadratic_form(r->sqrt_len, vector_dot(r->v1, x) * 2, c);
 	if (t > 0.005)
 	{
-		if (r->t > 0)
-			printf("t antes %f, t da esfera %f\n", r->t, t);
 		if (r->t == -1 || (t < r->t))
 		{
 			r->t = t;
@@ -57,6 +55,9 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 	}
 	return (false);
 }
+
+/*if (r->t > 0)
+			printf("t antes %f, t da esfera %f\n", r->t, t);*/
 
 void	bases_aux_2(t_ray *r, t_vector v)
 {

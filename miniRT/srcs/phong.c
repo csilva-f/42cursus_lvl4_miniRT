@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/10/12 22:24:31 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:14:11 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,9 @@ t_pos	phong(t_mini *m, t_ray *r, bool diffuse)
 	else
 		diff = (t_pos){0, 0, 0};
 	i = add_rgb(amb, diff);
-	/*spec = multconstRGB(k_s, pow(vector_dot(reflected_ray(r, l), \
-					vector_mult_const(vector_create(ray_pos(r->p0, \
-					r->v1, r->t), coord_new(0, 0, -1)), -1)), 1);*/
 	return (i);
 }
+
+//spec = multconstRGB(k_s, pow(vector_dot(reflected_ray(r, l),
+//vector_mult_const(vector_create(ray_pos(r->p0,
+//r->v1, r->t), coord_new(0, 0, -1)), -1)), 1);

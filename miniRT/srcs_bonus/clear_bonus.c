@@ -6,11 +6,12 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:45:42 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/07 23:05:38 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:40:48 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
+#include <stdlib.h>
 
 void	free_solids_2(t_mini *m)
 {
@@ -32,12 +33,19 @@ void	free_solids_2(t_mini *m)
 void	free_solids_3(t_mini *mini)
 {
 	t_cone	*aux_co;
+	t_light	*aux_l;
 
 	while (mini->co)
 	{
 		aux_co = mini->co->next;
 		free(mini->co);
 		mini->co = aux_co;
+	}
+	while (mini->light)
+	{
+		aux_l = mini->light->next;
+		free(mini->light);
+		mini->light = aux_l;
 	}
 }
 
@@ -86,6 +94,5 @@ void	free_structs(t_mini *mini, int mlx)
 	}
 	free(mini->al);
 	free(mini->cam);
-	free(mini->light);
 	free_solids(mini);
 }

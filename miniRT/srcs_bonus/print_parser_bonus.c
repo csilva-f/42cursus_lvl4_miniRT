@@ -6,21 +6,42 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 21:51:13 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/09/19 21:58:31 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:38:33 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
 
+void	print_parser_aux2(t_mini *m)
+{
+	t_cone	*co;
+	t_light	*l;
+
+	co = m->co;
+	l = m->light;
+	while (co != NULL)
+	{
+		printf("co\n%f,%f,%f %f,%f,%f %f %f %i %i %i\n", co->pos.x, co->pos.y, \
+				co->pos.z, co->vec.vx, co->vec.vy, co->vec.vz, co->k, co->h, \
+				(int)co->color.x, (int)co->color.y, (int)co->color.z);
+		co = co->next;
+	}
+	while (l != NULL)
+	{
+		printf("L\n%f,%f,%f %f, %i %i %i\n", l->pos.x, l->pos.y, \
+			l->pos.z, l->ratio, (int)l->color.x, (int)l->color.y, \
+			(int)l->color.z);
+		l = l->next;
+	}
+}
+
 void	print_parser_aux(t_mini *m)
 {
 	t_sphere	*s;
 	t_cylinder	*c;
-	t_cone		*co;
 
 	s = m->sp;
 	c = m->cyl;
-	co = m->co;
 	while (s != NULL)
 	{
 		printf("sp\n%f,%f", s->pos.x, s->pos.y);
@@ -35,13 +56,7 @@ void	print_parser_aux(t_mini *m)
 				(int)c->color.x, (int)c->color.y, (int)c->color.z);
 		c = c->next;
 	}
-	while (co != NULL)
-	{
-		printf("co\n%f,%f,%f %f,%f,%f %f %f %i %i %i\n", co->pos.x, co->pos.y, \
-				co->pos.z, co->vec.vx, co->vec.vy, co->vec.vz, co->k, co->h, \
-				(int)co->color.x, (int)co->color.y, (int)co->color.z);
-		co = co->next;
-	}
+	print_parser_aux2(m);
 }
 
 void	print_parser(t_mini *m)
@@ -53,9 +68,6 @@ void	print_parser(t_mini *m)
 	printf("C\n%f,%f", m->cam->pos.x, m->cam->pos.y);
 	printf(",%f %f,%f,%f %i\n", m->cam->pos.z, \
 			m->cam->vec.vx, m->cam->vec.vy, m->cam->vec.vz, m->cam->fov);
-	printf("L\n%f,%f,%f %f, %i %i %i\n", m->light->pos.x, m->light->pos.y, \
-			m->light->pos.z, m->light->ratio, (int)m->light->color.x, \
-			(int)m->light->color.y, (int)m->light->color.z);
 	pl = m->plane;
 	while (pl != NULL)
 	{

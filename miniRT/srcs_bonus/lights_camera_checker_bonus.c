@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lights_camera_checker.c                            :+:      :+:    :+:   */
+/*   lights_camera_checker_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:47:40 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/24 18:48:41 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:37:28 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,8 @@ void	check_l_vars(t_mini *m, char **vars)
 	char		**data;
 
 	m->counter_l++;
-	if (m->counter_l > 1)
-	{
-		vars_errors(m, 7);
-		return ;
-	}
 	data = ft_split(vars[1], ',');
 	if (count_vars(data, 3, 4, m))
-	{
-		m->light->pos.x = float_check(m, data[0]);
-		m->light->pos.y = float_check(m, data[1]);
-		m->light->pos.z = float_check(m, data[2]);
-		ft_free_split(data);
-		if (m->is_valid)
-		{
-			m->light->ratio = float_check(m, vars[2]);
-			if (m->light->ratio < 0 || m->light->ratio > 1)
-				vars_errors(m, 4);
-			else
-				fill_colors(m, vars[3], &m->light->color);
-			m->light->next = NULL;
-		}
-	}
+		l_add_b(&m->light, light_new(m, vars, &data));
+	ft_free_split(data);
 }

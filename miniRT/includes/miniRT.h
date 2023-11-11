@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/30 18:30:26 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:11:12 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,8 +249,8 @@ void		fill_colors(t_mini *m, char *str, t_pos *col);
 // COORD TRANSFORMATION
 t_vector	rotate_vector_aux(double angle, t_vector axis, t_vector v);
 t_vector	rotate_vector_2(t_mini *m, t_vector v, t_vector axis, double angle);
-void		data_transform_aux_2(t_mini *m, double angle, t_vector axis, t_pos o);
-void		data_transform_aux(t_mini *m, double a, t_pos o, t_vector axis_of_rot);
+void		data_transf_aux_2(t_mini *m, double angle, t_vector axis, t_pos o);
+void		data_transf_aux(t_mini *m, double a, t_pos o, t_vector axis_of_rot);
 void		data_transform(t_mini *m);
 
 // COORD TRANSFORMATION 2

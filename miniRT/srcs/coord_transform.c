@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 15:39:09 by fvieira           #+#    #+#             */
-/*   Updated: 2023/10/30 18:09:53 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:10:52 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_vector	rotate_vector_2(t_mini *m, t_vector v, t_vector axis, double angle)
 	return (vector_norm(result));
 }
 
-void	data_transform_aux_2(t_mini *m, double angle, t_vector axis, t_pos o)
+void	data_transf_aux_2(t_mini *m, double angle, t_vector axis, t_pos o)
 {
 	while (m->cyl)
 	{
@@ -80,7 +80,7 @@ void	data_transform_aux_2(t_mini *m, double angle, t_vector axis, t_pos o)
 	}
 }
 
-void	data_transform_aux(t_mini *m, double a, t_pos o, t_vector axis_of_rot)
+void	data_transf_aux(t_mini *m, double a, t_pos o, t_vector axis_of_rot)
 {
 	axis_of_rot = eq_transform(m, &a);
 	while (m->sp)
@@ -105,7 +105,7 @@ void	data_transform_aux(t_mini *m, double a, t_pos o, t_vector axis_of_rot)
 		m->plane->pos = ray_pos(o, m->plane->orig, distance(m->plane->pos, o));
 		m->plane = m->plane->next;
 	}
-	data_transform_aux_2(m, a, axis_of_rot, o);
+	data_transf_aux_2(m, a, axis_of_rot, o);
 }
 
 void	data_transform(t_mini *m)
@@ -119,7 +119,7 @@ void	data_transform(t_mini *m)
 	temp_pl = m->plane;
 	temp_cyl = m->cyl;
 	temp_light = m->light;
-	data_transform_aux(m, 0.0, (t_pos){0, 0, 0}, (t_vector){0, 0, 0});
+	data_transf_aux(m, 0.0, (t_pos){0, 0, 0}, (t_vector){0, 0, 0});
 	m->sp = temp_sp;
 	m->plane = temp_pl;
 	m->cyl = temp_cyl;

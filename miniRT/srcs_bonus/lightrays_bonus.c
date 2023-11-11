@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lightrays.c                                        :+:      :+:    :+:   */
+/*   lightrays_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:45:27 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/20 21:56:23 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:04:56 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	collisions_aux(t_mini *m, t_ray *ray)
 	}
 	while (m->plane)
 	{
-		plane_collision(m->plane, ray);
+		plane_collision(m->plane, ray, 0, 0);
 		m->plane = m->plane->next;
 	}
 }
@@ -78,7 +78,7 @@ void	collisions(t_mini *m, int x, int y)
 	m->cyl = temp_cyl;
 	m->co = temp_co;
 	if (m->ray->t > 0)
-		my_mlx_pixel_put(m, x, y, phong(m, m->ray, shadow(m)));
+		my_mlx_pixel_put(m, x, y, phong(m, m->ray));//, shadow(m)));
 	else
 		my_mlx_pixel_put(m, x, y, (t_pos){0, 0, 0});
 }
@@ -105,7 +105,5 @@ void	ray_create(t_mini *m)
 		}
 		x++;
 	}
-	//printf("cone %f %f %f\n", m->co->pos.x, m->co->pos.y, m->co->pos.z);
-	//printf("plane %f %f %f\n", m->plane->pos.x, m->plane->pos.y, m->plane->pos.z);
 	mlx_put_image_to_window(m->g->mlx, m->g->win, m->g->img, 0, 0);
 }

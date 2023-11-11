@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/07 23:01:36 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:05:18 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	collisions_aux2(t_mini *m, t_ray *ray)
 	}
 	while (m->plane)
 	{
-		plane_collision(m->plane, ray);
+		plane_collision(m->plane, ray, 0, 0);
 		m->plane = m->plane->next;
 		if (ray->t >= 0.0005)
 			return ;
@@ -67,21 +67,21 @@ void	light_collisions(t_mini *m, t_ray *temp)
 	m->co = temp_co;
 }
 
-bool	shadow(t_mini *m)
+bool	shadow(t_mini *m, t_light *l)
 {
 	t_ray	*temp;
 	t_pos	hit_c;
 
 	temp = malloc(sizeof(t_ray));
 	hit_c = ray_pos(m->ray->p0, m->ray->v1, m->ray->t - 0.0001);
-	temp->v1 = vector_norm(vector_create(m->light->pos, hit_c));
+	temp->v1 = vector_norm(vector_create(l->pos, hit_c));
 	temp->sqrt_len = vector_dot(temp->v1, temp->v1);
 	temp->p0 = hit_c;
 	temp->t = -1;
 	light_collisions(m, temp);
 	if (temp->t < 0.0005 && temp->t >= 0)
 		temp->t = -1;
-	if (temp->t == -1 || distance(m->light->pos, temp->p0) \
+	if (temp->t == -1 || distance(l->pos, temp->p0) \
 		< distance(ray_pos(temp->p0, temp->v1, temp->t), temp->p0))
 	{
 		free(temp);
@@ -91,27 +91,35 @@ bool	shadow(t_mini *m)
 	return (false);
 }
 
-t_pos	phong(t_mini *m, t_ray *r, bool diffuse)
+t_pos	phong(t_mini *m, t_ray *r)
 {
 	t_pos		i;
 	double		k[2];
 	t_pos		amb;
 	t_pos		diff;
 	t_vector	l;
+	t_light		*aux_l;
+	bool		diffuse;
 
+	aux_l = m->light;
 	k[0] = m->al->ratio;
-	k[1] = m->light->ratio;
-	l = vector_norm(vector_create(m->light->pos, ray_pos(r->p0, \
-					r->v1, r->t * 0.99999)));
-	amb = multconst_rgb(k[0], r->color);
-	(void)diffuse;
-	if (diffuse)
-		diff = multconst_rgb(k[1] * vector_dot(r->norm_v, l), r->color);
-	else
-		diff = (t_pos){0, 0, 0};
-	i = add_rgb(amb, diff);
-	/*spec = multconstRGB(k_s, pow(vector_dot(reflected_ray(r, l), \
-					vector_mult_const(vector_create(ray_pos(r->p0, \
-					r->v1, r->t), coord_new(0, 0, -1)), -1)), 1);*/
+	i = (t_pos){0, 0, 0};
+	while (aux_l != NULL)
+	{
+		k[1] = aux_l->ratio;
+		l = vector_norm(vector_create(aux_l->pos, ray_pos(r->p0, \
+						r->v1, r->t * 0.99999)));
+		amb = multconst_rgb(k[0], r->color);
+		diffuse = shadow(m, aux_l);
+		if (diffuse)
+			diff = multconst_rgb(k[1] * vector_dot(r->norm_v, l), r->color);
+		else
+			diff = (t_pos){0, 0, 0};
+		i = add_rgb(i, add_rgb(amb, diff));
+		/*spec = multconstRGB(k_s, pow(vector_dot(reflected_ray(r, l), \
+						vector_mult_const(vector_create(ray_pos(r->p0, \
+						r->v1, r->t), coord_new(0, 0, -1)), -1)), 1);*/
+		aux_l = aux_l->next;
+	}
 	return (i);
 }
