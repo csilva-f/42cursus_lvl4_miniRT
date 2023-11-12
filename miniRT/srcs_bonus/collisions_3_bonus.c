@@ -6,12 +6,38 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:49:33 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/07 23:03:14 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:33:10 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
 
+bool	plane_collision(t_plane *pl, t_ray *r, double t, double nom)
+{
+	double	denom;
+
+	denom = vector_dot(r->v1, pl->vec);
+	nom = vector_dot(vector_create(r->p0, pl->pos), pl->vec);
+	if ((denom < 0 && nom >= 0) || (denom > 0 && nom <= 0))
+	{
+		t = -1 * nom / denom;
+		if (t > 0)
+		{
+			if (r->t == -1 || (t < r->t))
+			{
+				plane_collision_aux(pl, &r, t);
+				if (denom < 0)
+					r->norm_v = pl->vec;
+				else
+					r->norm_v = vector_mult_const(pl->vec, -1);
+				if (pl->checkboard == 1)
+					r->color = color_condition(pl, ray_pos(r->p0, r->v1, t));
+				return (true);
+			}
+		}
+	}
+	return (false);
+}
 // co -> pos vec k(degrees) h color
 
 double	quadratic_form_cone(double a, double b, double c, double *t)
@@ -49,6 +75,7 @@ double	cone_bases(t_cone *c, t_ray *r, double t)
 		r->t = t;
 		r->reflex_times--;
 		r->color = c->color;
+		r->shine = c->shine;
 		if (vector_dot(r->v1, c->vec) < 0)
 			r->norm_v = c->vec;
 		else
@@ -67,6 +94,7 @@ void	cone_norm(t_cone *co, t_ray *r, double t, double m)
 	r->norm_v = vector_norm(new);
 	r->reflex_times--;
 	r->color = co->color;
+	r->shine = co->shine;
 	r->t = t;
 }
 

@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 19:07:43 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/19 21:57:08 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:09:13 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,12 @@ void	fill_colors(t_mini *m, char *str, t_pos *col)
 			vars_errors(m, 4);
 	}
 	ft_free_split(color);
+}
+
+t_pos	mix_rgb(t_pos c1, t_pos c2)
+{
+	c1.x *= (int)(c2.x / 255.0);
+	c1.y *= (int)(c2.y / 255.0);
+	c1.z *= (int)(c2.z / 255.0);
+	return (c1);
 }

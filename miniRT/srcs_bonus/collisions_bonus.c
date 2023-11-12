@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:42:57 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/11 10:48:13 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:24:55 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ bool	sphere_collision(t_sphere *sp, t_ray *r)
 			r->t = t;
 			r->reflex_times--;
 			r->color = sp->color;
+			r->shine = sp->shine;
 			r->norm_v = vector_norm(vector_create(ray_pos(r->p0, \
 							r->v1, t), sp->pos));
 			return (true);
@@ -116,6 +117,7 @@ double	bases(t_cylinder *c, t_ray *r, double t)
 		r->t = t;
 		r->reflex_times--;
 		r->color = c->color;
+		r->shine = c->shine;
 		bases_aux_2(r, vec);
 		return (r->t);
 	}

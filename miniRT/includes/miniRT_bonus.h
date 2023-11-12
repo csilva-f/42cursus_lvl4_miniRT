@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/11 18:49:58 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:33:00 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINIRT_BONUS_H
 
 # include <unistd.h>
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
@@ -72,6 +73,9 @@
 
 # define PI 3.1415926
 
+# define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+# define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
+
 typedef struct s_al
 {
 	double	ratio;
@@ -104,6 +108,7 @@ typedef struct s_ray
 	double			t;
 	int				reflex_times;
 	t_pos			color;
+	int				shine;
 	struct s_ray	*next;
 	struct s_ray	*prev;
 }		t_ray;
@@ -115,6 +120,7 @@ typedef struct s_sphere
 	double			d_squared;
 	t_pos			color;
 	t_vector		orig;
+	int				shine;
 	struct s_sphere	*next;
 	struct s_sphere	*prev;
 }		t_sphere;
@@ -128,6 +134,7 @@ typedef struct s_plane
 	t_pos			color;
 	int				checkboard;
 	t_pos			color2;
+	int				shine;
 	struct s_plane	*next;
 	struct s_plane	*prev;
 }		t_plane;
@@ -141,6 +148,7 @@ typedef struct s_cylinder
 	double				h;
 	t_vector			orig;
 	t_pos				color;
+	int					shine;
 	struct s_cylinder	*next;
 	struct s_cylinder	*prev;
 }		t_cylinder;
@@ -155,6 +163,7 @@ typedef struct s_cone
 	double				h;
 	t_vector			orig;
 	t_pos				color;
+	int					shine;
 	struct s_cone		*next;
 	struct s_cone		*prev;
 }		t_cone;
@@ -251,9 +260,11 @@ double		bases(t_cylinder *c, t_ray *r, double t);
 void		cyl_collision_aux(double *d, t_cylinder *c, t_ray *r, t_vector *x);
 void		cyl_collision_aux2(t_cylinder *c, t_ray *r, double *d, t_vector x);
 bool		cylinder_collision(t_cylinder *c, t_ray *r);
-bool		plane_collision(t_plane *pl, t_ray *r1, double t, double nom);
+t_pos		color_condition(t_plane *pl, t_pos p);
+void		plane_collision_aux(t_plane *pl, t_ray **r, double t);
 
 // COLLISIONS 3
+bool		plane_collision(t_plane *pl, t_ray *r, double t, double nom);
 void		cone_norm(t_cone *co, t_ray *r, double t, double m);
 double		quadratic_form_cone(double a, double b, double c, double *t);
 double		cone_bases(t_cone *c, t_ray *r, double t);
@@ -269,6 +280,7 @@ t_pos		divide_rgb(t_pos color1, t_pos color2);
 // COLORS
 int			rgb_to_int(int red, int green, int blue);
 void		fill_colors(t_mini *m, char *str, t_pos *col);
+t_pos		mix_rgb(t_pos c1, t_pos c2);
 
 // COORD TRANSFORMATION
 t_vector	rotate_vector_2(t_mini *m, t_vector v, t_vector axis, double angle);

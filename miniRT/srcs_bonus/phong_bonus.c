@@ -6,11 +6,12 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/11 19:16:11 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:28:29 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
+#include <math.h>
 #include <stdio.h>
 
 void	collisions_aux3(t_mini *m, t_ray *ray)
@@ -92,6 +93,16 @@ bool	shadow(t_mini *m, t_light *l)
 	return (false);
 }
 
+double	vec_cos(t_vector v1, t_vector v2)
+{
+	double	dot;
+	double	lengths;
+
+	dot = vector_dot(v1, v2);
+	lengths = length(v1) * length(v2);
+	return (dot / lengths);
+}
+
 t_pos	phong(t_mini *m, t_ray *r)
 {
 	t_pos		i;
@@ -101,6 +112,7 @@ t_pos	phong(t_mini *m, t_ray *r)
 	t_vector	l;
 	t_light		*aux_l;
 	bool		diffuse;
+	t_pos		spec;
 
 	aux_l = m->light;
 	k[0] = m->al->ratio;
@@ -116,11 +128,17 @@ t_pos	phong(t_mini *m, t_ray *r)
 			diff = multconst_rgb(k[1] * vector_dot(r->norm_v, l), r->color);
 		else
 			diff = (t_pos){0, 0, 0};
-		i = add_rgb(i, add_rgb(amb, diff));
-		/*spec = multconstRGB(k_s, pow(vector_dot(reflected_ray(r, l), \
-						vector_mult_const(vector_create(ray_pos(r->p0, \
-						r->v1, r->t), coord_new(0, 0, -1)), -1)), 1);*/
+		spec = mix_rgb(multconst_rgb(0.8 * k[1] * pow(vector_dot(\
+							vector_norm(vector_add(vector_norm(\
+										vector_mult_const(r->v1, -1)), l)), \
+							r->norm_v), r->shine), r->color), aux_l->color);
+		i = add_rgb(add_rgb(i, add_rgb(amb, diff)), spec);
 		aux_l = aux_l->next;
 	}
 	return (i);
 }
+
+//i = add_rgb(i, add_rgb(amb, diff));
+		/*spec = multconst_rgb(0.8, pow(vector_dot(reflected_ray(r, l), \
+					vector_mult_const(vector_create(ray_pos(r->p0, \
+					r->v1, r->t), coord_new(0, 0, -1)), -1)), 1));*/

@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 00:28:07 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/11 12:38:11 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:23:20 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 			c->d_squared = c->d * c->d;
 			c->h = float_check(m, vars[4]);
 			fill_colors(m, vars[5], &c->color);
+			c->shine = ft_atoi(vars[6]);
 		}
 	}
 	c->next = NULL;

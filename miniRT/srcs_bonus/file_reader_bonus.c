@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:57:04 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/11 12:20:52 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:13:05 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	check_line_values(t_mini *mini, char **vars)
 		check_c_vars(mini, vars, NULL);
 	else if (!ft_strncmp(vars[0], "L", 2) && count_vars(vars, 4, 5, mini))
 		check_l_vars(mini, vars);
-	else if (!ft_strncmp(vars[0], "pl", 3) && count_vars(vars, 4, 5, mini))
+	else if (!ft_strncmp(vars[0], "pl", 3) && count_vars(vars, 5, 5, mini))
 		check_pl_vars(mini, vars);
-	else if (!ft_strncmp(vars[0], "sp", 3) && count_vars(vars, 4, 5, mini))
+	else if (!ft_strncmp(vars[0], "sp", 3) && count_vars(vars, 5, 5, mini))
 		check_sp_vars(mini, vars);
-	else if (!ft_strncmp(vars[0], "cy", 3) && count_vars(vars, 6, 5, mini))
+	else if (!ft_strncmp(vars[0], "cy", 3) && count_vars(vars, 7, 5, mini))
 		check_cy_vars(mini, vars);
-	else if (!ft_strncmp(vars[0], "co", 3) && count_vars(vars, 6, 5, mini))
+	else if (!ft_strncmp(vars[0], "co", 3) && count_vars(vars, 7, 5, mini))
 		check_co_vars(mini, vars);
 }
 

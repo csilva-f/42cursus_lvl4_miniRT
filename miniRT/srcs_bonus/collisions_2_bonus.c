@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 22:39:06 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/11 18:17:39 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:33:15 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	cyl_collision_aux2(t_cylinder *c, t_ray *r, double *d, t_vector x)
 	r->t = d[1];
 	r->reflex_times--;
 	r->color = c->color;
+	r->shine = c->shine;
 	r->norm_v = vector_norm(vector_sub(vector_create(ray_pos(r->p0, r->v1, \
 						d[1]), c->pos), vector_mult_const(c->vec, x.vx)));
 }
@@ -87,31 +88,10 @@ t_pos	color_condition(t_plane *pl, t_pos p)
 		return (pl->color2);
 }
 
-bool	plane_collision(t_plane *pl, t_ray *r1, double t, double nom)
+void	plane_collision_aux(t_plane *pl, t_ray **r, double t)
 {
-	double	denom;
-
-	denom = vector_dot(r1->v1, pl->vec);
-	nom = vector_dot(vector_create(r1->p0, pl->pos), pl->vec);
-	if ((denom < 0 && nom >= 0) || (denom > 0 && nom <= 0))
-	{
-		t = -1 * nom / denom;
-		if (t > 0)
-		{
-			if (r1->t == -1 || (t < r1->t))
-			{
-				r1->t = t;
-				r1->reflex_times--;
-				r1->color = pl->color;
-				if (denom < 0)
-					r1->norm_v = pl->vec;
-				else
-					r1->norm_v = vector_mult_const(pl->vec, -1);
-				if (pl->checkboard == 1)
-					r1->color = color_condition(pl, ray_pos(r1->p0, r1->v1, t));
-				return (true);
-			}
-		}
-	}
-	return (false);
+	(*r)->t = t;
+	(*r)->reflex_times--;
+	(*r)->color = pl->color;
+	(*r)->shine = pl->shine;
 }
