@@ -106,32 +106,42 @@ double	vec_cos(t_vector v1, t_vector v2)
 t_pos	phong(t_mini *m, t_ray *r)
 {
 	t_pos		i;
-	double		k[2];
+	t_pos		k[2];
 	t_pos		amb;
 	t_pos		diff;
 	t_vector	l;
 	t_light		*aux_l;
-	bool		diffuse;
+	double 		dot;
 	t_pos		spec;
 
 	aux_l = m->light;
-	k[0] = m->al->ratio;
+	k[0] = multconst_rgb(m->al->ratio, m->al->color);
 	i = (t_pos){0, 0, 0};
-	amb = multconst_rgb(k[0], r->color);
+	amb = multiply_rgb(k[0], r->color);
 	while (aux_l != NULL)
 	{
-		k[1] = aux_l->ratio;
+		k[1] = multconst_rgb(aux_l->ratio, aux_l->color);
 		l = vector_norm(vector_create(aux_l->pos, ray_pos(r->p0, \
 						r->v1, r->t * 0.99999)));
-		diffuse = shadow(m, aux_l);
-		if (diffuse)
-			diff = multconst_rgb(k[1] * vector_dot(r->norm_v, l), r->color);
+		dot = vector_dot(r->norm_v, l);
+		//printf("dot %f\n", dot);
+		if (dot > 0 && shadow(m, aux_l))
+		{
+			diff = multiply_rgb(multconst_rgb(dot, k[1]), r->color);
+			spec = mix_rgb(multiply_rgb(multconst_rgb(0.8 * pow(vector_dot(\
+				vector_norm(vector_add(vector_norm(\
+				vector_mult_const(r->v1, -1)), l)), r->norm_v), r->shine), \
+				k[1]), r->color), aux_l->color);
+			//printf("sol %f %f %f ", diff.x, diff.y, diff.z);
+			//printf("| %f %f %f \n", spec.x, spec.y, spec.z);
+
+		}
 		else
+		{
+			//printf("sombra %f %f %f\n", amb.x, amb.y, amb.z);
 			diff = (t_pos){0, 0, 0};
-		spec = mix_rgb(multconst_rgb(0.8 * k[1] * pow(vector_dot(\
-							vector_norm(vector_add(vector_norm(\
-										vector_mult_const(r->v1, -1)), l)), \
-							r->norm_v), r->shine), r->color), aux_l->color);
+			spec = (t_pos){0, 0, 0};
+		}
 		i = add_rgb(add_rgb(i, add_rgb(amb, diff)), spec);
 		aux_l = aux_l->next;
 	}

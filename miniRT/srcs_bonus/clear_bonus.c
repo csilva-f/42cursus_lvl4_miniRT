@@ -54,6 +54,7 @@ void	free_solids(t_mini *mini)
 	t_plane		*aux_p;
 	t_sphere	*aux_s;
 	t_cylinder	*aux_c;
+	int			i;
 
 	while (mini->plane)
 	{
@@ -64,6 +65,13 @@ void	free_solids(t_mini *mini)
 	while (mini->sp)
 	{
 		aux_s = mini->sp->next;
+		i = 0;
+		while (i < 5000)
+		{
+        	free(mini->sp->map[i]);
+        	i++;
+    	}
+    	free(mini->sp->map);
 		free(mini->sp);
 		mini->sp = aux_s;
 	}

@@ -12,6 +12,18 @@
 
 #include "../includes/miniRT_bonus.h"
 
+/*t_material	material(void)
+{
+	t_material	new;
+
+	new = malloc(sizeof(t_material));
+	new->ka = (t_pos){};
+	new->kd = (t_pos){};
+	new->ks = (t_pos){};
+	return (new);
+}
+*/
+
 void	init(t_mini *mini)
 {
 	mini->is_valid = 1;

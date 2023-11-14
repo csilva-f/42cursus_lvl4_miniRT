@@ -21,6 +21,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
+# include <time.h>
 # include "../libft/libft.h"
 # include "../coords_vectors/coords_vectors.h"
 
@@ -121,6 +122,7 @@ typedef struct s_sphere
 	t_pos			color;
 	t_vector		orig;
 	int				shine;
+	int				**map;
 	struct s_sphere	*next;
 	struct s_sphere	*prev;
 }		t_sphere;
