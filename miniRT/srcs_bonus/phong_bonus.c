@@ -6,13 +6,11 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:42:32 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/12 13:28:29 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/14 22:08:59 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
-#include <math.h>
-#include <stdio.h>
 
 void	collisions_aux3(t_mini *m, t_ray *ray)
 {
@@ -29,7 +27,10 @@ void	collisions_aux2(t_mini *m, t_ray *ray)
 {
 	while (m->sp)
 	{
-		sphere_collision(m->sp, ray);
+		if (m->sp->b1 || m->sp->b2)
+			sphere_collision_bump(m->sp, ray);
+		else
+			sphere_collision(m->sp, ray);
 		m->sp = m->sp->next;
 		if (ray->t >= 0.0005)
 			return ;

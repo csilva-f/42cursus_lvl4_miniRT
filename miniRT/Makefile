@@ -6,7 +6,7 @@
 #    By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 14:33:39 by csilva-f          #+#    #+#              #
-#    Updated: 2023/11/11 12:39:34 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/11/14 22:03:29 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ SRCS_BONUS = srcs_bonus/alter_solid_dim_bonus.c			srcs_bonus/check_bonus.c			src
 			 srcs_bonus/translations_bonus.c			srcs_bonus/ang_calculate_bonus.c	srcs_bonus/coord_transform_2_bonus.c \
 			 srcs_bonus/solid_lst_3_bonus.c				srcs_bonus/collisions_3_bonus.c		srcs_bonus/solid_movs_3_bonus.c \
 			 srcs_bonus/translations_2_bonus.c			srcs_bonus/rotation_2_bonus.c		srcs_bonus/light_lst_bonus.c \
-			 srcs_bonus/solid_lst_4_bonus.c
+			 srcs_bonus/solid_lst_4_bonus.c				srcs_bonus/solid_lst_5_bonus.c		srcs_bonus/collisions_bump.c
 
 OBJ_DIR = obj
 OBJS = $(SRCS:%.c=%.o)

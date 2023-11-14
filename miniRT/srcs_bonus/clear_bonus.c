@@ -6,14 +6,13 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:45:42 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/09 21:40:48 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/14 22:57:38 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
-#include <stdlib.h>
 
-void	free_solids_2(t_mini *m)
+void	free_solids_lst(t_mini *m)
 {
 	t_solid	*aux_s;
 
@@ -30,11 +29,18 @@ void	free_solids_2(t_mini *m)
 	free(m->s);
 }
 
-void	free_solids_3(t_mini *mini)
+void	free_solids_aux(t_mini *mini)
 {
-	t_cone	*aux_co;
-	t_light	*aux_l;
+	t_cone		*aux_co;
+	t_light		*aux_l;
+	t_cylinder	*aux_c;
 
+	while (mini->cyl)
+	{
+		aux_c = mini->cyl->next;
+		free(mini->cyl);
+		mini->cyl = aux_c;
+	}
 	while (mini->co)
 	{
 		aux_co = mini->co->next;
@@ -49,12 +55,10 @@ void	free_solids_3(t_mini *mini)
 	}
 }
 
-void	free_solids(t_mini *mini)
+void	free_solids(t_mini *mini, int i)
 {
 	t_plane		*aux_p;
 	t_sphere	*aux_s;
-	t_cylinder	*aux_c;
-	int			i;
 
 	while (mini->plane)
 	{
@@ -65,25 +69,18 @@ void	free_solids(t_mini *mini)
 	while (mini->sp)
 	{
 		aux_s = mini->sp->next;
-		i = 0;
-		while (i < 5000)
+		if (mini->sp->b1 || mini->sp->b2)
 		{
-        	free(mini->sp->map[i]);
-        	i++;
-    	}
-    	free(mini->sp->map);
+			while (++i < 5000)
+				free(mini->sp->map[i]);
+			free(mini->sp->map);
+		}
 		free(mini->sp);
 		mini->sp = aux_s;
 	}
-	while (mini->cyl)
-	{
-		aux_c = mini->cyl->next;
-		free(mini->cyl);
-		mini->cyl = aux_c;
-	}
-	free_solids_3(mini);
+	free_solids_aux(mini);
 	if (mini->s)
-		free_solids_2(mini);
+		free_solids_lst(mini);
 }
 
 void	free_structs(t_mini *mini, int mlx)
@@ -102,5 +99,5 @@ void	free_structs(t_mini *mini, int mlx)
 	}
 	free(mini->al);
 	free(mini->cam);
-	free_solids(mini);
+	free_solids(mini, -1);
 }

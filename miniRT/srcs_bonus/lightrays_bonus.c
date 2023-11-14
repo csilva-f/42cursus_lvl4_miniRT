@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:45:27 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/11 18:04:56 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/14 22:09:59 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	collisions_aux(t_mini *m, t_ray *ray)
 	}
 	while (m->sp)
 	{
-		sphere_collision(m->sp, ray);
+		if (m->sp->b1 || m->sp->b2)
+			sphere_collision_bump(m->sp, ray);
+		else
+			sphere_collision(m->sp, ray);
 		m->sp = m->sp->next;
 	}
 	while (m->plane)
@@ -78,7 +81,7 @@ void	collisions(t_mini *m, int x, int y)
 	m->cyl = temp_cyl;
 	m->co = temp_co;
 	if (m->ray->t > 0)
-		my_mlx_pixel_put(m, x, y, phong(m, m->ray));//, shadow(m)));
+		my_mlx_pixel_put(m, x, y, phong(m, m->ray));
 	else
 		my_mlx_pixel_put(m, x, y, (t_pos){0, 0, 0});
 }

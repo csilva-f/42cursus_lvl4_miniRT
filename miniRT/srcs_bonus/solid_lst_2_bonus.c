@@ -6,83 +6,87 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 00:28:07 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/12 13:23:20 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/14 22:57:16 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
 
-t_sphere	*sph_last(t_sphere *sp)
+double	lerp(double t, double a, double b)
 {
-	t_sphere	*aux;
-
-	if (!sp)
-		return (NULL);
-	aux = sp;
-	while (aux->next != NULL)
-		aux = aux->next;
-	return (aux);
+	return (a + t * (b - a));
 }
 
-void	sph_add_b(t_sphere **sp, t_sphere *sp_new)
+double	grad(int hash, double x)
 {
-	t_sphere	*aux;
+	int		h;
+	double	grad;
 
-	if (sp)
+	h = hash & 15;
+	grad = 1 + (h & 7); 
+	if (h & 8)
+		grad = -grad;
+	return (grad * x);
+}
+
+double	perlin(double x, int *permutation)
+{
+	int		a;
+	double	u;
+	double	res;
+
+	a = (int)floor(x) & 255;
+	x -= floor(x);
+	u = fade(x);
+	res = lerp(u, grad(permutation[a], x), grad(permutation[a + 1], x - 1)) * 2;
+	return (res);
+}
+
+int	**map_create_b1(void)
+{
+	int	**matrix;
+	int	i;
+	int	j;
+
+	matrix = (int **)malloc(5000 * sizeof(int *));
+	i = 0;
+	while (i < 5000)
 	{
-		if (*sp)
+		j = 0;
+		matrix[i] = (int *)malloc(5000 * sizeof(int));
+		while (j < 5000)
 		{
-			aux = sph_last(*sp);
-			aux->next = sp_new;
-			sp_new = aux;
+			matrix[i][j] = sin(j) * sin(i) * 1000;
+			j++;
 		}
-		else
-			*sp = sp_new;
+		i++;
 	}
+	return (matrix);
 }
 
-void	cy_new_aux(t_mini *m, char ***data, t_cylinder **c)
+int	**map_create_b2(int z)
 {
-	(*c)->pos = coord_new(float_check(m, (*data)[0]), float_check(m, \
-				(*data)[1]), float_check(m, (*data)[2]));
-}
+	int		**matrix;
+	int		i;
+	int		j;
+	int		permutation[512];
+	double	value;
 
-t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
-{
-	t_cylinder	*c;
-
-	c = malloc(sizeof(t_cylinder));
-	cy_new_aux(m, data, &c);
-	ft_free_split(*data);
-	*data = ft_split(vars[2], ',');
-	if (count_vars(*data, 3, 4, m))
+	srand(time(NULL));
+	matrix = (int **)malloc(5000 * sizeof(int *));
+	i = -1;
+	while (++z < 512)
+		permutation[z] = rand() % 255;
+	while (++i < 5000)
 	{
-		c->vec = vector_new(float_check(m, (*data)[0]), float_check(m, \
-					(*data)[1]), float_check(m, (*data)[2]));
-		if (fabs(c->vec.vx) > 1 || fabs(c->vec.vy) > 1 || fabs(c->vec.vz) > 1
-			|| length(c->vec) != (double) 1)
-			vars_errors(m, 4);
-		else
+		j = 0;
+		matrix[i] = (int *)malloc(5000 * sizeof(int));
+		while (j < 5000)
 		{
-			c->d = float_check(m, vars[3]) / 2;
-			c->d_squared = c->d * c->d;
-			c->h = float_check(m, vars[4]);
-			fill_colors(m, vars[5], &c->color);
-			c->shine = ft_atoi(vars[6]);
+			value = perlin((double)i / 5000, permutation);
+			matrix[i][j] = (int)((value + 1.0) * 1000.0) + 1;
+			j++;
 		}
 	}
-	c->next = NULL;
-	return (c);
-}
-
-t_cylinder	*cy_last(t_cylinder *cy)
-{
-	t_cylinder	*aux;
-
-	if (!cy)
-		return (NULL);
-	aux = cy;
-	while (aux->next != NULL)
-		aux = aux->next;
-	return (aux);
+	return (matrix);
 }

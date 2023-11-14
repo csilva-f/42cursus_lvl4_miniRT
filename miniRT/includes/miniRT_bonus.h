@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/12 13:33:00 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/14 23:03:40 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ typedef struct s_sphere
 	t_vector		orig;
 	int				shine;
 	int				**map;
+	int				b1;
+	int				b2;
 	struct s_sphere	*next;
 	struct s_sphere	*prev;
 }		t_sphere;
@@ -198,6 +200,15 @@ typedef struct s_solid
 	struct s_solid	*next;
 }		t_solid;
 
+typedef struct s_l_lst
+{
+	bool				head;
+	char				ltt;
+	t_light				*l;
+	t_pos				old_color;
+	struct s_light_lst	*next;
+}		t_l_lst;
+
 typedef struct s_angles
 {
 	double			teta;
@@ -246,9 +257,9 @@ void		vars_errors(t_mini *mini, int code);
 bool		check_file(char *file_name, t_mini *mini);
 
 // CLEAR
-void		free_solids_2(t_mini *m);
-void		free_solids_3(t_mini *mini);
-void		free_solids(t_mini *mini);
+void		free_solids_lst(t_mini *m);
+void		free_solids_aux(t_mini *mini);
+void		free_solids(t_mini *mini, int i);
 void		free_structs(t_mini *mini, int mlx);
 
 // COLLISIONS
@@ -267,10 +278,14 @@ void		plane_collision_aux(t_plane *pl, t_ray **r, double t);
 
 // COLLISIONS 3
 bool		plane_collision(t_plane *pl, t_ray *r, double t, double nom);
-void		cone_norm(t_cone *co, t_ray *r, double t, double m);
 double		quadratic_form_cone(double a, double b, double c, double *t);
+void		cone_norm(t_cone *co, t_ray *r, double t, double m);
 double		cone_bases(t_cone *c, t_ray *r, double t);
 bool		cone_collision(t_cone *co, t_ray *r);
+
+// COLLISIONS BUMP
+t_vector	bump(t_vector vec, int **map, int x, int y);
+bool		sphere_collision_bump(t_sphere *sp, t_ray *r);
 
 // COLOR_OP
 t_pos		multconst_rgb(double c, t_pos color);
@@ -346,7 +361,7 @@ void		collisions_aux3(t_mini *m, t_ray *ray);
 void		collisions_aux2(t_mini *m, t_ray *ray);
 void		light_collisions(t_mini *m, t_ray *temp);
 bool		shadow(t_mini *m, t_light *l);
-t_pos		phong(t_mini *m, t_ray *r);//, bool diffuse);//, double alpha);
+t_pos		phong(t_mini *m, t_ray *r);
 
 // PIXEL CAMERA
 double		pixel_cam_x(double psx, t_mini *m);
@@ -384,23 +399,32 @@ void		pl_new_aux(t_mini *m, char **vars, t_plane **pl);
 t_plane		*pl_new(t_mini *m, char **vars, char ***data);
 t_plane		*pl_last(t_plane *pl);
 void		pl_add_b(t_plane **pl, t_plane *pl_new);
-t_sphere	*sph_new(t_mini *m, char **vars, char ***data);
+double		fade(double t);
 
 // SOLID LST 2
+double		lerp(double t, double a, double b);
+double		grad(int hash, double x);
+double		perlin(double x, int *permutation);
+int			**map_create_b1(void);
+int			**map_create_b2(int z);
+
+// SOLID LST 3
+void		sph_new_aux(char **vars, t_sphere **sp);
+t_sphere	*sph_new(t_mini *m, char **vars, char ***data);
 t_sphere	*sph_last(t_sphere *sp);
 void		sph_add_b(t_sphere **sp, t_sphere *sp_new);
 void		cy_new_aux(t_mini *m, char ***data, t_cylinder **c);
+
+// SOLID LST 4
 t_cylinder	*cy_new(t_mini *m, char **vars, char ***data);
 t_cylinder	*cy_last(t_cylinder *cy);
-
-// SOLID LST 3
 void		cy_add_b(t_cylinder **cy, t_cylinder *cy_new);
 void		co_new_aux2(t_mini *m, t_cone **c, char **vars);
 void		co_new_aux(t_mini *m, char ***data, t_cone **c);
+
+// SOLID LST 5
 t_cone		*co_new(t_mini *m, char **vars, char ***data);
 t_cone		*co_last(t_cone *cone);
-
-// SOLID LST 4
 void		co_add_b(t_cone **cone, t_cone *co_new);
 
 // SOLID MOVEMENTS

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 23:17:36 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/12 13:21:42 by csilva-f         ###   ########.fr       */
+/*   Created: 2023/11/14 21:38:43 by csilva-f          #+#    #+#             */
+/*   Updated: 2023/11/14 21:48:01 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,99 +81,7 @@ void	pl_add_b(t_plane **pl, t_plane *pl_new)
 	}
 }
 
-double fade(double t) {
-    return t * t * t * (t * (t * 6 - 15) + 10);
-}
-
-double lerp(double t, double a, double b) {
-    return a + t * (b - a);
-}
-
-double grad(int hash, double x) {
-    int h = hash & 15;
-    double grad = 1 + (h & 7); // Gradient value 1-8
-    if (h & 8) grad = -grad;   // Randomly invert half of them
-    return (grad * x);         // This is the key part: gradients are chosen based on hash
-}
-
-double perlin(double x, int *permutation) {
-    int a = (int)floor(x) & 255;
-    x -= floor(x);
-    double u = fade(x);
-    return lerp(u, grad(permutation[a], x), grad(permutation[a + 1], x - 1)) * 2;
-}
-
-
-int	**map_create(void)
+double	fade(double t)
 {
-	int	**matrix;
-	int	i;
-	int	j;
-
-	srand(time(NULL));
-
-
-	matrix = (int **)malloc(5000 * sizeof(int*));
-	i = 0;
-	int permutation[512];
-    for (int z = 0; z < 512; z++) {
-        permutation[z] = rand() % 255;
-    }
-	while (i < 5000)
-	{
-		j = 0;
-		matrix[i] = (int *)malloc(5000 * sizeof(int));
-		while (j < 5000)
-		{
-			double value = perlin((double)i / 5000, permutation);
-			matrix[i][j] = (int)((value + 1.0) * 1000.0) + 1;
-			j++;
-		}
-
-		i++;
-	}
-	return (matrix);
-}
-
-/*
-int	**map_create(void)
-{
-	int	**matrix;
-	int	i;
-	int	j;
-
-	matrix = (int **)malloc(5000 * sizeof(int*));
-	i = 0;
-	while (i < 5000)
-	{
-		j = 0;
-		matrix[i] = (int *)malloc(5000 * sizeof(int));
-		while (j < 5000)
-		{
-			matrix[i][j] = sin(j) * sin(i) * 1000;
-			j++;
-		}
-
-		i++;
-	}
-	return (matrix);
-}
-*/
-t_sphere	*sph_new(t_mini *m, char **vars, char ***data)
-{
-	t_sphere	*sp;
-
-	sp = malloc(sizeof(t_sphere));
-	if (!sp)
-		return (NULL);
-	sp->pos.x = float_check(m, (*data)[0]);
-	sp->pos.y = float_check(m, (*data)[1]);
-	sp->pos.z = float_check(m, (*data)[2]);
-	sp->d = float_check(m, vars[2]) / 2;
-	sp->d_squared = sp->d * sp->d;
-	fill_colors(m, vars[3], &sp->color);
-	sp->shine = ft_atoi(vars[4]);
-	sp->map = map_create();
-	sp->next = NULL;
-	return (sp);
+	return (t * t * t * (t * (t * 6 - 15) + 10));
 }
