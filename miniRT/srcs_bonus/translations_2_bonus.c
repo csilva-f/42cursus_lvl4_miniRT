@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 23:13:46 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/15 23:45:19 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/16 00:03:56 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	init_hl_light_mode(t_mini *m)
 		m->llst = m->llst->next;
 	m->action = 'l';
 	m->llst->old_color = m->llst->l->color;
-	m->llst->l->color = m->grey_c;
+	if (compare_rgb(m->llst->l->color, m->grey_c))
+		m->llst->l->color = m->grey_l;
+	else
+	 	m->llst->l->color = m->grey_c;
 	destroy_create_image(m, 5);
 }
 

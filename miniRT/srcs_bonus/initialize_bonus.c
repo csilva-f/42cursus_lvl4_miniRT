@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:37:13 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/15 23:33:17 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/16 00:02:13 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init(t_mini *mini)
 	mini->action = '0';
 	mini->reset = 0;
 	mini->grey_c = (t_pos){255, 0, 0};
+	mini->grey_l = (t_pos){192, 192, 192};
 	mini->counter_a = 0;
 	mini->counter_c = 0;
 	mini->counter_l = 0;

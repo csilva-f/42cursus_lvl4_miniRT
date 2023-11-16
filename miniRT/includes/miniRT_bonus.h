@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/15 23:45:56 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/16 00:01:04 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ typedef struct s_mini
 	bool		hl;
 	t_llst		*llst;
 	t_pos		grey_c;
+	t_pos		grey_l;
 	char		action;
 	bool		reset;
 	bool		flag;
