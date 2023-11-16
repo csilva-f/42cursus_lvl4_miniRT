@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 13:02:16 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/12 22:03:08 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:58:18 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	key_hook_aux_3(int keycode, t_mini *m)
 {
-	if (keycode == B && m->action == 'l')
-		light_translation(m, 0, 0, -1);
+	if (keycode == F && m->action == 'l')
+		light_movs(m, 0, 'f', 0);
+	else if (keycode == B && m->action == 'l')
+		light_movs(m, 0, 'b', 0);
 	else if (keycode == X && m->action == 'r')
 		dim_rot_trans(m, 0, 0, 'x');
 	else if (keycode == Y && m->action == 'r')
@@ -32,29 +34,28 @@ void	key_hook_aux_3(int keycode, t_mini *m)
 
 void	key_hook_aux_2(int keycode, t_mini *m)
 {
-	if (keycode == L)
+	if (keycode == I)
 	{
 		if (m->action == 'l')
-		{
-			m->action = '0';
-			destroy_create_image(m, 0);
-		}
+			light_movs(m, 0, '0', 1);
+		else
+			dim_rot_trans(m, 0, 1, '0');
+	}
+	else if (keycode == L)
+	{
+		if (m->action == 'l')
+			light_movs(m, 5, '0', 0);
 		else if (m->action == '0')
-		{
-			m->action = 'l';
-			print_action(m, 5);
-		}
+			light_movs(m, 5, '0', 0);
 	}
 	else if (keycode == RIGHT && m->action == 'l')
-		light_translation(m, 1, 0, 0);
+		light_movs(m, 0, 'r', 0);
 	else if (keycode == LEFT && m->action == 'l')
-		light_translation(m, -1, 0, 0);
+		light_movs(m, 0, 'l', 0);
 	else if (keycode == UP && m->action == 'l')
-		light_translation(m, 0, 1, 0);
+		light_movs(m, 0, 'u', 0);
 	else if (keycode == DOWN && m->action == 'l')
-		light_translation(m, 0, -1, 0);
-	else if (keycode == F && m->action == 'l')
-		light_translation(m, 0, 0, 1);
+		light_movs(m, 0, 'd', 0);
 	else
 		key_hook_aux_3(keycode, m);
 }
@@ -105,8 +106,6 @@ void	key_hook_aux(int keycode, t_mini *m)
 	else if (keycode != I && m->hl && (m->action == 't' || \
 				m->action == 'd' || m->action == 'h'))
 		key_hook_dim_rot_tr(keycode, m);
-	else if (keycode == I)
-		dim_rot_trans(m, 0, 1, '0');
 	else
 		key_hook_aux_2(keycode, m);
 }

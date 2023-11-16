@@ -6,23 +6,11 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:37:13 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/14 23:29:29 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:33:17 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
-
-/*t_material	material(void)
-{
-	t_material	new;
-
-	new = malloc(sizeof(t_material));
-	new->ka = (t_pos){};
-	new->kd = (t_pos){};
-	new->ks = (t_pos){};
-	return (new);
-}
-*/
 
 void	init(t_mini *mini)
 {
@@ -46,6 +34,7 @@ void	init(t_mini *mini)
 	mini->ray = NULL;
 	mini->light = NULL;
 	mini->s = NULL;
+	mini->llst = NULL;
 }
 
 void	init_canvas(t_mini *m)

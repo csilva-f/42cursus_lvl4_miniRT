@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/14 23:03:40 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:45:56 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,14 +200,13 @@ typedef struct s_solid
 	struct s_solid	*next;
 }		t_solid;
 
-typedef struct s_l_lst
+typedef struct s_llst
 {
-	bool				head;
-	char				ltt;
-	t_light				*l;
-	t_pos				old_color;
-	struct s_light_lst	*next;
-}		t_l_lst;
+	bool			head;
+	t_light			*l;
+	t_pos			old_color;
+	struct s_llst	*next;
+}		t_llst;
 
 typedef struct s_angles
 {
@@ -235,6 +234,7 @@ typedef struct s_mini
 	t_graphics	*g;
 	t_solid		*s;
 	bool		hl;
+	t_llst		*llst;
 	t_pos		grey_c;
 	char		action;
 	bool		reset;
@@ -294,6 +294,9 @@ t_pos		add_rgb(t_pos color1, t_pos color2);
 t_pos		sub_rgb(t_pos color1, t_pos color2);
 t_pos		divide_rgb(t_pos color1, t_pos color2);
 
+// COLOR_OP 2 
+int			compare_rgb(t_pos c1, t_pos c2);
+
 // COLORS
 int			rgb_to_int(int red, int green, int blue);
 void		fill_colors(t_mini *m, char *str, t_pos *col);
@@ -339,6 +342,13 @@ void		check_a_vars(t_mini *m, char **vars);
 int			counter_c(t_mini *m);
 void		check_c_vars(t_mini *m, char **v, char **data);
 void		check_l_vars(t_mini *m, char **vars);
+
+// LIGHTS ITERATE 
+t_llst		*llst_new(t_mini *m, t_light *l);
+t_llst		*llst_last(t_llst *l);
+void		llst_add_b(t_llst **l, t_llst *l_new);
+void		fill_light_list(t_mini *m);
+void		highlight_light(t_mini *m);
 
 // LIGHT LST
 t_light		*light_new(t_mini *m, char **vars, char ***data);
@@ -461,6 +471,9 @@ void		translate_solids(t_mini *m, char c, double n);
 
 // TRANSLATION 2
 void		light_translation(t_mini *m, int x, int y, int z);
+void		init_hl_light_mode(t_mini *m);
+void		iterate_lights(t_mini *m, int iter);
+void		light_movs(t_mini *m, int action, char c, int iter);
 
 // MAIN
 int			count_vars(char **vars, int equal, int code, t_mini *m);

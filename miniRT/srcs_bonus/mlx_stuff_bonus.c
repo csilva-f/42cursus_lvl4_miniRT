@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 18:33:31 by fvieira           #+#    #+#             */
-/*   Updated: 2023/09/24 18:55:32 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:07:43 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ void	raytracing(t_mini *m)
 
 	ray_create(m);
 	if (!n || m->reset)
+	{
 		fill_solid_list(m);
+		fill_light_list(m);
+	}
 	n++;
 }

@@ -6,11 +6,28 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:45:42 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/14 22:57:38 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/15 23:59:03 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT_bonus.h"
+
+void	free_lights_lst(t_mini *m)
+{
+	t_llst	*aux_llst;
+
+	while (m->llst->head != 1)
+		m->llst = m->llst->next;
+	if (m->llst->head == 1 && m->llst->next && m->llst->next->head != 1)
+		m->llst = m->llst->next;
+	while (m->llst->head != 1)
+	{
+		aux_llst = m->llst->next;
+		free(m->llst);
+		m->llst = aux_llst;
+	}
+	free(m->llst);
+}
 
 void	free_solids_lst(t_mini *m)
 {
@@ -32,8 +49,8 @@ void	free_solids_lst(t_mini *m)
 void	free_solids_aux(t_mini *mini)
 {
 	t_cone		*aux_co;
-	t_light		*aux_l;
 	t_cylinder	*aux_c;
+	t_light		*aux_l;
 
 	while (mini->cyl)
 	{
@@ -53,6 +70,8 @@ void	free_solids_aux(t_mini *mini)
 		free(mini->light);
 		mini->light = aux_l;
 	}
+	if (mini->llst)
+		free_lights_lst(mini);
 }
 
 void	free_solids(t_mini *mini, int i)
