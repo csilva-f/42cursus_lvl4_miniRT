@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:45:27 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/14 22:09:59 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:48:42 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	collisions_aux(t_mini *m, t_ray *ray)
 	}
 	while (m->co)
 	{
-		cone_collision(m->co, ray);
+		cone_collision(m->co, ray, NULL, (t_vector){0, 0, 0});
 		m->co = m->co->next;
 	}
 	while (m->sp)

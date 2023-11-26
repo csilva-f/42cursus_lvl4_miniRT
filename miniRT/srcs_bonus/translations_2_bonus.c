@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 23:13:46 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/16 00:03:56 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:49:45 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	light_translation(t_mini *m, int x, int y, int z)
 {
-	m->light->pos.x += x * 1;
-	m->light->pos.y += y * 1;
-	m->light->pos.z += z * 1;
+	m->llst->l->pos.x += x * 1;
+	m->llst->l->pos.y += y * 1;
+	m->llst->l->pos.z += z * 1;
 	destroy_create_image(m, 5);
 }
 
@@ -27,10 +27,6 @@ void	init_hl_light_mode(t_mini *m)
 		m->llst = m->llst->next;
 	m->action = 'l';
 	m->llst->old_color = m->llst->l->color;
-	if (compare_rgb(m->llst->l->color, m->grey_c))
-		m->llst->l->color = m->grey_l;
-	else
-	 	m->llst->l->color = m->grey_c;
 	destroy_create_image(m, 5);
 }
 
@@ -41,7 +37,6 @@ void	iterate_lights(t_mini *m, int iter)
 	{
 		m->llst = m->llst->next;
 		m->llst->old_color = m->llst->l->color;
-		m->llst->l->color = m->grey_c;
 		destroy_create_image(m, 5);
 	}
 	else

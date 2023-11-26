@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:49:33 by fvieira           #+#    #+#             */
-/*   Updated: 2023/11/14 22:12:47 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:45:19 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,19 @@ bool	plane_collision(t_plane *pl, t_ray *r, double t, double nom)
 	}
 	return (false);
 }
-// co -> pos vec k(degrees) h color
 
-double	quadratic_form_cone(double a, double b, double c, double *t)
+double	quadratic_form_cone(double **a)
 {
 	double	t_plus;
 	double	t_minu;
+	double	aux;
 
-	t_plus = (-1 * b + sqrt(b * b - 4 * a * c)) / (2 * a);
-	t_minu = (-1 * b - sqrt(b * b - 4 * a * c)) / (2 * a);
-	t[0] = t_plus;
-	t[1] = t_minu;
+	aux = sqrt((*a)[1] * (*a)[1] - 4 * (*a)[0] * (*a)[2]);
+	t_plus = (-1 * (*a)[1] + aux) / (2 * (*a)[0]);
+	aux = sqrt((*a)[1] * (*a)[1] - 4 * (*a)[0] * (*a)[2]);
+	t_minu = (-1 * (*a)[1] - aux) / (2 * (*a)[0]);
+	(*a)[5] = t_plus;
+	(*a)[6] = t_minu;
 	if (t_plus >= 0 && (t_minu <= 0 || t_plus <= t_minu))
 		return (t_plus);
 	else if (t_minu >= 0)
@@ -98,50 +100,17 @@ void	cone_norm(t_cone *co, t_ray *r, double t, double m)
 	r->t = t;
 }
 
-bool	cone_collision(t_cone *co, t_ray *r)
+void	cone_collision_aux(t_cone *co, t_ray *r, double **a, t_vector *x)
 {
-	double		a;
-	double		b;
-	double		c;
-	double		d_v;
-	double		x_v;
-	double		t[2];
-	t_vector	x;
+	double	aux;
 
-	x = vector_create(r->p0, co->pos);
-	d_v = vector_dot(r->v1, co->vec);
-	x_v = vector_dot(x, co->vec);
-	a = r->sqrt_len - co->k_k * pow(d_v, 2);
-	b = 2 * (vector_dot(r->v1, x) - co->k_k * d_v * x_v);
-	c = vector_dot(x, x) - co->k_k * pow(vector_dot(x, co->vec), 2);
-	a = quadratic_form_cone(a, b, c, t);
-	if (a > 0.05)
-	{
-		if (vector_dot(vector_create(ray_pos(r->p0, r->v1, a), co->pos), \
-					co->vec) < 0)
-		{
-			if (a == t[0])
-				a = t[1];
-			else if (a == t[1])
-				a = t[0];
-			if (a < 0.05 || vector_dot(vector_create(ray_pos(r->p0, r->v1, a), \
-				co->pos), co->vec) < 0)
-				return (false);
-		}
-		if (r->t == -1 || (a < r->t))
-		{
-			c = d_v * a + x_v;
-			b = distance(co->pos, ray_pos(co->pos, co->vec, co->h));
-			if (c < b)
-			{
-				r->t = cone_bases(co, r, 0);
-				if (a < r->t || r->t < 0)
-					cone_norm(co, r, a, c);
-				return (true);
-			}
-			else if (c >= b)
-				return (cone_bases(co, r, 0));
-		}
-	}
-	return (false);
+	(*a) = malloc(7 * sizeof(double));
+	(*x) = vector_create(r->p0, co->pos);
+	(*a)[3] = vector_dot(r->v1, co->vec);
+	(*a)[4] = vector_dot((*x), co->vec);
+	(*a)[0] = r->sqrt_len - co->k_k * pow((*a)[3], 2);
+	(*a)[1] = 2 * (vector_dot(r->v1, (*x)) - co->k_k * (*a)[3] * (*a)[4]);
+	aux = pow(vector_dot((*x), co->vec), 2);
+	(*a)[2] = vector_dot((*x), (*x)) - co->k_k * aux;
+	(*a)[0] = quadratic_form_cone(a);
 }

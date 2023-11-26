@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/16 00:01:04 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:26:09 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 #  include <X11/X.h>
 # endif
 
-# define HEIGHT 72.0/1.5
-# define WIDTH 128.0/1.5
+# define HEIGHT 72.0/3
+# define WIDTH 128.0/3
 
 # define ESC 65307
 # define LEFT 65361
@@ -73,9 +73,6 @@
 # define BLUE 0x80A0CC
 
 # define PI 3.1415926
-
-# define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
-# define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 
 typedef struct s_al
 {
@@ -279,10 +276,14 @@ void		plane_collision_aux(t_plane *pl, t_ray **r, double t);
 
 // COLLISIONS 3
 bool		plane_collision(t_plane *pl, t_ray *r, double t, double nom);
-double		quadratic_form_cone(double a, double b, double c, double *t);
+double		quadratic_form_cone(double **a);
 void		cone_norm(t_cone *co, t_ray *r, double t, double m);
 double		cone_bases(t_cone *c, t_ray *r, double t);
-bool		cone_collision(t_cone *co, t_ray *r);
+void		cone_collision_aux(t_cone *co, t_ray *r, double **a, t_vector *x);
+
+// COLLISIONS 4
+bool		cone_collisions_aux2(double **a, t_cone *co, t_ray *r);
+bool		cone_collision(t_cone *co, t_ray *r, double *a, t_vector x);
 
 // COLLISIONS BUMP
 t_vector	bump(t_vector vec, int **map, int x, int y);
@@ -368,11 +369,15 @@ void		destroy_create_image(t_mini *m, int action);
 void		raytracing(t_mini *m);
 
 // PHONG
+bool		shadow(t_mini *m, t_light *l);
+double		vec_cos(t_vector v1, t_vector v2);
+void		phong_aux(t_mini *m, t_ray *r, t_pos **k, t_light *aux_l);
+t_pos		phong(t_mini *m, t_ray *r);
+
+// PHONG 2
 void		collisions_aux3(t_mini *m, t_ray *ray);
 void		collisions_aux2(t_mini *m, t_ray *ray);
 void		light_collisions(t_mini *m, t_ray *temp);
-bool		shadow(t_mini *m, t_light *l);
-t_pos		phong(t_mini *m, t_ray *r);
 
 // PIXEL CAMERA
 double		pixel_cam_x(double psx, t_mini *m);
