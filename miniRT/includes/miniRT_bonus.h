@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:44:12 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/11/26 17:26:09 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/11/27 19:37:55 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 #  include <X11/X.h>
 # endif
 
-# define HEIGHT 72.0/3
-# define WIDTH 128.0/3
+# define HEIGHT 72.0
+# define WIDTH 128.0
 
 # define ESC 65307
 # define LEFT 65361
