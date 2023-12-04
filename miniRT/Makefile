@@ -6,7 +6,7 @@
 #    By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 14:33:39 by csilva-f          #+#    #+#              #
-#    Updated: 2023/11/26 17:14:20 by csilva-f         ###   ########.fr        #
+#    Updated: 2023/12/04 19:56:07 by csilva-f         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,4 +104,3 @@ noleaks: fclean all
 
 .SILENT:
 
-.PHONY: all miniRT clean fclean re obj

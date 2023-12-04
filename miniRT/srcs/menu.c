@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 16:41:44 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/10/10 20:03:58 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/12/04 20:55:34 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	create_menu_aux(int y, void *mlx, void *win)
 	mlx_string_put(mlx, win, 10, y += 15, WHITE, "X-Axis:            [X]");
 	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Y-Axis:            [Y]");
 	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Z-Axis:            [Z]");
-	mlx_string_put(mlx, win, 10, y += 25, BLUE, "LIGHT TRANSALTION MODE [L]");
+	mlx_string_put(mlx, win, 10, y += 25, BLUE, "LIGHT TRANSLATION MODE [L]");
 	mlx_string_put(mlx, win, 10, y += 15, WHITE, "X-Axis:           arrows");
 	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Y-Axis:           arrows");
 	mlx_string_put(mlx, win, 10, y += 15, WHITE, "Z-Axis:          [F]  [B]");
