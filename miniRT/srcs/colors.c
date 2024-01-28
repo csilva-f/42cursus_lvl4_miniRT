@@ -6,7 +6,7 @@
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 19:07:43 by fvieira           #+#    #+#             */
-/*   Updated: 2023/07/10 19:07:45 by fvieira          ###   ########.fr       */
+/*   Updated: 2023/09/19 21:57:08 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,8 @@ int	rgb_to_int(int red, int green, int blue)
 	return (res);
 }
 
-int	fill_colors(t_mini *m, char *str, int c)
+void	fill_colors(t_mini *m, char *str, t_pos *col)
 {
-	int		r;
-	int		g;
-	int		b;
 	char	**color;
 
 	color = ft_split(str, ',');
@@ -36,17 +33,15 @@ int	fill_colors(t_mini *m, char *str, int c)
 		if (ft_str_isd(color[0]) && ft_str_isd(color[1]) \
 				&& ft_str_isd(color[2]))
 		{
-			r = ft_atoi(color[0]);
-			g = ft_atoi(color[1]);
-			b = ft_atoi(color[2]);
-			if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255)
-				c = rgb_to_int(r, g, b);
-			else
+			col->x = ft_atoi(color[0]);
+			col->y = ft_atoi(color[1]);
+			col->z = ft_atoi(color[2]);
+			if (col->x < 0 || col->x > 255 || col->y < 0 || \
+					col->y > 255 || col->z < 0 || col->z > 255)
 				vars_errors(m, 4);
 		}
 		else
 			vars_errors(m, 4);
 	}
 	ft_free_split(color);
-	return (c);
 }

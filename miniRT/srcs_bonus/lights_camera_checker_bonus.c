@@ -1,0 +1,74 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lights_camera_checker_bonus.c                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/10 18:47:40 by fvieira           #+#    #+#             */
+/*   Updated: 2023/11/09 21:37:28 by csilva-f         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/miniRT_bonus.h"
+
+void	check_a_vars(t_mini *m, char **vars)
+{
+	m->counter_a++;
+	if (m->counter_a > 1)
+	{
+		vars_errors(m, 7);
+		return ;
+	}
+	m->al->ratio = float_check(m, vars[1]);
+	if (m->is_valid)
+		fill_colors(m, vars[2], &m->al->color);
+}
+
+int	counter_c(t_mini *m)
+{
+	m->counter_c++;
+	if (m->counter_c > 1)
+		vars_errors(m, 7);
+	return (m->counter_c);
+}
+
+void	check_c_vars(t_mini *m, char **v, char **data)
+{
+	if (counter_c(m) > 1)
+		return ;
+	data = ft_split(v[1], ',');
+	if (count_vars(data, 3, 4, m))
+	{
+		m->cam->pos.x = float_check(m, data[0]);
+		m->cam->pos.y = float_check(m, data[1]);
+		m->cam->pos.z = float_check(m, data[2]);
+		ft_free_split(data);
+		data = ft_split(v[2], ',');
+		if (count_vars(data, 3, 4, m))
+		{
+			m->cam->vec.vx = float_check(m, data[0]);
+			m->cam->vec.vy = float_check(m, data[1]);
+			m->cam->vec.vz = float_check(m, data[2]);
+			if (fabs(m->cam->vec.vx) > 1 || fabs(m->cam->vec.vy) > 1 || \
+					fabs(m->cam->vec.vz) > 1 || fabs(length(m->cam->vec)) != 1)
+				vars_errors(m, 4);
+			ft_free_split(data);
+			if (ft_str_isd(v[3]) && ft_atoi(v[3]) <= 180 && ft_atoi(v[3]) >= 0)
+				m->cam->fov = ft_atoi(v[3]);
+			else
+				vars_errors(m, 4);
+		}
+	}
+}
+
+void	check_l_vars(t_mini *m, char **vars)
+{
+	char		**data;
+
+	m->counter_l++;
+	data = ft_split(vars[1], ',');
+	if (count_vars(data, 3, 4, m))
+		l_add_b(&m->light, light_new(m, vars, &data));
+	ft_free_split(data);
+}

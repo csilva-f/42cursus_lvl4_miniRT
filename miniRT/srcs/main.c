@@ -6,72 +6,11 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 14:34:00 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/11 00:54:11 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/20 21:30:51 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-#include <stdlib.h>
-
-void	init(t_mini *mini, char **argv)
-{
-	mini->file = argv[1];
-	mini->is_valid = 1;
-	mini->al = malloc(sizeof(t_al));
-	mini->cam = malloc(sizeof(t_cam));
-	mini->light = malloc(sizeof(t_light));
-	if (!mini->al || !mini->cam || !mini->light)
-		return ;
-	mini->plane = NULL;
-	mini->sp = NULL;
-	mini->cyl = NULL;
-}
-
-/*void	ft_s_clear(t_plane **pl, t_sphere **sp, t_cylinder **cy)
-{
-	t_plane		*aux_p;
-	t_sphere	*aux_s;
-	t_cylinder	*aux_c;
-
-	if ((*pl) && pl)
-	{
-		while (*pl && pl)
-		{
-			aux_p = (*pl)->next;
-			free(*pl);
-			*pl = aux_p;
-		}
-	}
-}*/
-
-void	free_structs(t_mini *mini)
-{
-	t_plane		*aux_p;
-	t_sphere	*aux_s;
-	t_cylinder	*aux_c;
-
-	free(mini->al);
-	free(mini->cam);
-	free(mini->light);
-	while (mini->plane)
-	{
-		aux_p = mini->plane->next;
-		free(mini->plane);
-		mini->plane = aux_p;
-	}
-	while (mini->sp)
-	{
-		aux_s = mini->sp->next;
-		free(mini->sp);
-		mini->sp = aux_s;
-	}
-	while (mini->cyl)
-	{
-		aux_c = mini->cyl->next;
-		free(mini->cyl);
-		mini->cyl = aux_c;
-	}
-}
 
 int	count_vars(char **vars, int equal, int code, t_mini *m)
 {
@@ -89,9 +28,9 @@ int	count_vars(char **vars, int equal, int code, t_mini *m)
 	}
 }
 
-float	float_check(t_mini *m, char *str)
+double	float_check(t_mini *m, char *str)
 {
-	float	nbr;
+	double	nbr;
 	char	**parts;
 
 	nbr = -1;
@@ -99,7 +38,7 @@ float	float_check(t_mini *m, char *str)
 	if (count_vars(parts, 1, 4, m) == 2)
 	{
 		if (ft_str_isd(parts[0]) && ft_str_isd(parts[1]))
-			nbr = ft_atoi(parts[0]) + (float)ft_atoi(parts[1])
+			nbr = ft_atoi(parts[0]) + (double)ft_atoi(parts[1])
 				/ powf(10, ft_strlen(parts[1]));
 		else
 			vars_errors(m, 4);
@@ -117,16 +56,19 @@ float	float_check(t_mini *m, char *str)
 
 int	main(int argc, char **argv)
 {
-	t_mini	mini;
+	t_mini	m;
 
 	if (argc == 2)
 	{
-		if (check_file(argv[1], &mini))
+		if (!check_file(argv[1], &m))
 			return (1);
-		init(&mini, argv);
-		get_values(&mini);
-		free_structs(&mini);
-		if (!mini.is_valid)
+		init(&m);
+		get_values(&m);
+		if (m.is_valid)
+			init_canvas(&m);
+		else
+			free_structs(&m, 1);
+		if (!m.is_valid)
 			return (1);
 	}
 	else

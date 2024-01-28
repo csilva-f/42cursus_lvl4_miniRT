@@ -6,7 +6,7 @@
 /*   By: csilva-f <csilva-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 00:28:07 by csilva-f          #+#    #+#             */
-/*   Updated: 2023/07/11 00:45:20 by csilva-f         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:15:49 by csilva-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,37 @@ void	sph_add_b(t_sphere **sp, t_sphere *sp_new)
 	}
 }
 
+void	cy_new_aux(t_mini *m, char ***data, t_cylinder **c)
+{
+	(*c)->pos = coord_new(float_check(m, (*data)[0]), float_check(m, \
+				(*data)[1]), float_check(m, (*data)[2]));
+}
+
 t_cylinder	*cy_new(t_mini *m, char **vars, char ***data)
 {
-	t_cylinder	*cy;
+	t_cylinder	*c;
 
-	cy = malloc(sizeof(t_cylinder));
-	cy->cx = float_check(m, (*data)[0]);
-	cy->cy = float_check(m, (*data)[1]);
-	cy->cz = float_check(m, (*data)[2]);
+	c = malloc(sizeof(t_cylinder));
+	cy_new_aux(m, data, &c);
 	ft_free_split(*data);
 	*data = ft_split(vars[2], ',');
 	if (count_vars(*data, 3, 4, m))
 	{
-		cy->nv_x = float_check(m, (*data)[0]);
-		cy->nv_y = float_check(m, (*data)[1]);
-		cy->nv_z = float_check(m, (*data)[2]);
-		if (fabs(cy->nv_x) > 1 || fabs(cy->nv_y) > 1 || fabs(cy->nv_z) > 1)
+		c->vec = vector_new(float_check(m, (*data)[0]), float_check(m, \
+					(*data)[1]), float_check(m, (*data)[2]));
+		if (fabs(c->vec.vx) > 1 || fabs(c->vec.vy) > 1 || fabs(c->vec.vz) > 1
+			|| length(c->vec) != (double) 1)
 			vars_errors(m, 4);
 		else
 		{
-			cy->d = float_check(m, vars[3]);
-			cy->h = float_check(m, vars[4]);
-			cy->color = fill_colors(m, vars[5], -1);
+			c->d = float_check(m, vars[3]) / 2;
+			c->d_squared = c->d * c->d;
+			c->h = float_check(m, vars[4]);
+			fill_colors(m, vars[5], &c->color);
 		}
 	}
-	cy->next = NULL;
-	return (cy);
+	c->next = NULL;
+	return (c);
 }
 
 t_cylinder	*cy_last(t_cylinder *cy)
